@@ -1,0 +1,31 @@
+.login-page{
+    background: white;
+    height:100vh;
+}
+
+.loginBay{
+    width: 60%;
+}
+
+.loginArea {
+    margin-top: 3rem;
+    width: 60%;
+}
+
+.loginArea img{
+    width: 300px;
+    height: 300px;
+}
+
+.loginDetails{
+    padding: 0;
+    margin-top:0;
+}
+
+.loginForm{
+    margin-top: 2rem;
+}
+
+.inputBox{
+
+}
