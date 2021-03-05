@@ -7,6 +7,8 @@ import axios from 'axios';
 // import Modal from './loginModal';
 // import M from 'materialize-css';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 class login extends Component{
     state = {
         email: '',
@@ -23,13 +25,22 @@ class login extends Component{
             email: this.state.email,
             password: this.state.password
         }).then((res)=>{
-            this.props.userInfo(this.state);        // string user data to redux store
+            console.log(res.data.data);
 
             if(res.data.success === true){
-                alert("You are logged in!");
+                // alert("You are logged in!");
+                toast.success("Successfully logged in");
                 console.log("You are logged in!");
+
+                this.props.userInfo(res.data.data);        // string user data to redux store
+                this.setState({
+                    email: '',
+                    password: '',
+                    loginStatus: ''
+                });
             }else{
-                alert("Please sign-Up first");
+                // alert("Please sign-Up first");
+                toast.error("Sign up first");
                 console.log("Please sign-Up first");
             }
 
@@ -84,8 +95,8 @@ class login extends Component{
                                 <form className="loginForm">
                                     <div className="inputBox">
                                         <div className="input-field inputBar">
-                                            <input id="email" type="email" className="validate" onChange={this.handleChange}></input>
-                                            <label htmlFor="email" value={this.state.email}>Email</label>
+                                            <input id="email" type="email" className="validate" onChange={this.handleChange} value={this.state.email}></input>
+                                            <label htmlFor="email">Email</label>
                                         </div>
                                         <div className="input-field inputBar">
                                             <input id="password" type="password" className="validate" value={this.state.password} onChange={this.handleChange}></input>

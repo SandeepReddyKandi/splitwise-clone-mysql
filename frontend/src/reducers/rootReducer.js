@@ -14,7 +14,6 @@ const initState = {
 
 // storing user info to the redux store
 const rootReducer = (state = initState, action)=>{
-    // console.log("hlo");
     if(action.type === 'LOGIN_INFO'){
         const loginInfo = [action.payload.email, action.payload.password];
         return {

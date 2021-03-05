@@ -4,6 +4,7 @@ import './signup.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 class signUp extends Component {
     state = {
@@ -28,10 +29,12 @@ class signUp extends Component {
 
             if(res.data.success == true) {
                 console.log("You have successfully signed in !");
-                alert("You have successfully signed in !");
+                // alert("You have successfully signed in !");
+                toast.success("You have successfully signed in !");
             }else{
                 console.log(res.data.reason);
-                alert(res.data.reason);
+                // alert(res.data.reason);
+                toast.error(res.data.reason);
             }
 
             this.setState({
