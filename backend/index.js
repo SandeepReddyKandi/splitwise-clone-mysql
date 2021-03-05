@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config/config');
+const cors = require('cors');
 
 const app = express();
 const logger = require('./utils/logger').getLogger();
 const db = require('./models/index');
+
+app.use(cors());
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies

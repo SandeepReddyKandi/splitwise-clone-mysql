@@ -1,6 +1,6 @@
 .signUpBay img{
-    width:200px;
-    height:200px;
+    margin-top: 2rem;
+    height:360px;
     margin-top: 1.5rem;
 }
 
@@ -11,4 +11,8 @@
 
 .inputBar{
     margin-top: 2rem;
+}
+
+.submitBtn{
+    margin-top: 1rem;
 }
