@@ -29,11 +29,6 @@ class login extends Component{
           toast.success("Successfully logged in");
 
           this.props.userInfo(res.data.data);        // string user data to redux store
-          this.setState({
-            email: "",
-            password: "",
-            loginStatus: ""
-          });
         }else{
           toast.error("Sign up first");
         }
@@ -43,6 +38,12 @@ class login extends Component{
         });
       }).catch((err)=>{
         console.log(err);
+      }).then(()=>{
+        this.setState({
+          email: "",
+          password: "",
+          loginStatus: ""
+        });
       });
     }
 
