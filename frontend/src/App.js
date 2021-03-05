@@ -1,10 +1,11 @@
-import {BrowserRouter, Route} from 'react-router-dom';
-import login from './components/login';
-import signup from './components/signUp';
-import home from './components/home';
-import './App.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import login from "./components/login";
+import signup from "./components/signUp";
+import home from "./components/home";
+import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

@@ -25,7 +25,7 @@
       "semi": 2,
       "quotes": ["error", "double"],
       "indent": ["error", 2],
-      "no-console": ["error", { "allow": ["info", "warn", "error"] }],
+      // "no-console": ["error", { "allow": ["info", "warn", "error"] }],
       "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
       "object-curly-spacing": ["error", "always", { "objectsInObjects": true }],
       "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
