@@ -21,16 +21,11 @@ async function findUserByEmail(email) {
   return result;
 }
 
-async function updateUserDetails(userId, data) {
-  const { currency, phone, name, password } = data;
-  const result = await users.update(
-    {
-      currency, phone, name, password,
-    },
-    {
-      id: userId,
-    },
-  );
+async function updateUserDetailsById(userId, data) {
+  const { currency, phone, name, password, language, timezone } = data;
+  const values = { currency, phone, name, password, language, timezone };
+  const condition = { returning: true, plain: true, where: { id: userId } };
+  const result = await users.update(values, condition);
   return result;
 }
 
@@ -40,23 +35,30 @@ async function getUserByAppAccessToken(token) {
 }
 
 async function unsetUserAppAccessToken(userId) {
-  const user = await users.update({ token: '' }, { id: userId });
+  const condition = { returning: true, plain: true, where: { id: userId } };
+  const user = await users.update({ token: '' }, condition);
   return user;
 }
 
 async function addUserAppAccessToken(userId, token) {
   const values = { token };
-  const condition = { where: { id: userId } };
+  const condition = { returning: true, plain: true, where: { id: userId } };
   const user = await users.update(values, condition);
   return user;
+}
+
+async function getAllUsers() {
+  const result = await users.findAll();
+  return result;
 }
 
 module.exports = {
   getUserById,
   createNewUser,
   findUserByEmail,
-  updateUserDetails,
+  updateUserDetailsById,
   getUserByAppAccessToken,
   unsetUserAppAccessToken,
   addUserAppAccessToken,
+  getAllUsers,
 };

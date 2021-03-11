@@ -19,15 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: DataTypes.STRING,
     currency: {
-      default: currencyEnums.USD,
+      defaultValue: currencyEnums.USD,
       type: DataTypes.ENUM(...Object.values(currencyEnums)),
     },
     language: {
-      default: 'English',
+      defaultValue: 'English',
       type: DataTypes.STRING,
     },
     timezone: {
-      default: '(GMT +5:30) Indian Standard Time',
+      defaultValue: '(GMT +5:30) Indian Standard Time',
       type: DataTypes.STRING,
     },
     imageURL: DataTypes.STRING,

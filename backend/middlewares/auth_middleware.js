@@ -34,7 +34,12 @@ async function isLoggedIn(req, res, next) {
 
     const { decodedToken } = tokenData;
     const { userId } = decodedToken;
-    req.user = await userRepo.getUserById(userId);
+    const decodedUser = await userRepo.getUserById(userId);
+    if (!decodedUser || _.isEmpty(decodedUser)) {
+      const response = genericDtl.getResponseDto({}, 'Invalid token!');
+      return res.status(401).send(response);
+    }
+    req.user = { userId: decodedUser.id, email: decodedUser.email };
     return next();
   } catch (err) {
     logger.error(`Error while verifing user auth. Err: ${err}`);
