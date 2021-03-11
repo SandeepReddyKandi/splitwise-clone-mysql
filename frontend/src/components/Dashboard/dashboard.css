@@ -1,0 +1,80 @@
+.brand-logo{
+    margin-left: 1rem;
+}
+
+nav{
+    border-bottom: 1px solid rgb(207, 207, 207);
+}
+
+td{
+    border-right: 1px solid rgb(207, 207, 207);
+    padding: 8px;
+}
+
+td p{
+    margin: 0;
+}
+
+.container { 
+    width: 100%;
+}
+
+.expenses .col{
+    margin-top: 0;
+}
+
+.loading-msg{
+    margin: auto auto;
+}
+
+.amtContainer .row{
+    margin-bottom:0;
+}
+
+.amtContainer .card{
+    width: 100%;
+    padding: 0;
+}
+
+.amtContainer .card-title{
+    font-size: 1.1rem;
+    margin-bottom: -10px;
+    /* margin-left: 10px; */
+}
+
+.amtContainer .card-content{
+    /* margin: 0; */
+    padding: 0;
+}
+
+.amtContainer img{
+    /* min-height: 100%;
+    width: 100%; */
+    /* margin-top: 10px; */
+}
+
+.list-content{
+    margin-top:0;
+    padding-top:0;
+}
+
+.recieveAmt{
+    margin-left: 5px;
+}
+
+.giveAmt .card-content{
+    margin-right: 4px;
+}
+
+.recievingList{
+    min-height:500px;
+    border-left: 1px solid rgb(160, 160, 160);
+}
+
+.dashboard{
+    height: 600px;
+}
+
+.dashboard-icon .col{
+    margin-top: 10px;
+}

@@ -1,38 +1,38 @@
-{
-    "root": true,
-    "settings": {
-      "react": {
-        "version": "16.13.1"
-      }
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "commonjs": true,
-      "es6": true,
-      "node": true,
-      "browser": true,
-      "jest": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 11,
-      "sourceType": "module"
-    },
-    "rules": {
-      "semi": 2,
-      "quotes": ["error", "double"],
-      "indent": ["error", 2],
-      // "no-console": ["error", { "allow": ["info", "warn", "error"] }],
-      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
-      "object-curly-spacing": ["error", "always", { "objectsInObjects": true }],
-      "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
-      "space-infix-ops": ["error", { "int32Hint": false }],
-      "eol-last": ["error", "always"]
-    },
-    "globals": {
-      "JSX": true
-    }
-  }
+// {
+//     "root": true,
+//     "settings": {
+//       "react": {
+//         "version": "16.13.1"
+//       }
+//     },
+//     "extends": [
+//       "eslint:recommended",
+//       "plugin:react/recommended"
+//     ],
+//     "parser": "@typescript-eslint/parser",
+//     "env": {
+//       "commonjs": true,
+//       "es6": true,
+//       "node": true,
+//       "browser": true,
+//       "jest": true
+//     },
+//     "parserOptions": {
+//       "ecmaVersion": 11,
+//       "sourceType": "module"
+//     },
+//     "rules": {
+//       "semi": 2,
+//       "quotes": ["error", "double"],
+//       "indent": ["error", 2],
+//       // "no-console": ["error", { "allow": ["info", "warn", "error"] }],
+//       "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+//       "object-curly-spacing": ["error", "always", { "objectsInObjects": true }],
+//       "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
+//       "space-infix-ops": ["error", { "int32Hint": false }],
+//       "eol-last": ["error", "always"]
+//     },
+//     "globals": {
+//       "JSX": true
+//     }
+//   }
