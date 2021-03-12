@@ -35,8 +35,8 @@ const initState = {
     ],
 
     groups:[
-        "Four People One House",
-        "Home Expenses"
+        {name:"Four People One House", id:"lkj1"},
+        {name:"Home Expenses", id:"lkj2"}
     ]
 }
 
@@ -56,6 +56,20 @@ const userExpenses = (state = initState, action)=>{
                 toGive: totakPayableAmt
             }
         
+        case "DELETE_USER":
+            const username = action.payload.userName;
+
+            console.log('action: ',username);
+            
+            const recieveList = state.recieve.filter((user)=> user.name !== username);
+            const payingList = state.pay.filter((user) => user.name !== username);
+            
+            return {
+                ...state,
+                recieve : recieveList,
+                pay : payingList
+            }
+
         default:
             return state;
     }

@@ -1,0 +1,13 @@
+#modal1{
+    width: 30%;
+}
+
+#modal1 .modal-content{
+    margin: auto;
+    width: 80%;
+}
+
+#modal1 .modal-content input[type="date"]{
+    color: rgb(214, 214, 214);
+    text-align: center;
+}

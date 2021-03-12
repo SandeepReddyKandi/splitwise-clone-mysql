@@ -50,19 +50,19 @@ const Sidebar = ()=>{
                 </div>
                 <ul className="collection">
                 {
-                    groupsName.map((name)=>{
+                    groupsName.map((group, index)=>{
                         return(
-                            <li className="collection-item">
+                            <li className="collection-item" key={group.id}>
                                 <span>
                                     <i className="fas fa-bookmark"></i>
                                 </span>
                                 <Link to={{
                                     pathname: '/user/home/groups',
                                     groupName:{
-                                        name: name
+                                        name: group.name
                                     }
                                 }}>
-                                    <a href="#!">{name}</a>
+                                    <span>{group.name}</span>
                                 </Link>
                             </li>
                         )

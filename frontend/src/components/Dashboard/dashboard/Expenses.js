@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSelector} from 'react-redux';
 import Recieve from './Recieve';
 import Give from './GivePayment';
+import Modal from './Modal';
 import '../dashboard.css';
-
+import './Modal.css'
+import "materialize-css/dist/css/materialize.min.css";
 
 const Expenses = (props)=>{
     const exp = useSelector(state => state.expenses);
@@ -16,13 +18,14 @@ const Expenses = (props)=>{
                 <div className="nav-wrapper">
                     <a href="#" className="brand-logo black-text text-lighten-3">Dashboard</a>
                     <ul id="nav-mobile" className="right">
-                        <li>
-                            <a href="#" className="waves-effect waves-light btn orange darken-3">Add a bill</a>
-                            <a href="#" className="waves-effect waves-light btn">Settle up</a>
+                        <li className="btnGrp">
+                            <a href="#" className="btn orange darken-3">Add a bill</a>
+                            <Modal/>
                         </li>
                     </ul>
                 </div>
             </nav>
+
             <table className="col m12 highlight centered grey lighten-3">
                 <tbody>
                     <tr>
@@ -62,7 +65,9 @@ const Expenses = (props)=>{
                             )
                             :
                             (
-                                <div className="container loading-sg">Loading...</div>
+                                <div className="container emptyList row valign-wrapper center-align">
+                                    <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
+                                </div>
                             )
                         }
                     </div>
@@ -79,7 +84,9 @@ const Expenses = (props)=>{
                             )
                             :
                             (
-                                <div className="container">Loading...</div>
+                                <div className="container emptyList row valign-wrapper center-align">
+                                    <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
+                                </div>
                             )
                         }
                     </div>
