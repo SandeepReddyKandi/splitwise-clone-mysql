@@ -17,7 +17,7 @@ const UserGroups = (props)=>{
     const showUsers = userExpenses.slice(0, 1);
     const remainingUsers = userExpenses.slice(1, userExpenses.length);
 
-    // console.log(groupName);
+    console.log(groupName);
     console.log(usrGrp[0]);
     console.log(userExpenses);
 
@@ -123,7 +123,6 @@ const UserGroups = (props)=>{
                         </div>
                     </div>
                     <div className="view-details">
-                    {/* link/a doensn't work ..why ?? */}
                         <p id="openDetailsLink" className="contentLink row" onClick={()=>{
                             document.querySelector("#extraInfo").classList.toggle('vanish');
                             document.querySelector("#openDetailsLink").classList.toggle('vanish');

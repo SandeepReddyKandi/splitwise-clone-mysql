@@ -59,8 +59,9 @@ const groupExpenses = (state = initState, action)=>{
 
             const newGroupList = state.groups.map((group)=>{
                 if(group.name === groupName){
-                    const tempGrp = [...group.expense, newExpense];
-                    return tempGrp;
+                    // console.log("match found : ",groupName);
+                    const tempGrp = [...group.expenses, newExpense];
+                    group.expenses = tempGrp;
                 }
                 return group;
             });

@@ -6,7 +6,7 @@ import "materialize-css/dist/css/materialize.min.css";
 
 class Modal extends Component {
     state = {
-        groupName:'',
+        groupName: this.props.groupName,
         itemName: '',
         itemCost: '',
         date: {
@@ -34,21 +34,21 @@ class Modal extends Component {
   }
 
   setDate = (e)=>{
-      const date = (e.target.value).split("-");
+    const date = (e.target.value).split("-");
+    const months = [
+        "jan", "Feb", "March", "April", "May", "June", "July", "Agust", "Sept", 
+        "Oct", "Nov", "Dec"
+    ]
     this.setState({
         ...this.state,
         date: {
-            month: date[1],
+            month: months[date[1]-1],
             day: date[2]
         }
     })
   }
   
-  settleBalance = ()=>{
-    this.setState({
-        ...this.state,
-        groupName: this.props.groupName
-    })
+  addExpense = ()=>{
     this.props.addExpense(this.state);
   }
 
@@ -85,7 +85,7 @@ class Modal extends Component {
             </div>
             <div className="row modal-footer">
                 <div className="col m12 center-align">
-                    <a className="modal-close btn btn-success" onClick={this.settleBalance}>
+                    <a className="modal-close btn btn-success" onClick={this.addExpense}>
                     Save
                     </a>
                 </div>
