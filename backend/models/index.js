@@ -20,6 +20,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require('./user')(sequelize, Sequelize);
+db.users = require('./user_model')(sequelize, Sequelize);
+db.groups = require('./groups_model')(sequelize, Sequelize);
+db.expenses = require('./expenses_model')(sequelize, Sequelize);
 
 module.exports = db;
