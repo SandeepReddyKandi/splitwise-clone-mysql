@@ -127,3 +127,17 @@ td p{
     visibility:none;
     display:none;
 }
+
+#main-list li{
+    margin:0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+#extraInfo {
+    margin-top: 0;
+}
+
+#mainInfo{
+    margin-bottom: 0;
+}
