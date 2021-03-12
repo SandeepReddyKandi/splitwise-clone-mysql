@@ -12,25 +12,29 @@ const initState = {
                 {expenseName: "Dai Thanh", cost: 22.76, payer: "User1", date: {month:"feb", day:3}, id:"qwe7"},
                 {expenseName: "instacart-walmart", cost: 36.00, payer: "User2", date: {month:"feb", day:12}, id:"qwe8"},
                 {expenseName: "instacart", cost: 36.00, payer: "User2", date: {month:"feb", day:28}, id:"qwe9"},
+            ],
+            totalExpenses:[
+                {user:"USER 1", amt: 12},
+                {user:"USER 2", amt: -10},
+                {user:"USER 1", amt: 20}
             ]
         },
 
         { 
-            name: "Four People",   
+            name: "Home Expenses",   
             id: "poi1",
             expenses : [
                 {expenseName: "Grocery Outlet", cost: 16.24, payer: "User1", date: {month:"jan", day:31}, id:"qwe1"},
                 {expenseName: "Grocery Outlet", cost: 10.2, payer: "User2", date: {month:"jan",day:30}, id:"qwe2"},
                 {expenseName: "instacart", cost: 36.00, payer: "User1", date: {month:"jan", day:28}, id:"qwe3"},
+            ],
+            totalExpenses:[
+                {user:"USER 1", amt: 12},
+                {user:"USER 2", amt: -10},
+                {user:"USER 1", amt: 20}
             ]
         }
-    ],
-
-    totalExpenses:[
-        {user:"USER 1", amt: 12},
-        {user:"USER 2", amt: -10},
-        {user:"USER 1", amt: 20}
-    ]   
+    ],   
 }
 
 const groupExpenses = (state = initState, action)=>{

@@ -7,15 +7,16 @@ import '../dashboard.css';
 const UserGroups = (props)=>{
     const groups = useSelector(state => state.groupExpenses);
 
-    const groupName = props.location.groupName.name;
+    const groupName = props.location.groupName ? props.location.groupName.name : "Four People One House";
     const usrGrp = groups.groups.filter((group) => group.name === groupName);
     const expList = usrGrp[0].expenses;
-    const userExpenses = groups.totalExpenses;
+    const userExpenses = usrGrp[0].totalExpenses;
     const showUsers = userExpenses.slice(0, 1);
     const remainingUsers = userExpenses.slice(1, userExpenses.length);
 
     console.log(groupName);
-    console.log(usrGrp[0].expenses);
+    console.log(usrGrp[0] ? usrGrp[0].expenses:null);
+    console.log(userExpenses);
 
     return (
         <div className="container user-groups">
@@ -23,7 +24,7 @@ const UserGroups = (props)=>{
                 <div className="col m8 z-depth-1">
                     <div className="header row valign-wrapper grey lighten-2">
                         <div className="col m6 valign-wrapper">
-                                <img className="responsive-img" src="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
+                                <img className="responsive-img" srsc="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
                                 <span className="center-align">HOME EXPENSES</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
@@ -122,7 +123,7 @@ const UserGroups = (props)=>{
                             document.querySelector("#extraInfo").classList.toggle('vanish');
                             document.querySelector("#openDetailsLink").classList.toggle('vanish');
                             document.querySelector("#closeDetailsLink").classList.toggle('vanish');
-                        }}><span className="col m12">view more >></span></a>
+                        }}><span className="col m12">view more..</span></a>
 
                         <a href="#" id="closeDetailsLink" className="contentLink vanish row" onClick={()=>{
                             document.querySelector("#extraInfo").classList.toggle('vanish');

@@ -63,12 +63,14 @@ td p{
     border-left: 1px solid rgb(160, 160, 160);
 }
 
-.dashboard{
-    height: 600px;
+.dashboard-header .col{
+    margin-top: 10px;
 }
 
-.dashboard-icon .col{
-    margin-top: 10px;
+.dashboard-header span{
+    margin-top: 5px;
+    font-size:1.1rem;
+    /* font-weight: 600; */
 }
 
 .user-groups .col {
@@ -140,4 +142,38 @@ td p{
 
 #mainInfo{
     margin-bottom: 0;
+}
+
+.group-list .collection{
+    width: 90%;
+    border: none;
+    border-left: 5px solid #00b6b6;
+    color: #00b6b6;
+}
+
+.group-list .collection a{
+    text-decoration: none;
+    color: #00b6b6;
+    margin-left: 5px;
+}
+
+.group-header{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+    padding: 5px;
+}
+
+.group-header p{
+    margin:0;
+}
+
+.group-header span{
+    margin-left:5px;
+}
+
+.group-header .icon{
+    width: 100%;
 }

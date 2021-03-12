@@ -32,6 +32,11 @@ const initState = {
                 {group:"House Party", amt:54.89, id:9}
             ]
         }
+    ],
+
+    groups:[
+        "Four People One House",
+        "Home Expenses"
     ]
 }
 
