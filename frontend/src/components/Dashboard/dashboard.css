@@ -39,18 +39,10 @@ td p{
 .amtContainer .card-title{
     font-size: 1.1rem;
     margin-bottom: -10px;
-    /* margin-left: 10px; */
 }
 
 .amtContainer .card-content{
-    /* margin: 0; */
     padding: 0;
-}
-
-.amtContainer img{
-    /* min-height: 100%;
-    width: 100%; */
-    /* margin-top: 10px; */
 }
 
 .list-content{
@@ -77,4 +69,61 @@ td p{
 
 .dashboard-icon .col{
     margin-top: 10px;
+}
+
+.user-groups .col {
+    margin-top: 0;
+}
+
+.header{
+    padding: 10px;
+}
+
+.header span {
+    margin-left: 10px;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.expenseBtn button{
+    margin: 0 auto;
+}
+
+.expenses-list-table {
+    width: 100%;
+    margin: 0;
+    margin-bottom:10px;
+}
+
+.expenses-list-table tr:last-child{
+    border-bottom: none;
+}
+
+.sidebar-header {
+    /* margin: 30px; */
+    padding: 3rem !important;
+}
+
+.sidebar-header h6{
+    font-weight: 600;
+}
+
+.users-collection,
+.users-collection .collection-item{
+    border: none;
+}
+
+.date{
+    display: flex;
+    flex-direction:column;
+    font-weight: bold;
+}
+
+.date .day{
+    font-size: 1.2rem;
+}
+
+.vanish{
+    visibility:none;
+    display:none;
 }

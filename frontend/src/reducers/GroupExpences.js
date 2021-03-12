@@ -4,12 +4,23 @@ const initState = {
             name: "Four People One House",   
             id: "poi1",
             expenses : [
-                {expenseName: "Grocery Outlet", cost: 16.24, payer: "User1", date: "jan 31", id:"qwe1"},
-                {expenseName: "Grocery Outlet", cost: 10.2, payer: "User2", date: "jan 30", id:"qwe2"},
-                {expenseName: "instacart", cost: 36.00, payer: "User1", date: "jan 28", id:"qwe3"}
+                {expenseName: "Grocery Outlet", cost: 16.24, payer: "User1", date: {month:"jan", day:31}, id:"qwe1"},
+                {expenseName: "Grocery Outlet", cost: 10.2, payer: "User2", date: {month:"jan",day:30}, id:"qwe2"},
+                {expenseName: "instacart", cost: 36.00, payer: "User1", date: {month:"jan", day:28}, id:"qwe3"},
+                {expenseName: "instacart", cost: 7.50, payer: "User2", date: {month:"jan", day:12}, id:"qwe4"},
+                {expenseName: "instacart", cost: 56.20, payer: "User3", date: {month:"feb", day:2}, id:"qwe5"},
+                {expenseName: "Dai Thanh", cost: 22.76, payer: "User1", date: {month:"feb", day:3}, id:"qwe7"},
+                {expenseName: "instacart-walmart", cost: 36.00, payer: "User2", date: {month:"feb", day:12}, id:"qwe8"},
+                {expenseName: "instacart", cost: 36.00, payer: "User2", date: {month:"feb", day:28}, id:"qwe9"},
             ]
         }
-    ]
+    ],
+
+    totalExpenses:[
+        {user:"USER 1", amt: 12},
+        {user:"USER 2", amt: -10},
+        {user:"USER 1", amt: 20}
+    ]   
 }
 
 const groupExpenses = (state = initState, action)=>{
