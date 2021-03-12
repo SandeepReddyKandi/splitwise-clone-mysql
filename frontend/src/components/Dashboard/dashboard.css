@@ -16,7 +16,22 @@ td p{
 }
 
 .container { 
-    width: 100%;
+    width: 100% !important;
+}
+
+.dashboard .container{
+    width: 100% !important;
+    padding: 0;
+}
+
+.main-display{
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.sidebar{
+    padding-top: 0;
+    margin-top: 0 ;
 }
 
 .expenses .col{
@@ -63,14 +78,32 @@ td p{
     border-left: 1px solid rgb(160, 160, 160);
 }
 
-.dashboard-header .col{
+.dashboard-header .col,
+.recent-activity .col
+{
     margin-top: 10px;
 }
 
-.dashboard-header span{
+.dashboard-header {
+    margin-bottom: 0;
+}
+
+.dashboard-header img{
+    filter: gray;
+    filter: grayscale(1); 
+}
+
+.dashboard-header span,
+.recent-activity span
+{
     margin-top: 5px;
     font-size:1.1rem;
-    /* font-weight: 600; */
+}
+
+.recent-activity i{
+    font-size: 1.5rem;
+    margin-top: 8px;
+    color: grey;
 }
 
 .user-groups .col {
@@ -166,7 +199,9 @@ td p{
     padding: 5px;
 }
 
-.group-header p{
+.group-header p,
+.activity-header p
+{
     margin:0;
 }
 
@@ -176,4 +211,14 @@ td p{
 
 .group-header .icon{
     width: 100%;
+}
+
+.activity-header{
+    width: 100%;
+    font-size:1.3rem;
+    justify-content: flex-start;
+}
+
+.activity-header .icon{
+    width: 10%;
 }

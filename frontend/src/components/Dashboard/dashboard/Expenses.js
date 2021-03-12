@@ -11,7 +11,7 @@ const Expenses = (props)=>{
     let giveAmt =  exp.pay;
 
     return (
-        <div className="container expenses row">
+        <div className="container expenses row z-depth-2">
             <nav className="col m12 grey lighten-3 z-depth-0">
                 <div className="nav-wrapper">
                     <a href="#" className="brand-logo black-text text-lighten-3">Dashboard</a>

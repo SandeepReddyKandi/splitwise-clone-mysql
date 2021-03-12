@@ -12,27 +12,39 @@ const Sidebar = ()=>{
         <div className="container sidebar">
             {/* dashboard header */}
             <div className="row dashboard-header">
-                <div className="col m2">
-                    <Link to="/user/home/dashboard">
+                <Link to="/user/home/dashboard">
+                    <div className="col m2">
                         <img className="circle responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter"/>
-                    </Link>
-                </div>
-                <div className="col m10 valign-wrapper">
-                    <span className="grey-text text-darken-2 valign-wrapper">
-                        Dashboard
-                    </span>
-                </div>
+                    </div>
+                    <div className="col m10 valign-wrapper">
+                        <span className="grey-text text-darken-2 valign-wrapper">
+                            Dashboard
+                        </span>
+                    </div>
+                </Link>
             </div>
 
             {/* recent activity */}
-            
+            <div className="row recent-activity">
+                <Link to="#">
+                    <div className="col m2 ">
+                        <i className="fas fa-flag"></i>
+                    </div>
+                    <div className="col m10 valign-wrapper">
+                        <span className="grey-text text-darken-2 valign-wrapper">
+                            Recent activity
+                        </span>
+                    </div>
+                </Link>
+            </div>
+
 
             {/* side-bar group list */}
-            <div className="group-list">
+            <div className="row group-list">
                 <div className="group-header grey lighten-3 left-align">
                     <p className="gery-text">GROUPS</p>
                     <div className="icon right-align">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <i className="fa fa-plus" aria-hidden="true"></i>
                         <span>add</span>
                     </div>
                 </div>
@@ -42,7 +54,7 @@ const Sidebar = ()=>{
                         return(
                             <li className="collection-item">
                                 <span>
-                                    <i class="fas fa-bookmark"></i>
+                                    <i className="fas fa-bookmark"></i>
                                 </span>
                                 <Link to={{
                                     pathname: '/user/home/groups',
