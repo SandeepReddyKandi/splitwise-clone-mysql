@@ -5,7 +5,9 @@ import RecentActivity from './RecentActivity/RecientActivity';
 import { Link, Switch } from "react-router-dom";
 import { BrowserRouter, Router, Route, Redirect } from "react-router-dom";
 import UserGroups from './Groups/UserGroup';
+import User from './User/User';
 import './dashboard.css';
+import CreateNewGroup from './CreateNewGroup';
 
 const Dashboard = (props)=>{
     return (
@@ -20,7 +22,7 @@ const Dashboard = (props)=>{
                             <Link to="/user/home/" className="green-text text-darken-3">
                                 <button className="btn teal">Home</button>
                             </Link>
-                            <Link to="#">
+                            <Link to="/user">
                                 <span>
                                     <i className="fas fa-user"></i>   
                                 </span>
@@ -41,6 +43,7 @@ const Dashboard = (props)=>{
                                 <Route path="/user/home/dashboard" component={Expenses}/>
                                 <Route path="/user/home/groups" component={UserGroups}/>
                                 <Route path="/user/home/recentactivity" component={RecentActivity}/>
+                                <Route path="/user/home/newGroup" component={CreateNewGroup}/>
                             </div>
                         </Switch>
                     </div>

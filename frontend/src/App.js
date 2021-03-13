@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashboard from './components/Dashboard/Dashboard';
 import Expenses from './components/Dashboard/dashboard/Expenses';
 import UserGroups from './components/Dashboard/Groups/UserGroup';
+import User from './components/Dashboard/User/User';
 
 function App() {
   return (
@@ -18,12 +19,8 @@ function App() {
         <Route exact path="/" component={home}/>
         <Route path="/login" component={login}/>
         <Route path="/signup" component={signup}/>
+        <Route exact path="/user" component={User}/>
         <Route path="/user/home" component={Dashboard}/>
-        {/* <Route path="/user/home/dashboard" component={Dashboard}/>
-        <Route path="/user/home/groups" component={Dashboard}/> */}
-        {/* <Route exact path="/user/home" component={Expenses}/>
-        <Route path="/user/home/dashboard" component={Expenses}/>
-        <Route path="/user/home/groups" component={UserGroups}/> */}
       </div>
     </BrowserRouter>
   );

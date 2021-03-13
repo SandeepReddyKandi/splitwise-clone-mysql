@@ -20,6 +20,7 @@ const Expenses = (props)=>{
                     <ul id="nav-mobile" className="right">
                         <li className="btnGrp">
                             <a href="#" className="btn orange darken-3">Add a bill</a>
+                            <a className=" btn modal-trigger" data-target="modal1">Settle</a>
                             <Modal/>
                         </li>
                     </ul>

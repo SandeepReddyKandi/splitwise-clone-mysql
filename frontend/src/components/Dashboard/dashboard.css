@@ -236,13 +236,6 @@ td p{
     margin-top: 2rem;
 }
 
-.btnGrp{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
 .navbarBtnGrp{
     display: flex;
 }
@@ -259,4 +252,50 @@ td p{
 .contentLink {
     cursor: pointer;
     color: #007272;
+}
+
+.user-header .container{
+    width: 100%;
+}
+
+.personal-img-info{
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin: auto
+}
+
+.personal-img-info img{
+    max-height: 250px;
+    max-width: 250px;
+}
+
+.personal-img-info input[type="file"]{
+    margin-left: 15%;
+}
+
+.info{
+    margin-top: 3rem;
+}
+
+.info span{
+    color: #007272;
+}
+
+.info span i{
+    margin-left: 5px;
+}
+
+.personal-info p{
+    margin-bottom: 0;
+}
+
+select {
+    background:rgb(0, 0, 0);
+}
+
+option {
+    min-height: 20px !important;
 }

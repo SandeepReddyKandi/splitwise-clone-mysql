@@ -3,6 +3,7 @@ import { Link, Switch } from "react-router-dom";
 import {useSelector} from 'react-redux';
 import Dashboard from './Dashboard';
 import './dashboard.css';
+import CreateNewGroup from './CreateNewGroup';
 
 const Sidebar = ()=>{
     const groups = useSelector(state => state.expenses);
@@ -44,8 +45,10 @@ const Sidebar = ()=>{
                 <div className="group-header grey lighten-3 left-align">
                     <p className="gery-text">GROUPS</p>
                     <div className="icon right-align">
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                        <span>add</span>
+                        <Link to="/user/home/newGroup">
+                            <i className="fa fa-plus modal-trigger"></i>
+                            <span>add</span>
+                        </Link>
                     </div>
                 </div>
                 <ul className="collection">

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "react-select": "^4.2.1"
   }
 }

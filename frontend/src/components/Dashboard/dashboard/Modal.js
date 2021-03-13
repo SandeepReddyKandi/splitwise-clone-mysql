@@ -35,12 +35,12 @@ class Modal extends Component {
   render() {
     return (
       <div>
-        <a
+        {/* <a
           className=" btn modal-trigger"
           data-target="modal1"
         >
           Settle
-        </a>
+        </a> */}
 
         <div ref={Modal => {
             this.Modal = Modal;
