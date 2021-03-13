@@ -58,7 +58,7 @@ async function leaveGroup(req, res, next) {
     logger.info('controllers', 'leaveGroup');
     const { userId } = req.user;
     const { groupId } = req.params;
-    const groupExpense = await expensesRepo.getGroupExpenseForUserId(groupId, userId); // Implement
+    const groupExpense = await expensesRepo.getGroupExpenseForUserId(groupId, userId);
     if (groupExpense || !_.isEmpty(groupExpense)) return res.send(genericDTL.getResponseDto('', 'You can not leave group without clearing dues.'));
     await groupsRepo.leaveGroup(userId, groupId);
     const updatedDetails = await groupsRepo.getGroupById(groupId);

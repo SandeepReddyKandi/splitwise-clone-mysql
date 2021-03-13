@@ -1,3 +1,4 @@
+const { uuid } = require('uuidv4');
 const { currencyEnums } = require('../utils/enums');
 
 module.exports = (sequelize, DataTypes) => {
@@ -31,5 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM(...Object.values(currencyEnums)),
     },
   });
+  Expense.beforeCreate((expense) => expense.id = uuid());
   return Expense;
 };

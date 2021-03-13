@@ -43,7 +43,8 @@ async function acceptGroupInvite(data) {
 
 async function createGroup(data) {
   const { name, userId, invitedUsers, currency } = data;
-  const group = { name, invitedUsers, acceptedUsers: [userId], currency };
+  const invitedUsersFinal = invitedUsers || [];
+  const group = { name, invitedUsers: invitedUsersFinal, acceptedUsers: [userId], currency };
   const result = await groups.create(group);
   return result;
 }
@@ -67,9 +68,9 @@ async function updateGroupDetails(data) {
 }
 
 async function getAllAcceptedUsersByGroupId(groupId) {
-  const group = await groups.findOne({ where: { id: groupId } });
+  const group = await groups.findOne({ plain: true, where: { id: groupId } });
   const result = group.acceptedUsers;
-  return result.toJSON();
+  return result;
 }
 
 module.exports = {
