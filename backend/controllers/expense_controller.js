@@ -30,7 +30,10 @@ async function getAllExpenses(req, res, next) {
     logger.info('controllers', 'getAllExpenses');
     const { userId } = req.user;
     const { getExpenses, payExpenses } = await expensesRepo.getAllExpensesForUserId(userId);
-    const response = genericDTL.getResponseDto();
+    const users = await usersRepo.getAllUsers();
+    const allGroups = await groupsRepo.getAllGroups();
+    const data = await expensesDtl.getExpenseSummaryDto({ getExpenses, payExpenses, userId, users, allGroups });
+    const response = genericDTL.getResponseDto(data);
     return res.send(response);
   } catch (err) {
     logger.error(`Unable to get all expenses. Err. ${JSON.stringify(err)}`);
