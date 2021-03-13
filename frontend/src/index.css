@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 code {
@@ -19,4 +20,48 @@ code {
 .loginArea img{
   width: 200px;
   height: 200px;
+}
+
+.new-group > img{
+  height: 200px !important;
+}
+
+#groupLeftSide{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 3rem;
+}
+
+#groupLeftSide input[type="file"]{
+  margin-left: 15%;
+}
+
+.group-member{
+  margin-bottom: 0 !important;
+}
+
+#addUser .addUserBtn{
+  cursor: pointer !important;
+}
+
+#addUser{
+  margin-top: 1rem;
+}
+#addUser form{
+  padding: 1rem;
+}
+
+#usersList{
+  margin-top: 10px;
+  color: grey;
+}
+
+#usersList img{
+  width: 50px;
+}
+
+#groupRightSide{
+  margin-left: 20px;
 }

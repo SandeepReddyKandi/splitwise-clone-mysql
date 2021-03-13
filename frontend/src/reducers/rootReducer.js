@@ -1,35 +1,14 @@
-const initState = {
-  loginInfo: {
-    email: null,
-    password: null
-  },
+import authReducer from "./authReducer";
+import userExpenses from "./userExpenses";
+import GroupExpences from "./GroupExpences";
+import recentActivity from "./recentActivity";
+import { combineReducers } from "redux";
 
-  signupInfo: {
-    userName: null,
-    userEmail: null,
-    userPhone: null,
-    userPassword: null
-  }
-};
+const rootReducer = combineReducers({
+  auth: authReducer,
+  expenses: userExpenses,
+  groupExpenses : GroupExpences,
+  recentActivity : recentActivity
+});
 
-// storing user info to the redux store
-const rootReducer = (state = initState, action)=>{
-  if(action.type === "LOGIN_INFO"){
-    const loginInfo = [action.payload.email, action.payload.password];
-    return {
-      ...state,
-      loginInfo: loginInfo   
-    };
-  }
-
-  if(action.type === "SIGNUP_INFO"){
-    const signupInfo = [action.payload.name, action.payload.email, action.payload.phone, action.payload.password];   
-    return{
-      ...state,
-      signupInfo: signupInfo
-    };
-  }
-
-  return state;
-};
 export default rootReducer;

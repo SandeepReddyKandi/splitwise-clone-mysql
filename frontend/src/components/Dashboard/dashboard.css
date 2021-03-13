@@ -1,0 +1,301 @@
+.brand-logo{
+    margin-left: 1rem;
+}
+
+nav{
+    border-bottom: 1px solid rgb(207, 207, 207);
+}
+
+td{
+    border-right: 1px solid rgb(207, 207, 207);
+    padding: 8px;
+}
+
+td p{
+    margin: 0;
+}
+
+.container { 
+    width: 100% !important;
+}
+
+.dashboard .container{
+    width: 100% !important;
+    padding: 0;
+}
+
+.main-display{
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.sidebar{
+    padding-top: 0;
+    margin-top: 0 ;
+}
+
+.expenses .col{
+    margin-top: 0;
+}
+
+.loading-msg{
+    margin: auto auto;
+}
+
+.amtContainer .row{
+    margin-bottom:0;
+}
+
+.amtContainer .card{
+    width: 100%;
+    padding: 0;
+}
+
+.amtContainer .card-title{
+    font-size: 1.1rem;
+    margin-bottom: -10px;
+}
+
+.amtContainer .card-content{
+    padding: 0;
+}
+
+.list-content{
+    margin-top:0;
+    padding-top:0;
+}
+
+.recieveAmt{
+    margin-left: 5px;
+}
+
+.giveAmt .card-content{
+    margin-right: 4px;
+}
+
+.recievingList{
+    min-height:500px;
+    border-left: 1px solid rgb(160, 160, 160);
+}
+
+.dashboard-header .col,
+.recent-activity .col
+{
+    margin-top: 10px;
+}
+
+.dashboard-header {
+    margin-bottom: 0;
+}
+
+.dashboard-header img{
+    filter: gray;
+    filter: grayscale(1); 
+}
+
+.dashboard-header span,
+.recent-activity span
+{
+    margin-top: 5px;
+    font-size:1.1rem;
+}
+
+.recent-activity i{
+    font-size: 1.5rem;
+    margin-top: 8px;
+    color: grey;
+}
+
+.user-groups .col {
+    margin-top: 0;
+}
+
+.header{
+    padding: 10px;
+}
+
+.header span {
+    margin-left: 10px;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+/* .expenseBtn button{
+    margin: 0 auto;
+} */
+
+.expenseBtn{
+    /* margin: 0 auto; */
+}
+
+.expenses-list-table {
+    width: 100%;
+    margin: 0;
+    margin-bottom:10px;
+}
+
+.expenses-list-table tr:last-child{
+    border-bottom: none;
+}
+
+.sidebar-header {
+    /* margin: 30px; */
+    padding: 3rem !important;
+}
+
+.sidebar-header h6{
+    font-weight: 600;
+}
+
+.users-collection,
+.users-collection .collection-item{
+    border: none;
+}
+
+.date{
+    display: flex;
+    flex-direction:column;
+    font-weight: bold;
+}
+
+.date .day{
+    font-size: 1.2rem;
+}
+
+.vanish{
+    visibility:none;
+    display:none;
+}
+
+#main-list li{
+    margin:0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+#extraInfo {
+    margin-top: 0;
+}
+
+#mainInfo{
+    margin-bottom: 0;
+}
+
+.group-list .collection{
+    width: 90%;
+    border: none;
+    border-left: 5px solid #00b6b6;
+    color: #00b6b6;
+}
+
+.group-list .collection a{
+    text-decoration: none;
+    color: #00b6b6;
+    margin-left: 5px;
+}
+
+.group-header{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+    padding: 5px;
+}
+
+.group-header p,
+.activity-header p
+{
+    margin:0;
+}
+
+.group-header span{
+    margin-left:5px;
+}
+
+.group-header .icon{
+    width: 100%;
+}
+
+.activity-header{
+    width: 100%;
+    font-size:1.3rem;
+    justify-content: flex-start;
+}
+
+.activity-header .icon{
+    width: 10%;
+}
+
+/* when the expense list is empty */
+.emptyList{
+    width:100%;
+}
+
+.emptyList .emptyText{
+    margin-top: 2rem;
+}
+
+.navbarBtnGrp{
+    display: flex;
+}
+.navbarBtnGrp span{
+    color: #007272;
+}
+.navbarBtnGrp i{
+    width: 100%;
+    height:100%;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.contentLink {
+    cursor: pointer;
+    color: #007272;
+}
+
+.user-header .container{
+    width: 100%;
+}
+
+.personal-img-info{
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin: auto
+}
+
+.personal-img-info img{
+    max-height: 250px;
+    max-width: 250px;
+}
+
+.personal-img-info input[type="file"]{
+    margin-left: 15%;
+}
+
+.info{
+    margin-top: 3rem;
+}
+
+.info span{
+    color: #007272;
+}
+
+.info span i{
+    margin-left: 5px;
+}
+
+.personal-info p{
+    margin-bottom: 0;
+}
+
+select {
+    background:rgb(0, 0, 0);
+}
+
+option {
+    min-height: 20px !important;
+}
