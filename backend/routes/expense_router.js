@@ -5,8 +5,10 @@ const { isLoggedIn } = require('../middlewares/auth_middleware');
 const router = express.Router();
 
 router.get('/all', isLoggedIn, expenseController.getAllExpenses);
+router.get('/balance/:user2Id', isLoggedIn, expenseController.getBalanceByUser2Id);
 router.get('/details/:expenseId', isLoggedIn, expenseController.getExpenseDetails);
-router.post('/create', isLoggedIn, expenseController.createExpense);
-router.post('/settle/:expenseId', isLoggedIn, expenseController.settleExpense);
+router.post('/create', isLoggedIn, expenseController.createGroupExpense);
+router.get('/recent', isLoggedIn, expenseController.getRecentExpenses);
+router.put('/settle/:user2Id', isLoggedIn, expenseController.settleExpense);
 
 module.exports = router;

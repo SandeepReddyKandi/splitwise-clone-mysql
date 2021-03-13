@@ -34,9 +34,12 @@
     "request-promise": "^4.2.2",
     "sequelize": "^5.21.2",
     "socket.io": "^2.0.3",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.6"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.0",
     "eslint": "^7.21.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^12.1.0",

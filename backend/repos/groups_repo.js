@@ -10,6 +10,11 @@ async function findGroupByName(name) {
   return result;
 }
 
+async function getAllGroups() {
+  const result = await groups.findAll();
+  return result;
+}
+
 async function getAllGroupsByUserId(userId) {
   const allGroups = await groups.findAll();
   const invitedGroups = _.filter(allGroups, group => group.invitedUsers.includes(userId));
@@ -64,10 +69,11 @@ async function updateGroupDetails(data) {
 async function getAllAcceptedUsersByGroupId(groupId) {
   const group = await groups.findOne({ where: { id: groupId } });
   const result = group.acceptedUsers;
-  return result;
+  return result.toJSON();
 }
 
 module.exports = {
+  getAllGroups,
   getAllGroupsByUserId,
   getGroupById,
   acceptGroupInvite,
