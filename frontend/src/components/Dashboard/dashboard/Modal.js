@@ -49,9 +49,12 @@ class Modal extends Component {
           className="modal"
         >
             <div className="modal-content center-align">
+                <div className="modal-title">
+                  <h5 className="orange-text text-darken-2">Settle Balance</h5>
+                </div>
                 <div className="row center-align">
                     <div className="input-field col m12 s12">
-                        <input placeholder="Settle balance with User" id="userName" type="text" className="validate center-align"
+                        <input placeholder="user to settle balance with" id="userName" type="text" className="validate center-align"
                             onChange={this.setUserName}
                         />
                     </div>

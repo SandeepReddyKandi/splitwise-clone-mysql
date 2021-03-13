@@ -10,8 +10,8 @@ class Modal extends Component {
         itemName: '',
         itemCost: '',
         date: {
-            month:'',
-            day:''
+            month:'3',
+            day:'20'
         }
     }
 
@@ -69,6 +69,9 @@ class Modal extends Component {
           className="modal"
         >
             <div className="modal-content right-align">
+                <div className="modal-title center-align">
+                  <h5 className="row orange-text text-darken-2">Add new expense to the group</h5>
+                </div>
                 <div className="row right-align">
                     <div className="input-field col m12 s12">
                         <input placeholder="Expense item name" id="itemName" type="text" className=" input-field validate center-align"
@@ -76,9 +79,6 @@ class Modal extends Component {
                         />
                         <input placeholder="Cost of item" id="itemCost" type="number" className="input-field validate center-align"
                             onChange={this.setValues}
-                        />
-                        <input placeholder="Date of Expense" id="date" type="date" className="input-field validate center-align"
-                            onChange={this.setDate}
                         />
                     </div>
                 </div>
