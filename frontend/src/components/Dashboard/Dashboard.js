@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Expenses from './dashboard/Expenses';
+import RecentActivity from './RecentActivity/RecientActivity';
 import { Link, Switch } from "react-router-dom";
 import { BrowserRouter, Router, Route, Redirect } from "react-router-dom";
 import UserGroups from './Groups/UserGroup';
@@ -17,7 +18,7 @@ const Dashboard = (props)=>{
                     <ul className="right">
                         <li className="navbarBtnGrp">
                             <Link to="/user/home/" className="green-text text-darken-3">
-                                <button className="waves-effect waves-light btn">Home</button>
+                                <button className="btn teal">Home</button>
                             </Link>
                             <Link to="#">
                                 <span>
@@ -39,6 +40,7 @@ const Dashboard = (props)=>{
                                 <Route exact path="/user/home" component={Expenses}/>
                                 <Route path="/user/home/dashboard" component={Expenses}/>
                                 <Route path="/user/home/groups" component={UserGroups}/>
+                                <Route path="/user/home/recentactivity" component={RecentActivity}/>
                             </div>
                         </Switch>
                     </div>

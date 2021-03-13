@@ -26,7 +26,7 @@ const Sidebar = ()=>{
 
             {/* recent activity */}
             <div className="row recent-activity">
-                <Link to="#">
+                <Link to="/user/home/recentactivity">
                     <div className="col m2 ">
                         <i className="fas fa-flag"></i>
                     </div>
