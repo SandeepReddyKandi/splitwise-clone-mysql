@@ -1,4 +1,4 @@
-const { currencyEnums, expenseEnums } = require('../utils/enums');
+const { currencyEnums } = require('../utils/enums');
 
 module.exports = (sequelize, DataTypes) => {
   const Expense = sequelize.define('expenses', {
@@ -7,30 +7,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
     },
     byUser: {
+      required: true,
       type: DataTypes.UUID,
     },
     toUser: {
+      required: true,
       type: DataTypes.UUID,
-    },
-    expenseId: {
-      type: DataTypes.STRING,
-      unique: true,
     },
     groupId: {
       type: DataTypes.UUID,
-      require: true,
+      required: true,
     },
     amount: {
       required: true,
       type: DataTypes.FLOAT,
     },
-    status: {
-      required: true,
-      type: DataTypes.ENUM(...Object.values(expenseEnums)),
-    },
     description: DataTypes.STRING,
+    settledAt: {
+      type: DataTypes.DATE,
+    },
     currency: {
-      default: currencyEnums.USD,
+      defaultValue: currencyEnums.USD,
       type: DataTypes.ENUM(...Object.values(currencyEnums)),
     },
   });
