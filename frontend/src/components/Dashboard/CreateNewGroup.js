@@ -3,34 +3,35 @@ import { connect } from "react-redux";
 import letter from "../../letter.webp";
 
 class CreateNewGroup extends Component {
-	// state = {
-
-	// }
-
-	addUser = (e)=>{
-		const list = document.querySelector('.group-members');
-		const newList = document.createElement('div');
-		newList.classList.add("row", "group-member");
-
-		const nameField = document.createElement('div');
-		newList.classList.add("input-field", "col", "m6");
-		nameField.innerHTML = `
-			<label for="name">name</label>
-			<input id="name" type="text" className="validate"/>
-		`
-
-		const emailField = document.createElement('div');
-		newList.classList.add("input-field", "col", "m6");
-		emailField.innerHTML = `
-			<label for="email">email</label>
-			<input id="email" type="email" className="validate"/>
-		`
-
-		newList.appendChild(nameField);
-		newList.appendChild(emailField);
-
-		list.appendChild(newList);
+	state = {
+		groupName: "",
+		users: [
+			{username: "", email:""},
+		]
 	}
+
+ 	addUser = (e)=>{
+		 e.preventDefault();
+		// const list = document.querySelector('.group-members');
+		// const newList = document.createElement('div');
+		// newList.classList.add("col","m12");
+		// newList.setAttribute("id", "usersList")
+
+		// const name = document.getElementById("name").value;
+		// const email = document.getElementById("email").value;
+
+		// console.log("value : ", e.target.parentNode.);
+
+		// newList.innerHTML = `
+		// <span className="center-align valign-wrapper">
+		// 	<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
+		// 	(${name}) (${email})
+		// </span>
+		// `
+
+		// list.appendChild(newList);
+	}
+
 
 	render() {
 		return (
@@ -51,12 +52,12 @@ class CreateNewGroup extends Component {
 						</div>
 					</div>
 					<div className="row group-members">
-						<p className="grey-text">Group members</p>
+						<p className="grey-text">Group members</p> 
 						<div className="row group-member valign-wrapper">
 							<div className="col m12" id="usersList">
 								<span className="center-align valign-wrapper">
 									<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
-									{this.props.userInfo.name} ({this.props.userInfo.email})
+									({this.props.userInfo.name}) ({this.props.userInfo.email})
 								</span>
 							</div>
 						</div>
@@ -73,7 +74,7 @@ class CreateNewGroup extends Component {
 									<label htmlFor="email">email</label>
 								</div>
 							</div>
-							<button className="btn orange darken-3">Add a person</button>
+							<button className="btn orange darken-3" onClick={this.addUser}>Add a person</button>
 						</form>
 					</div>
 				</div>

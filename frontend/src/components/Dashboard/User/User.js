@@ -10,6 +10,10 @@ const User = ()=>{
     const currEmail = userInfo.signupInfo.email;
     const currPhone = userInfo.signupInfo.phone;
 
+    const selectItem = ()=>{
+        console.log("changes");
+    }
+
     return(
         <div className="user-info">
             <nav className="nav-wrapper teal accent-4 navbar user-header">
@@ -83,8 +87,8 @@ const User = ()=>{
                             <div>
                                 <form>
                                     <label htmlFor="cars">Choose a car:</label>
-                                    <select defaultValue="volvo" name="cars" id="cars">
-                                        <option value="volvo" className="selected">Volvo</option>
+                                    <select defaultValue="volvo" name="cars" id="cars" onChange={selectItem}>
+                                        <option value="volvo">Volvo</option>
                                         <option value="saab">Saab</option>
                                         <option value="opel">Opel</option>
                                         <option value="audi">Audi</option>
