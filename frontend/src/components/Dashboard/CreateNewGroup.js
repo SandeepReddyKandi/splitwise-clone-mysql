@@ -17,6 +17,11 @@ class CreateNewGroup extends Component {
 		});
 	}	
 
+	// here we are submitting the store data to db
+	createNewGroup = ()=>{
+		// data is already stored in store : newGroups
+	}	
+
  	addGroup = (e)=>{
 		e.preventDefault();
 
@@ -84,7 +89,7 @@ class CreateNewGroup extends Component {
 						}
 					</div>
 					<div className="row" id="addGroup">
-						<form className="grey lighten-3 center-align">
+						<form className="grey lighten-3 center-align add-group-content">
 							<div className="row">
 								<div className="input-field col s6">
 									<input id="name" type="text" className="validate" onChange={this.handleChange}/>
@@ -97,6 +102,9 @@ class CreateNewGroup extends Component {
 							</div>
 							<button className="btn orange darken-3" onClick={this.addGroup}>Add a person</button>
 						</form>
+					</div>
+					<div className="row">
+						<button className="btn btn-large green darken-1" onClick={this.addGroup} onClick={this.createNewGroup}>Create Group</button>
 					</div>
 				</div>
 			</div>
