@@ -12,12 +12,10 @@ const Invites = ()=>{
 
     const existingGroups = groupData.activities.existingGroups;
     const invites = groupData.activities.groupInvites;
-
-    // console.log(invites);
+    let searchedGroup ='';
 
     const acceptInvitation = (e)=>{
         const groupName = e.target.parentElement.parentElement.previousSibling.children[0].innerText;
-
     }
 
     const rejectInvitation = (e)=>{
@@ -26,7 +24,11 @@ const Invites = ()=>{
 
     const deleteGroup = (e)=>{
         const groupName = e.target.parentElement.parentElement.previousSibling.children[0].innerText;
-        
+    }
+
+    const searchGroup = (e)=>{
+        searchedGroup = e.target.parentElement.parentElement.parentElement.children[0].children[0].value;
+        console.log(searchedGroup);
     }
 
     return(
@@ -43,9 +45,19 @@ const Invites = ()=>{
                         (
                             (
                                 <div>
+                                    <div className="search-box center-align">
+                                        <div className="row center-align">
+                                            <div className="input-field col s9">
+                                                <input id="groupName" type="text" className="validate"/>
+                                                <label for="groupName">Group Name</label>
+                                            </div>
+                                            <div className="col s3 valign-wrapper">
+                                                <a className="btn-floating waves-light blue add" onClick={searchGroup}><i class="material-icons">search</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table className="centered highlight expenses-list-table">
                                         <tbody>
-
                                             {/* list of invitatiosn */}
                                             {   
                                                 invites.length ?
@@ -73,24 +85,41 @@ const Invites = ()=>{
 
                                             {/* list of already existing groups */}
                                             {   
-                                                existingGroups.length ?
-                                                (
-                                                    existingGroups.map((invite)=>{
-                                                        return(
-                                                            <tr className="left-align" key={existingGroups.id}>
-                                                                <td className="grey-text text-darken-2">
-                                                                    <h6>{invite.name}</h6>
-                                                                </td>
-                                                                <td className="left-align">
-                                                                    <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
+                                                searchedGroup !== '' ?
+                                                (    
+                                                    <tr className="left-align">
+                                                        <td className="grey-text text-darken-2">
+                                                            <h6>{searchedGroup}</h6>
+                                                        </td>
+                                                        <td className="left-align">
+                                                            <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
+                                                        </td>
+                                                    </tr>
+                                                        
                                                 )
                                                 :
                                                 (
-                                                    <div>Loading...</div>
+                                                    existingGroups.length > 0 ?
+                                                    (
+                                                        existingGroups.map((invite)=>{
+                                                        return(
+                                                                <tr className="left-align" key={existingGroups.id}>
+                                                                    <td className="grey-text text-darken-2">
+                                                                        <h6>{invite.name}</h6>
+                                                                    </td>
+                                                                    <td className="left-align">
+                                                                        <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    )
+                                                    :
+                                                    (
+                                                        <div>
+                                                            <h6>You are not in any group</h6>
+                                                        </div>
+                                                    )
                                                 )
                                             }
                                         </tbody>
@@ -110,6 +139,12 @@ const Invites = ()=>{
             </div>
         </div>
     )
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        
+    }
 }
 
 export default Invites;
