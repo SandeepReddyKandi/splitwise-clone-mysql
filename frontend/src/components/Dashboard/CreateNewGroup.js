@@ -11,6 +11,9 @@ class CreateNewGroup extends Component {
 		name: "",
 		email:"",
 		userIds: [],
+		completeUserList: [],
+		selectedPerson: '',
+		userIdToNameMap: {},
 	}
 
 	handleChange = (e) => {
@@ -18,18 +21,43 @@ class CreateNewGroup extends Component {
 			[e.target.id] : e.target.value
 		});
 	}
+	componentDidMount() {
+		console.log(this.props.userInfo, `Bearer ${this.props.userInfo.token}`)
+		axios.get('http://localhost:8000/user/all', {
+			headers: {
+				authorization: `Bearer ${this.props.userInfo.token}`,
+			}
+		}).then(res => {
+			if (res.data.success) {
+				this.setState({
+					...this.state,
+					completeUserList: res.data.data.map(user => {
+						return {
+							label: user.name,
+							id: user.id,
+							email: user.email,
+						}
+					}),
+				})
+			} else {
+				toast.error(res.data.message);
+			}
+		})
+	}
 
 	// here we are submitting the store data to db
 	createNewGroup = (e) => {
 		e.preventDefault();
-		if (this.state.groupName === '' || this.state.name === '' || this.state.email === '') {
-			toast.error("Please fill in the required fields!");
+		if (this.state.groupName === '') {
+			toast.error("Please add a name to your group");
 		} else {
-			axios.post('http://localhost:8080/groups/create', {
+			axios.post('http://localhost:8000/groups/create', {
 				name: this.state.groupName,
-				invitedUsers: this.state.userIds,
+				invitedUsers: this.state.userIds.map(user => user.id),
 			}, {
-				Authorization: `Bearer ${this.props.userInfo.token}`,
+				headers: {
+					authorization: `Bearer ${this.props.userInfo.token}`,
+				}
 			}).then((res) => {
 				if (res.data.success) {
 					this.props.addAPersonToGroup(this.state);
@@ -41,28 +69,17 @@ class CreateNewGroup extends Component {
 		}
 	}
 
- 	addAPersonToGroup = (e) => {
-		e.preventDefault();
-		if (this.state.groupName === '' || this.state.name === '' || this.state.email === '') {
-			toast.error("Please fill in the required fields!");
-		} else {
-			axios.post('http://localhost:8080/groups/create', {
-				name: this.state.groupName,
-				invitedUsers: this.state.userIds,
-			}, {
-				Authorization: `Bearer ${this.props.userInfo.token}`,
-			}).then((res) => {
-				if (res.data.success) {
-					this.props.addAPersonToGroup(this.state);
-					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
-				} else {
-					toast.error(res.data.message);
-				}
-			})
-		}
+ 	addAPersonToGroup = () => {
+		console.log(this.state.selectedPerson, this.state.userIds);
+		 this.setState({
+			 ...this.state,
+			 userIds: [...this.state.userIds, this.state.selectedPerson],
+			 selectedPerson: '',
+		 });
 	}
 
 	render() {
+		console.log(this.state.userIds)
 		return (
 			<div className="container row new-group">
 				<div className="col m4 center-align" id="groupLeftSide">
@@ -113,19 +130,28 @@ class CreateNewGroup extends Component {
 						}
 					</div>
 					<div className="row" id="addAPersonToGroup">
-						<form className="grey lighten-3 center-align add-group-content">
-							<div className="row">
-								<div className="input-field col s6">
-									<input id="name" type="text" className="validate" onChange={this.handleChange}/>
-									<label htmlFor="name">name</label>
-								</div>
-								<div className="input-field col s6">
-									<input id="email" type="email" className="validate" onChange={this.handleChange}/>
-									<label htmlFor="email">email</label>
-								</div>
-							</div>
-							<button className="btn orange darken-3" onClick={this.addAPersonToGroup}>Add a person</button>
-						</form>
+						<select
+							value={this.state.selectedPerson}
+							name={'selectAPerson'}
+							onChange={(value) => {
+								this.setState({
+									...this.state,
+									selectedPerson: {
+										name: value.target.options[value.target.selectedIndex].text,
+										id: value.target.options[value.target.selectedIndex].value,
+										email: value.target.options[value.target.selectedIndex].id
+									}})
+							}}
+						>
+							{
+								this.state.completeUserList.map(user => {
+									return (
+										<option value={user.value} id={user.email}>{user.label}</option>
+									)
+								})
+							}
+						</select>
+						<button className="btn orange darken-3" onClick={this.addAPersonToGroup}>Add a person</button>
 					</div>
 					<div className="row">
 						<button className="btn btn-large green darken-1" onClick={this.createNewGroup}>Create Group</button>
