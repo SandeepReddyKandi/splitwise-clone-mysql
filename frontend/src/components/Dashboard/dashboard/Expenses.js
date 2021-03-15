@@ -9,13 +9,11 @@ import "materialize-css/dist/css/materialize.min.css";
 import axios from 'axios';
 
 const Expenses = (props)=>{
-    const exp = useSelector(state => state.expenses);
-    let recieveAmt = exp.recieve;
-    let giveAmt =  exp.pay;
-
-    const storeData = useSelector(state => {
+    const {recieve, pay} = useSelector(state => {
         return {
-            token : state.auth.signupInfo.token
+            recieve: state.expenseState.recieve,
+            pay: state.expenseState.recieve,
+            token : state.userState.token
         }
     });
 
@@ -62,10 +60,10 @@ const Expenses = (props)=>{
                 <div className="row valign-wrappe center-align amtList">
                     <div className="col m6 payingList">
                         <h5 className="grey-text left">YOU OWE</h5>
-                        { 
-                            giveAmt.length ? 
+                        {
+                            pay.length ?
                             (
-                                giveAmt.map((payment)=>{
+                                pay.map((payment)=>{
                                     return(
                                         <Give paymentList={payment} key={payment.id}/>
                                     )
@@ -81,10 +79,10 @@ const Expenses = (props)=>{
                     </div>
                     <div className="col m6 recievingList">
                         <h5 className="grey-text right">YOU ARE OWED</h5>
-                        { 
-                            recieveAmt.length ? 
+                        {
+                            recieve.length ?
                             (
-                                recieveAmt.map((payment)=>{
+                                recieve.map((payment)=>{
                                     return(
                                         <Recieve paymentList={payment} key={payment.id}/>
                                     )

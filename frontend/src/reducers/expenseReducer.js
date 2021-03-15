@@ -1,5 +1,7 @@
 const initState = {
     recentActivities: [],
+    recieve: [],
+    pay: [],
 }
 
 const expenseReducer = (state = initState, action)=>{

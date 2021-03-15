@@ -3,39 +3,62 @@ import { connect } from "react-redux";
 import letter from "../../letter.webp";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 class CreateNewGroup extends Component {
 	state = {
 		groupName: "",
 		name: "",
-		email:""
+		email:"",
+		userIds: [],
 	}
 
-	handleChange = (e)=>{
+	handleChange = (e) => {
 		this.setState({
 			[e.target.id] : e.target.value
 		});
-	}	
+	}
 
 	// here we are submitting the store data to db
-	createNewGroup = ()=>{
-		// data is already stored in store : newGroups
-	}	
-
- 	addGroup = (e)=>{
+	createNewGroup = (e) => {
 		e.preventDefault();
+		if (this.state.groupName === '' || this.state.name === '' || this.state.email === '') {
+			toast.error("Please fill in the required fields!");
+		} else {
+			axios.post('http://localhost:8080/groups/create', {
+				name: this.state.groupName,
+				invitedUsers: this.state.userIds,
+			}, {
+				Authorization: `Bearer ${this.props.userInfo.token}`,
+			}).then((res) => {
+				if (res.data.success) {
+					this.props.addAPersonToGroup(this.state);
+					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
+				} else {
+					toast.error(res.data.message);
+				}
+			})
+		}
+	}
 
-		console.log(this.state);
-
-		if(this.state.groupName === ''){
-			toast.error("Fill the Groupname");
-		}else if(this.state.name === ''){
-			toast.error("Fill name");
-		}else if(this.state.email === ''){
-			toast.error("Fill email");
-		}else{
-			this.props.addGroup(this.state);
-			toast.success("User added!");
+ 	addAPersonToGroup = (e) => {
+		e.preventDefault();
+		if (this.state.groupName === '' || this.state.name === '' || this.state.email === '') {
+			toast.error("Please fill in the required fields!");
+		} else {
+			axios.post('http://localhost:8080/groups/create', {
+				name: this.state.groupName,
+				invitedUsers: this.state.userIds,
+			}, {
+				Authorization: `Bearer ${this.props.userInfo.token}`,
+			}).then((res) => {
+				if (res.data.success) {
+					this.props.addAPersonToGroup(this.state);
+					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
+				} else {
+					toast.error(res.data.message);
+				}
+			})
 		}
 	}
 
@@ -45,12 +68,12 @@ class CreateNewGroup extends Component {
 				<div className="col m4 center-align" id="groupLeftSide">
 					<img className="responsive-img" src={letter} alt="letter"/>
 					<div className="change-avatar center-align">
-						<p>change your avatar</p> 
+						<p>Change Group Image</p>
 						<input className="center-align" type="file"/>
 					</div>
 				</div>
 				<div className="col m7" id="groupRightSide">
-					<h5 className="grey-text">start a new group</h5>
+					<h5 className="grey-text">Start a new group</h5>
 					<div className="row group-name">
 						<div className="input-field col m12">
 							<input id="groupName" type="text" className="validate" onChange={this.handleChange} required/>
@@ -58,37 +81,38 @@ class CreateNewGroup extends Component {
 						</div>
 					</div>
 					<div className="row group-members">
-						<p className="grey-text">Group members</p> 
+						<p className="grey-text">Group members</p>
 						<div className="row group-member valign-wrapper">
 							<div className="col m12" id="usersList">
 								<span className="center-align valign-wrapper">
-									<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
+									<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png" alt={'i'}/>
 									({this.props.userInfo.name}) ({this.props.userInfo.email})
 								</span>
 							</div>
 						</div>
 						{
-							this.props.getUsersInfo.length > 0 ?
+							this.state.userIds.length > 0 &&
 							(
-								this.props.getUsersInfo.map((user)=>{
+								this.state.userIds.map((user)=>{
 									return(
 										<div className="row group-member valign-wrapper">
 											<div className="col m12" id="usersList">
 												<span className="center-align valign-wrapper">
-													<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
+													<img
+														className="responsive-img"
+														src="https://img.icons8.com/nolan/64/user-male-circle.png"
+														alt=""
+													/>
 													({user.name}) ({user.email})
 												</span>
 											</div>
 										</div>
 									)
 								})
-							):
-							(
-								null
 							)
 						}
 					</div>
-					<div className="row" id="addGroup">
+					<div className="row" id="addAPersonToGroup">
 						<form className="grey lighten-3 center-align add-group-content">
 							<div className="row">
 								<div className="input-field col s6">
@@ -100,11 +124,11 @@ class CreateNewGroup extends Component {
 									<label htmlFor="email">email</label>
 								</div>
 							</div>
-							<button className="btn orange darken-3" onClick={this.addGroup}>Add a person</button>
+							<button className="btn orange darken-3" onClick={this.addAPersonToGroup}>Add a person</button>
 						</form>
 					</div>
 					<div className="row">
-						<button className="btn btn-large green darken-1" onClick={this.addGroup} onClick={this.createNewGroup}>Create Group</button>
+						<button className="btn btn-large green darken-1" onClick={this.createNewGroup}>Create Group</button>
 					</div>
 				</div>
 			</div>
@@ -114,15 +138,13 @@ class CreateNewGroup extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-		// this user info
-        userInfo : state.auth.signupInfo,
-		getUsersInfo : state.newGroup.users
+        userInfo : state.userState.user,
     }
 }
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		addGroup : (state)=>{
+		addAPersonToGroup : (state)=>{
 			dispatch({
 				type : 'ADD_USER',
 				payload : state

@@ -4,17 +4,12 @@ import { useSelector, connect } from 'react-redux';
 import '../dashboard.css';
 import userIcon from './img/user_1.png';
 
-const User = (props)=>{  
-    const userInfo = useSelector(state => state.auth);
-    const currentUser = userInfo.signupInfo.name;
-    const currEmail = userInfo.signupInfo.email;
-    const currPhone = userInfo.signupInfo.phone;
-
-    const [userCurreny, setUserCurreny] = useState('');
+const User = (props)=>{
+    const initUser = useSelector(state => state.userState.user);
+    const [user, setUser] = useState(initUser);
+    const [userCurrency, setUserCurrency] = useState('');
     const [userTimezone, setuserTimezone] = useState('');
     const [userLanguage, setUsetLanguage] = useState('');
-
-    // console.log(props);
 
     return(
         <div className="user-info">
@@ -30,11 +25,11 @@ const User = (props)=>{
                             </Link>
                             <Link to="/user">
                                 <span>
-                                    <i className="fas fa-user"></i>   
+                                    <i className="fas fa-user"></i>
                                 </span>
                             </Link>
                         </li>
-                    </ul> 
+                    </ul>
                 </div>
             </nav>
             <div className="row" id="userContent">
@@ -54,7 +49,7 @@ const User = (props)=>{
                                 <div className="info">
                                     <div>
                                         <p>Your Name</p>
-                                        <div>   <b>{currentUser}  </b> 
+                                        <div>   <b>{user.name}  </b>
                                             <span>
                                                 <i className="fas fa-pencil-alt"></i>
                                                 Edit
@@ -63,7 +58,7 @@ const User = (props)=>{
                                     </div>
                                     <div>
                                         <p>Your email address</p>
-                                        <div>   <b>{currEmail}  </b> 
+                                        <div>   <b>{user.email}  </b>
                                             <span>
                                                 <i className="fas fa-pencil-alt"></i>
                                                 Edit
@@ -72,7 +67,7 @@ const User = (props)=>{
                                     </div>
                                     <div>
                                         <p>Your phone number</p>
-                                        <div>   <b>{currPhone}  </b> 
+                                        <div>   <b>{user.phone}  </b>
                                             <span>
                                                 <i className="fas fa-pencil-alt"></i>
                                                 Edit
@@ -92,7 +87,7 @@ const User = (props)=>{
                                     <div className="row">
                                         <label htmlFor="currency">Currency :</label>
                                         <select defaultValue="USD" name="currency" id="currency" onChange={(e)=>{
-                                            setUserCurreny(e.target.options[e.target.selectedIndex].text);
+                                            setUserCurrency(e.target.options[e.target.selectedIndex].text);
                                             props.setUserVariables({
                                                 currency: e.target.options[e.target.selectedIndex].text,
                                                 timezone: userTimezone,
@@ -114,7 +109,7 @@ const User = (props)=>{
                                             console.log("value : ", e.target.options[e.target.selectedIndex].text);
                                             setuserTimezone(e.target.options[e.target.selectedIndex].text);
                                             props.setUserVariables({
-                                                currency: userCurreny,
+                                                currency: userCurrency,
                                                 timezone: e.target.options[e.target.selectedIndex].text,
                                                 language: userLanguage
                                             });
@@ -127,13 +122,13 @@ const User = (props)=>{
                                             <option value="CAD">Toronto, Canada EST (UTC -5)</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div className="row">
                                         <label htmlFor="languages">Language :</label>
                                         <select defaultValue="English" name="languages" id="languages" onChange={(e)=>{
                                             setUsetLanguage(e.target.options[e.target.selectedIndex].text);
                                             props.setUserVariables({
-                                                currency: userCurreny,
+                                                currency: userCurrency,
                                                 timezone: userTimezone,
                                                 language: e.target.options[e.target.selectedIndex].text
                                             });

@@ -1,16 +1,13 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import login from "./components/login";
 import signup from "./components/signUp";
 import home from "./components/home";
 import "./App.css";
-import { ToastContainer } from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from './components/Dashboard/Dashboard';
-import Expenses from './components/Dashboard/dashboard/Expenses';
-import UserGroups from './components/Dashboard/Groups/UserGroup';
 import User from './components/Dashboard/User/User';
-// import CreateNewGroup from './components/Dashboard/CreateNewGroup';
 
 function App() {
   return (
@@ -29,4 +26,4 @@ function App() {
 }
 
 export default App;
- 
+

@@ -1,32 +1,24 @@
-import React, {useEffect} from 'react';
-import { useSelector, connect } from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import '../dashboard.css'
 
 const Invites = ()=>{
-    const groupData = useSelector(state => {
+    const {activeGroups, invitedGroups, token } = useSelector(state => {
         return {
-            activities: state.allGroups, 
-            token : state.auth.signupInfo.token
+            activeGroups: state.userState.activeGroups,
+            invitedGroups: state.userState.invitedGroups,
+            token : state.userState.token
         }
     });
 
-    const existingGroups = groupData.activities.existingGroups;
-    const invites = groupData.activities.groupInvites;
-
-    // console.log(invites);
-
-    const acceptInvitation = (e)=>{
-        const groupName = e.target.parentElement.parentElement.previousSibling.children[0].innerText;
-
+    const acceptInvitation = (invite)=>{
     }
 
-    const rejectInvitation = (e)=>{
-        const groupName = e.target.parentElement.parentElement.previousSibling.children[0].innerText;
+    const rejectInvitation = (invite)=>{
     }
 
-    const deleteGroup = (e)=>{
-        const groupName = e.target.parentElement.parentElement.previousSibling.children[0].innerText;
-        
+    const deleteGroup = (invite)=>{
+
     }
 
     return(
@@ -39,59 +31,58 @@ const Invites = ()=>{
                         </div>
                     </div>
                     {
-                        invites ?
+                        invitedGroups ?
                         (
                             (
                                 <div>
                                     <table className="centered highlight expenses-list-table">
                                         <tbody>
-
-                                            {/* list of invitatiosn */}
-                                            {   
-                                                invites.length ?
+                                            {
+                                                invitedGroups.length ?
                                                 (
-                                                    invites.map((invite)=>{
+                                                    invitedGroups.map((invite)=>{
                                                         return(
-                                                            <tr className="left-align grey lighten-4" key={invites.id}>
+                                                            <tr className="left-align grey lighten-4" key={invitedGroups.id}>
                                                                 <td className="grey-text text-darken-2">
                                                                     <h6>{invite.name}</h6>
                                                                 </td>
                                                                 <td className="left-align">
-                                                                    <a class="btn-floating waves-light green add" onClick={acceptInvitation}><i class="material-icons">add</i></a>
-                                                                    <span style={{marginLeft:"10px"}}></span>
-                                                                    <a class="btn-floating waves-light red delete" onClick={rejectInvitation}><i class="material-icons">clear</i></a>
+                                                                    <a
+                                                                        className="btn-floating waves-light green add"
+                                                                        onClick={() => acceptInvitation(invite)}
+                                                                    >
+                                                                        <i className="material-icons">add</i>
+                                                                    </a>
+                                                                    <span style={{marginLeft:"10px"}}/>
+                                                                    <a
+                                                                        className="btn-floating waves-light red delete"
+                                                                        onClick={() => rejectInvitation(invite)}
+                                                                    >
+                                                                        <i className="material-icons">clear</i>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         )
                                                     })
-                                                )
-                                                :
-                                                (
-                                                    <div>Loading...</div>
-                                                )
-                                            }
-
-                                            {/* list of already existing groups */}
-                                            {   
-                                                existingGroups.length ?
-                                                (
-                                                    existingGroups.map((invite)=>{
-                                                        return(
-                                                            <tr className="left-align" key={existingGroups.id}>
-                                                                <td className="grey-text text-darken-2">
-                                                                    <h6>{invite.name}</h6>
-                                                                </td>
-                                                                <td className="left-align">
-                                                                    <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                )
-                                                :
-                                                (
-                                                    <div>Loading...</div>
-                                                )
+                                                ): <div>Loading...</div>
+                                            }{
+                                                activeGroups.length ? activeGroups.map((invite)=>{
+                                                    return(
+                                                        <tr className="left-align" key={activeGroups.id}>
+                                                            <td className="grey-text text-darken-2">
+                                                                <h6>{invite.name}</h6>
+                                                            </td>
+                                                            <td className="left-align">
+                                                                <a
+                                                                    className="btn-floating waves-light red delete"
+                                                                    onClick={() => deleteGroup(invite)}
+                                                                >
+                                                                    <i className="material-icons">clear</i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                }) : <div>Loading...</div>
                                             }
                                         </tbody>
                                     </table>
