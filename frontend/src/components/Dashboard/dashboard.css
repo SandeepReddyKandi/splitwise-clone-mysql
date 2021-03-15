@@ -322,3 +322,18 @@ option {
 .add-group-content{
     padding: 15px
 }
+
+.search-box {
+    width: 70%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-top: 2rem;
+    margin: auto auto;
+}
+
+.search-box > .row {
+    width: 100%;
+    padding : 10px;
+    margin: auto auto;
+}

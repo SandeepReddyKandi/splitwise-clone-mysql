@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import '../dashboard.css'
 
 const Invites = ()=>{
+    let searchedGroup ='';
     const {activeGroups, invitedGroups, token } = useSelector(state => {
         return {
             activeGroups: state.userState.activeGroups,
@@ -20,6 +21,10 @@ const Invites = ()=>{
     const deleteGroup = (invite)=>{
 
     }
+    const searchGroup = (e)=>{
+        searchedGroup = e.target.parentElement.parentElement.parentElement.children[0].children[0].value;
+        console.log(searchedGroup);
+    }
 
     return(
         <div className="container user-groups">
@@ -35,6 +40,17 @@ const Invites = ()=>{
                         (
                             (
                                 <div>
+                                    <div className="search-box center-align">
+                                        <div className="row center-align">
+                                            <div className="input-field col s9">
+                                                <input id="groupName" type="text" className="validate"/>
+                                                <label for="groupName">Group Name</label>
+                                            </div>
+                                            <div className="col s3 valign-wrapper">
+                                                <a className="btn-floating waves-light blue add" onClick={searchGroup}><i class="material-icons">search</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table className="centered highlight expenses-list-table">
                                         <tbody>
                                             {
@@ -64,25 +80,51 @@ const Invites = ()=>{
                                                             </tr>
                                                         )
                                                     })
-                                                ): <div>Loading...</div>
-                                            }{
-                                                activeGroups.length ? activeGroups.map((invite)=>{
-                                                    return(
-                                                        <tr className="left-align" key={activeGroups.id}>
-                                                            <td className="grey-text text-darken-2">
-                                                                <h6>{invite.name}</h6>
-                                                            </td>
-                                                            <td className="left-align">
-                                                                <a
-                                                                    className="btn-floating waves-light red delete"
-                                                                    onClick={() => deleteGroup(invite)}
-                                                                >
-                                                                    <i className="material-icons">clear</i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                )
+                                                :
+                                                (
+                                                    <div>Loading...</div>
+                                                )
+                                            }
+
+                                            {/* list of already existing groups */}
+                                            {
+                                                searchedGroup !== '' ?
+                                                (
+                                                    <tr className="left-align">
+                                                        <td className="grey-text text-darken-2">
+                                                            <h6>{searchedGroup}</h6>
+                                                        </td>
+                                                        <td className="left-align">
+                                                            <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                )
+                                                :
+                                                (
+                                                    existingGroups.length > 0 ?
+                                                    (
+                                                        existingGroups.map((invite)=>{
+                                                        return(
+                                                                <tr className="left-align" key={existingGroups.id}>
+                                                                    <td className="grey-text text-darken-2">
+                                                                        <h6>{invite.name}</h6>
+                                                                    </td>
+                                                                    <td className="left-align">
+                                                                        <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
                                                     )
-                                                }) : <div>Loading...</div>
+                                                    :
+                                                    (
+                                                        <div>
+                                                            <h6>You are not in any group</h6>
+                                                        </div>
+                                                    )
+                                                )
                                             }
                                         </tbody>
                                     </table>
