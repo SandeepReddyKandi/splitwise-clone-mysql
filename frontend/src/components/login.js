@@ -1,20 +1,17 @@
-import React,  { Component } from "react";
-import { Link } from "react-router-dom";
+import React, {Component} from "react";
+import {Link, withRouter} from "react-router-dom";
 import "./login.css";
 import letter from "../letter.webp";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import axios from "axios";
-import { toast } from "react-toastify";
-import PropTypes from "prop-types";
+import {toast} from "react-toastify";
 
 class login extends Component{
     state = {
       email: "",
       password: "",
-      loginStatus: ""
     }
 
-    // saving log to redux store
     // making an fetch call to the user in db
     userLoginDetails = (e)=>{
       e.preventDefault();
@@ -23,27 +20,15 @@ class login extends Component{
         email: this.state.email,
         password: this.state.password
       }).then((res)=>{
-        console.log(res.data.data);
-
-        if(res.data.success === true){
-          toast.success("Successfully logged in");
-
-          this.props.userInfo(res.data.data);        // string user data to redux store
-        }else{
-          toast.error("Sign up first");
+        if(res.data.success){
+          toast.success("Successfully logged in!");
+          this.props.userInfo(res.data.data);
+          this.props.history.push('/user/home');
+        } else{
+          toast.error(res.data.message);
         }
-
-        this.setState({
-          loginStatus: res.data.success
-        });
       }).catch((err)=>{
         console.log(err);
-      }).then(()=>{
-        this.setState({
-          email: "",
-          password: "",
-          loginStatus: ""
-        });
       });
     }
 
@@ -76,7 +61,7 @@ class login extends Component{
               </ul>
             </div>
           </nav>
-    
+
           <div className="container loginArea">
             <div className="row loginBay center">
               <div className="col s6 right-align">
@@ -100,7 +85,7 @@ class login extends Component{
                     </div>
                     <button className="waves-effect waves-light btn-large orange darken-4" onClick={(e)=>{
                       this.userLoginDetails(e);
-                    }}> 
+                    }}>
                         Login
                     </button>
                   </form>
@@ -115,17 +100,13 @@ class login extends Component{
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    userInfo: (state)=>{
+    userInfo: (payload)=>{
       dispatch({
-        type: "LOGIN_INFO",
-        payload: state
+        type: "ADD_USER",
+        payload
       });
     }
   };
 };
 
-login.propTypes = {
-  userInfo: PropTypes.any
-};
-
-export default connect(null, mapDispatchToProps)(login); 
+export default withRouter(connect(null, mapDispatchToProps)(login));

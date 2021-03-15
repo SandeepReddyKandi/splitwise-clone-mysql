@@ -1,4 +1,4 @@
-import authReducer from "./authReducer";
+import userReducer from "./userReducer";
 import userExpenses from "./userExpenses";
 import GroupExpences from "./GroupExpences";
 import recentActivity from "./recentActivity";
@@ -6,7 +6,7 @@ import NewGroups from "./newGroups";;
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  auth: authReducer,
+  auth: userReducer,
   expenses: userExpenses,
   groupExpenses : GroupExpences,
   recentActivity : recentActivity,

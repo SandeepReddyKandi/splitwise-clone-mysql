@@ -3,42 +3,34 @@ import { useSelector} from 'react-redux';
 import ExpenseList from './ExpenseList';
 import axios from 'axios';
 import '../dashboard.css';
+import {toast} from "react-toastify";
 
 const UserGroups = (props)=>{
     const storeData = useSelector(state => {
         return {
-            activities: state.recentActivity.activity, 
+            activities: state.recentActivity.activity,
             token : state.auth.signupInfo.token
         }
     });
 
     const activities = storeData.activities;
-    useEffect(()=>{
+    useEffect(() => {
         axios.get('http://localhost:8000/all',{
             Authorization:`Bearer ${storeData.token}`
         }).then((res)=>{
             console.log(res.data.data);
-    
+
             if(res.data.success === true){
               toast.success("Recent activity successfully fetched !");
-    
+
               this.props.userInfo(res.data.data);        // string user data to redux store
             }else{
               toast.error("Sign up first");
             }
-    
-            // this.setState({
-            //   loginStatus: res.data.success
-            // });
           }).catch((err)=>{
             console.log(err);
-          }).then(()=>{
-            // this.setState({
-            //   email: "",
-            //   password: "",
-            //   loginStatus: ""
-            // });
-          });
+            toast.error('Something went wrong, Please try again!');
+          })
     },[])
 
     return (
@@ -56,7 +48,7 @@ const UserGroups = (props)=>{
                             (
                                 <div>
                                     <table className="centered highlight expenses-list-table">
-                                    {   
+                                    {
                                         activities.length ?
                                         (
                                             <ExpenseList expenselist={activities}/>
