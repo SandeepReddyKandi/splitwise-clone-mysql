@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Expenses from './dashboard/Expenses';
-import RecentActivity from './RecentActivity/RecientActivity';
+import RecentActivity from './RecentActivity/RecentActivity';
 import { Link, Switch } from "react-router-dom";
 import { BrowserRouter, Router, Route, Redirect } from "react-router-dom";
 import UserGroups from './Groups/UserGroup';
@@ -28,7 +28,7 @@ const Dashboard = (props)=>{
                             </Link>
                             <Link to="/user">
                                 <span>
-                                    <i className="fas fa-user"></i>   
+                                    <i className="fas fa-user"></i>
                                 </span>
                             </Link>
                         </li>

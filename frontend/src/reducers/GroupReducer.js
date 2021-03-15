@@ -1,7 +1,7 @@
 const initState = {
     groups: [
-        { 
-            name: "Four People One House",   
+        {
+            name: "Four People One House",
             id: "poi1",
             expenses : [
                 {expenseName: "Grocery Outlet", cost: 16.24, payer: "User1", date: {month:"jan", day:31}, id:"qwe1"},
@@ -18,10 +18,8 @@ const initState = {
                 {user:"USER 2", amt: -10, id:"poi2"},
                 {user:"USER 1", amt: 20, id:"poi3"}
             ]
-        },
-
-        { 
-            name: "Home Expenses",   
+        }, {
+            name: "Home Expenses",
             id: "poi1",
             expenses : [
                 {expenseName: "Grocery Outlet", cost: 16.24, payer: "User1", date: {month:"jan", day:31}, id:"qwe1"},
@@ -33,7 +31,7 @@ const initState = {
                 {user:"USER 3", amt: -10, id:"poi8"}
             ]
         }
-    ],   
+    ],
 }
 
 const groupExpenses = (state = initState, action)=>{
@@ -45,7 +43,7 @@ const groupExpenses = (state = initState, action)=>{
             const date = action.payload.date;
             const cost = action.payload.itemCost
             const id = "qwe" + (Math.floor(Math.random()*10));
-            
+
             const newExpense = {
                 expenseName : expenseName,
                 cost : cost,
@@ -81,7 +79,7 @@ const groupExpenses = (state = initState, action)=>{
                 groups : newGroupList
             }
         }
-        
+
         default:
             return state;
     }

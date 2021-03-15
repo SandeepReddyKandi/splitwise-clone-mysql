@@ -6,8 +6,11 @@ import './dashboard.css';
 import CreateNewGroup from './CreateNewGroup';
 
 const Sidebar = ()=>{
-    const groups = useSelector(state => state.expenses);
-    const groupsName = groups.groups;
+    const {groups} = useSelector(state => {
+        return {
+            groups: state.groupState.groups
+        }
+    });
 
     return(
         <div className="container sidebar">
@@ -53,11 +56,11 @@ const Sidebar = ()=>{
                 </div>
                 <ul className="collection">
                 {
-                    groupsName.map((group, index)=>{
+                    groups.map((group)=>{
                         return(
                             <li className="collection-item" key={group.id}>
                                 <span>
-                                    <i className="fas fa-bookmark"></i>
+                                    <i className="fas fa-bookmark"/>
                                 </span>
                                 <Link to={`/user/home/groups/${group.name}`}>
                                     <span>{group.name}</span>
