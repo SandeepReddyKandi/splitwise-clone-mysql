@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import '../dashboard.css'
 
 const Invites = ()=>{
-    let searchedGroup ='';
+    const [searchString, setSearchString] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    // let searchString = '';
     const {activeGroups, invitedGroups, token } = useSelector(state => {
         return {
             activeGroups: state.userState.activeGroups,
@@ -21,9 +23,19 @@ const Invites = ()=>{
     const deleteGroup = (invite)=>{
 
     }
-    const searchGroup = (e)=>{
-        searchedGroup = e.target.parentElement.parentElement.parentElement.children[0].children[0].value;
-        console.log(searchedGroup);
+    const handleSearch = (e) => {
+        setSearchString(e.target.value);
+        if (!e.target.value) {
+            setSearchResult([]);
+        } else {
+            searchGroup();
+        }
+    }
+    const searchGroup = () => {
+        const updatedSearchResult = [...invitedGroups, ...activeGroups].filter(group => {
+            return group.name.toLowerCase().includes(searchString);
+        });
+        setSearchResult(updatedSearchResult);
     }
 
     return(
@@ -43,8 +55,14 @@ const Invites = ()=>{
                                     <div className="search-box center-align">
                                         <div className="row center-align">
                                             <div className="input-field col s9">
-                                                <input id="groupName" type="text" className="validate"/>
-                                                <label for="groupName">Group Name</label>
+                                                <input
+                                                    id="groupName"
+                                                    type="text"
+                                                    className="validate"
+                                                    value={searchString}
+                                                    onChange={handleSearch}
+                                                />
+                                                <label htmlFor="groupName">Group Name</label>
                                             </div>
                                             <div className="col s3 valign-wrapper">
                                                 <a className="btn-floating waves-light blue add" onClick={searchGroup}><i class="material-icons">search</i></a>
@@ -54,7 +72,7 @@ const Invites = ()=>{
                                     <table className="centered highlight expenses-list-table">
                                         <tbody>
                                             {
-                                                invitedGroups.length ?
+                                                invitedGroups.length > 0 && searchResult.length === 0 &&
                                                 (
                                                     invitedGroups.map((invite)=>{
                                                         return(
@@ -81,33 +99,43 @@ const Invites = ()=>{
                                                         )
                                                     })
                                                 )
-                                                :
-                                                (
-                                                    <div>Loading...</div>
-                                                )
                                             }
-
-                                            {/* list of already existing groups */}
                                             {
-                                                searchedGroup !== '' ?
+                                                searchResult.length > 0 ?
                                                 (
-                                                    <tr className="left-align">
-                                                        <td className="grey-text text-darken-2">
-                                                            <h6>{searchedGroup}</h6>
-                                                        </td>
-                                                        <td className="left-align">
-                                                            <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
-                                                        </td>
-                                                    </tr>
+                                                    searchResult.map((invite)=>{
+                                                        return(
+                                                            <tr className="left-align grey lighten-4" key={invitedGroups.id}>
+                                                                <td className="grey-text text-darken-2">
+                                                                    <h6>{invite.name}</h6>
+                                                                </td>
+                                                                <td className="left-align">
+                                                                    <a
+                                                                        className="btn-floating waves-light green add"
+                                                                        onClick={() => acceptInvitation(invite)}
+                                                                    >
+                                                                        <i className="material-icons">add</i>
+                                                                    </a>
+                                                                    <span style={{marginLeft:"10px"}}/>
+                                                                    <a
+                                                                        className="btn-floating waves-light red delete"
+                                                                        onClick={() => rejectInvitation(invite)}
+                                                                    >
+                                                                        <i className="material-icons">clear</i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
 
                                                 )
                                                 :
                                                 (
-                                                    existingGroups.length > 0 ?
+                                                    activeGroups.length > 0 && searchResult.length === 0 ?
                                                     (
-                                                        existingGroups.map((invite)=>{
+                                                        activeGroups.map((invite)=>{
                                                         return(
-                                                                <tr className="left-align" key={existingGroups.id}>
+                                                                <tr className="left-align" key={activeGroups.id}>
                                                                     <td className="grey-text text-darken-2">
                                                                         <h6>{invite.name}</h6>
                                                                     </td>
