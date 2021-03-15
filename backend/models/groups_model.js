@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     acceptedUsers: {
       type: DataTypes.STRING,
       get() {
-        return this.getDataValue('acceptedUsers').split(';');
+        return this.getDataValue('acceptedUsers') ? this.getDataValue('acceptedUsers').split(';') : this.getDataValue('acceptedUsers');
       },
       set(val) {
         this.setDataValue('acceptedUsers', val.join(';'));

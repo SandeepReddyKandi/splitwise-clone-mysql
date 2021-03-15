@@ -25,6 +25,7 @@ db.sequelize.sync();
 
 app.use('/user/', require('./routes/user_router'));
 app.use('/groups/', require('./routes/groups_router'));
+app.use('/expenses/', require('./routes/expense_router'));
 
 // set port, listen for requests
 const PORT = process.env.PORT || config.port;

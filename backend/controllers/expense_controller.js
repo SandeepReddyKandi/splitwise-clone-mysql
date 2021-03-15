@@ -16,6 +16,8 @@ async function getBalanceByUser2Id(req, res, next) {
     logger.info('controllers', 'getBalanceByUser2Id');
     const { userId } = req.user;
     const { user2Id } = req.params;
+    const user = await usersRepo.getUserById(user2Id);
+    if (!user) return res.send(genericDTL.getResponseDto('', 'User not found'));
     const { balance } = await expensesRepo.getBalanceBetweenUsers(userId, user2Id);
     const response = genericDTL.getResponseDto({ balance });
     return res.send(response);
@@ -30,7 +32,10 @@ async function getAllExpenses(req, res, next) {
     logger.info('controllers', 'getAllExpenses');
     const { userId } = req.user;
     const { getExpenses, payExpenses } = await expensesRepo.getAllExpensesForUserId(userId);
-    const response = genericDTL.getResponseDto();
+    const users = await usersRepo.getAllUsers();
+    const allGroups = await groupsRepo.getAllGroups();
+    const data = await expensesDtl.getExpenseSummaryDto({ getExpenses, payExpenses, userId, users, allGroups });
+    const response = genericDTL.getResponseDto(data);
     return res.send(response);
   } catch (err) {
     logger.error(`Unable to get all expenses. Err. ${JSON.stringify(err)}`);
@@ -46,9 +51,11 @@ async function getRecentExpenses(req, res, next) {
     const groups = await groupsRepo.getAllGroups();
     const users = await usersRepo.getAllUsers();
     const expenses = [];
-    acceptedGroups.forEach((groupId) => {
-      expenses.push(...expensesRepo.getAllExpensesByGroupId(groupId, userId));
-    });
+    await Promise.all(acceptedGroups.map(async (group) => {
+      const groupId = group.id;
+      const temp = await expensesRepo.getAllExpensesByGroupId(groupId, userId);
+      expenses.push(...temp);
+    }));
     const data = expensesDtl.getRecentExpensesDto({ users, groups, userId, expenses });
     const response = genericDTL.getResponseDto(data);
     return res.send(response);
@@ -61,14 +68,14 @@ async function getRecentExpenses(req, res, next) {
 async function createGroupExpense(req, res, next) {
   try {
     logger.info('controllers', 'createGroupExpense', 'body', JSON.stringify(req.body));
-    const userId = req.user;
+    const { userId } = req.user;
     const { groupId, amount, description } = req.body;
     const group = await groupsRepo.getGroupById(groupId);
-    if (!group || !group.length || !group.acceptedUsers.length) return genericDTL.getResponseDto('', 'Group not found');
+    if (!group || !group.acceptedUsers.length) return res.send(genericDTL.getResponseDto('', 'Group not found'));
     const userIds = group.acceptedUsers;
     const { currency } = group;
-    const expense = await expensesRepo.createGroupExpense({ userId, userIds, groupId, amount, description, currency });
-    const resData = expensesDtl.getBasicExpenseDetailsDto(expense);
+    const expenses = await expensesRepo.createGroupExpense({ userId, userIds, groupId, amount, description, currency });
+    const resData = expensesDtl.getBasicExpensesDetailsDto(expenses);
     const response = genericDTL.getResponseDto(resData);
     return res.send(response);
   } catch (err) {
@@ -118,10 +125,10 @@ async function getBalanceBetweenAllUsersForGroup(req, res, next) {
 
 async function settleExpense(req, res, next) {
   try {
-    logger.info('controllers', 'settleExpense', 'body', JSON.stringify(req.body));
+    logger.info('controllers', 'settleExpense', 'params', JSON.stringify(req.params));
     const { userId } = req.user;
-    const { expenseId } = req.params;
-    const updatedDetails = await expensesRepo.settleExpense({ userId, expenseId });
+    const { user2Id } = req.params;
+    const updatedDetails = await expensesRepo.settleAllBalancesBetweenUsers(userId, user2Id);
     const response = genericDTL.getResponseDto(updatedDetails);
     return res.send(response);
   } catch (err) {

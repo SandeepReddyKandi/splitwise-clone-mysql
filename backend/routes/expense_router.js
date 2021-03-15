@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get('/all', isLoggedIn, expenseController.getAllExpenses);
 router.get('/balance/:user2Id', isLoggedIn, expenseController.getBalanceByUser2Id);
-router.get('/details/:expenseId', isLoggedIn, expenseController.getExpenseDetails);
 router.post('/create', isLoggedIn, expenseController.createGroupExpense);
 router.get('/recent', isLoggedIn, expenseController.getRecentExpenses);
 router.put('/settle/:user2Id', isLoggedIn, expenseController.settleExpense);
