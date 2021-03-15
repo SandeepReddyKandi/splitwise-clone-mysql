@@ -6,11 +6,18 @@ import Modal from './Modal';
 import '../dashboard.css';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
+import axios from 'axios';
 
 const Expenses = (props)=>{
     const exp = useSelector(state => state.expenses);
     let recieveAmt = exp.recieve;
     let giveAmt =  exp.pay;
+
+    const storeData = useSelector(state => {
+        return {
+            token : state.auth.signupInfo.token
+        }
+    });
 
     return (
         <div className="container expenses row z-depth-2">

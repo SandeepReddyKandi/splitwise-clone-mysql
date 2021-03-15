@@ -85,7 +85,13 @@ td p{
 }
 
 .dashboard-header {
+    margin-bottom: 0 !important;
+    margin-top:20px;
+}
+
+.recent-activity {
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 .dashboard-header img{
@@ -175,6 +181,7 @@ td p{
 
 #extraInfo {
     margin-top: 0;
+    border-top-style: none;
 }
 
 #mainInfo{
@@ -258,13 +265,20 @@ td p{
     width: 100%;
 }
 
+#userContent {
+    width: 60%;
+    margin-left: 25%;
+}
+
 .personal-img-info{
     width: 100%;
     display:flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    margin: auto
+    margin: auto;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .personal-img-info img{
@@ -294,8 +308,13 @@ td p{
 
 select {
     background:rgb(0, 0, 0);
+    display: block !important;
 }
 
 option {
     min-height: 20px !important;
+}
+
+.group-member{
+    width:70% !important;
 }

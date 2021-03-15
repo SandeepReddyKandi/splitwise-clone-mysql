@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Expenses from './components/Dashboard/dashboard/Expenses';
 import UserGroups from './components/Dashboard/Groups/UserGroup';
 import User from './components/Dashboard/User/User';
+// import CreateNewGroup from './components/Dashboard/CreateNewGroup';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" component={signup}/>
         <Route exact path="/user" component={User}/>
         <Route path="/user/home" component={Dashboard}/>
+        {/* <Route path="/user/home/newGroup" component={CreateNewGroup}/> */}
       </div>
     </BrowserRouter>
   );

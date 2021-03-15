@@ -11,7 +11,8 @@ const initState = {
     password: "",
     currency: "USD",
     timezone: 'UTC -8 USA and 2 more',
-    language: 'English'
+    language: 'English',
+    token: ''
   }
 };
 
@@ -32,11 +33,18 @@ const authReducer = (state = initState, action)=>{
     };
   }
 
-  if(action.type === "UPDATE_CURR"){
-    const newInfo = [state.signupInfo];
-    newInfo.currency = action.payload.currency;
+  if(action.type === "SET_USER_VARIABLES"){
+    const newInfo = state.signupInfo;
+
+    if(action.payload.currency !== '')
+      newInfo.currency = action.payload.currency;
+    if(action.payload.timezone !== '')
+      newInfo.timezone = action.payload.timezone;
+    if(action.payload.language !== '')
+      newInfo.language = action.payload.language;
 
     console.log("newInfo : ", newInfo);
+    console.log('payload : ', action.payload);
 
     return {
       ...state,
@@ -44,18 +52,6 @@ const authReducer = (state = initState, action)=>{
     }
   }
 
-  if(action.type === "UPDATE_TZ"){
-    const newInfo = [state.signupInfo];
-    newInfo.timezone = action.payload.timezone;
-
-    console.log("newInfo : ", newInfo);
-
-    return {
-      ...state,
-      signupInfo: newInfo
-    }
-  }
-    
   return state;
 };
 

@@ -59,12 +59,7 @@ const Sidebar = ()=>{
                                 <span>
                                     <i className="fas fa-bookmark"></i>
                                 </span>
-                                <Link to={{
-                                    pathname: '/user/home/groups',
-                                    groupName:{
-                                        name: group.name
-                                    }
-                                }}>
+                                <Link to={`/user/home/groups/${group.name}`}>
                                     <span>{group.name}</span>
                                 </Link>
                             </li>

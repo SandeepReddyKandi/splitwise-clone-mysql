@@ -33,7 +33,7 @@ async function acceptGroupInvite(data) {
   const groupData = await groups.findOne({ where: { id: groupId } });
   if (!groupData) throw new Error('Invalid group id');
   if (groupData.acceptedUsers.includes(userId)) return groupData;
-  const newInvitedUsers = _.filter(groupData.invitedUsers, user => user != userId);
+  const newInvitedUsers = _.filter(groupData.invitedUsers, user => user !== userId);
   groupData.acceptedUsers.push(userId);
   const values = { acceptedUsers: groupData.acceptedUsers, invitedUsers: newInvitedUsers };
   const condition = { returning: true, plain: true, where: { id: groupId } };
@@ -51,7 +51,7 @@ async function createGroup(data) {
 async function leaveGroup(userId, groupId) {
   const groupData = await groups.findOne({ where: { id: groupId } });
   if (!groupData) throw new Error('Invalid group id');
-  const newAcceptedUsers = _.filter(groupData.acceptedUsers, user => user != userId);
+  const newAcceptedUsers = _.filter(groupData.acceptedUsers, user => user !== userId);
   const values = { acceptedUsers: newAcceptedUsers };
   const condition = { returning: true, plain: true, where: { id: groupId } };
   const result = await groups.update(values, condition);

@@ -7,22 +7,24 @@ import Modal from './Modal';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
 
+var groupName;
 const UserGroups = (props)=>{
-    const groups = useSelector(state => state.groupExpenses);
+    useEffect(()=>{
+        document.querySelector("#extraInfo").classList.add('vanish');
+        document.querySelector("#openDetailsLink").classList.remove('vanish');
+        document.querySelector("#closeDetailsLink").classList.add('vanish');
+    });
 
-    const groupName = props.location.groupName ? props.location.groupName.name : "Four People One House";
+    const groups = useSelector(state => state.groupExpenses);
+    const groupName = props.match.params.id;
     const usrGrp = groups.groups.filter((group) => group.name === groupName);
     const expList = usrGrp[0].expenses;
     const userExpenses = usrGrp[0].totalExpenses;
     const showUsers = userExpenses.slice(0, 1);
     const remainingUsers = userExpenses.slice(1, userExpenses.length);
-
-    console.log(groupName);
-    console.log(usrGrp[0]);
-    console.log(userExpenses);
-
+    
     return (
-        <div className="container user-groups">
+        <div className="container user-groups">  
             <div className="row">
                 <div className="col m8 z-depth-1">
                     <div className="header row valign-wrapper grey lighten-2">
@@ -31,7 +33,6 @@ const UserGroups = (props)=>{
                                 <span className="center-align">HOME EXPENSES</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
-                            {/* <button className="btn orange orange darken-4">Add an expense</button> */}
                             <Modal groupName={groupName}/>
                         </div>
                     </div>

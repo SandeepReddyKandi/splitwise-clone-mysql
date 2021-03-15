@@ -1,13 +1,45 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSelector} from 'react-redux';
 import ExpenseList from './ExpenseList';
+import axios from 'axios';
 import '../dashboard.css';
 
 const UserGroups = (props)=>{
-    const groups = useSelector(state => state.recentActivity);
-    const activities = groups.state.activity;
+    const storeData = useSelector(state => {
+        return {
+            activities: state.recentActivity.activity, 
+            token : state.auth.signupInfo.token
+        }
+    });
 
-    // console.log("activities : ", groups.state.activity);
+    const activities = storeData.activities;
+    useEffect(()=>{
+        axios.get('http://localhost:8000/all',{
+            Authorization:`Bearer ${storeData.token}`
+        }).then((res)=>{
+            console.log(res.data.data);
+    
+            if(res.data.success === true){
+              toast.success("Recent activity successfully fetched !");
+    
+              this.props.userInfo(res.data.data);        // string user data to redux store
+            }else{
+              toast.error("Sign up first");
+            }
+    
+            // this.setState({
+            //   loginStatus: res.data.success
+            // });
+          }).catch((err)=>{
+            console.log(err);
+          }).then(()=>{
+            // this.setState({
+            //   email: "",
+            //   password: "",
+            //   loginStatus: ""
+            // });
+          });
+    },[])
 
     return (
         <div className="container user-groups">
@@ -51,5 +83,16 @@ const UserGroups = (props)=>{
         </div>
     )
 }
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+      userInfo: (state)=>{
+        dispatch({
+          type: "ADD_ACTIVITIES",
+          payload: state
+        });
+      }
+    };
+  };
 
 export default UserGroups;

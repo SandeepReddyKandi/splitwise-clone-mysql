@@ -1,37 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import letter from "../../letter.webp";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CreateNewGroup extends Component {
 	state = {
 		groupName: "",
-		users: [
-			{username: "", email:""},
-		]
+		name: "",
+		email:""
 	}
 
- 	addUser = (e)=>{
-		 e.preventDefault();
-		// const list = document.querySelector('.group-members');
-		// const newList = document.createElement('div');
-		// newList.classList.add("col","m12");
-		// newList.setAttribute("id", "usersList")
+	handleChange = (e)=>{
+		this.setState({
+			[e.target.id] : e.target.value
+		});
+	}	
 
-		// const name = document.getElementById("name").value;
-		// const email = document.getElementById("email").value;
+ 	addGroup = (e)=>{
+		e.preventDefault();
 
-		// console.log("value : ", e.target.parentNode.);
+		console.log(this.state);
 
-		// newList.innerHTML = `
-		// <span className="center-align valign-wrapper">
-		// 	<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
-		// 	(${name}) (${email})
-		// </span>
-		// `
-
-		// list.appendChild(newList);
+		if(this.state.groupName === ''){
+			toast.error("Fill the Groupname");
+		}else if(this.state.name === ''){
+			toast.error("Fill name");
+		}else if(this.state.email === ''){
+			toast.error("Fill email");
+		}else{
+			this.props.addGroup(this.state);
+			toast.success("User added!");
+		}
 	}
-
 
 	render() {
 		return (
@@ -39,7 +40,7 @@ class CreateNewGroup extends Component {
 				<div className="col m4 center-align" id="groupLeftSide">
 					<img className="responsive-img" src={letter} alt="letter"/>
 					<div className="change-avatar center-align">
-						<p>change your avatar</p>
+						<p>change your avatar</p> 
 						<input className="center-align" type="file"/>
 					</div>
 				</div>
@@ -47,7 +48,7 @@ class CreateNewGroup extends Component {
 					<h5 className="grey-text">start a new group</h5>
 					<div className="row group-name">
 						<div className="input-field col m12">
-							<input id="groupName" type="text" className="validate"/>
+							<input id="groupName" type="text" className="validate" onChange={this.handleChange} required/>
 							<label htmlFor="groupName">My group shall be called</label>
 						</div>
 					</div>
@@ -61,20 +62,40 @@ class CreateNewGroup extends Component {
 								</span>
 							</div>
 						</div>
+						{
+							this.props.getUsersInfo.length > 0 ?
+							(
+								this.props.getUsersInfo.map((user)=>{
+									return(
+										<div className="row group-member valign-wrapper">
+											<div className="col m12" id="usersList">
+												<span className="center-align valign-wrapper">
+													<img className="responsive-img" src="https://img.icons8.com/nolan/64/user-male-circle.png"/>
+													({user.name}) ({user.email})
+												</span>
+											</div>
+										</div>
+									)
+								})
+							):
+							(
+								null
+							)
+						}
 					</div>
-					<div className="row" id="addUser">
+					<div className="row" id="addGroup">
 						<form className="grey lighten-3 center-align">
 							<div className="row">
 								<div className="input-field col s6">
-									<input id="name" type="text" className="validate"/>
+									<input id="name" type="text" className="validate" onChange={this.handleChange}/>
 									<label htmlFor="name">name</label>
 								</div>
 								<div className="input-field col s6">
-									<input id="email" type="email" className="validate"/>
+									<input id="email" type="email" className="validate" onChange={this.handleChange}/>
 									<label htmlFor="email">email</label>
 								</div>
 							</div>
-							<button className="btn orange darken-3" onClick={this.addUser}>Add a person</button>
+							<button className="btn orange darken-3" onClick={this.addGroup}>Add a person</button>
 						</form>
 					</div>
 				</div>
@@ -85,9 +106,21 @@ class CreateNewGroup extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        userInfo : state.auth.signupInfo
+		// this user info
+        userInfo : state.auth.signupInfo,
+		getUsersInfo : state.newGroup.users
     }
 }
 
-// export default CreateNewGroup;
-export default connect(mapStateToProps, null)(CreateNewGroup);
+const mapDispatchToProps = (dispatch)=>{
+	return {
+		addGroup : (state)=>{
+			dispatch({
+				type : 'ADD_USER',
+				payload : state
+			})
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGroup);

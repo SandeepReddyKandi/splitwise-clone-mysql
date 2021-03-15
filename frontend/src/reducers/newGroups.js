@@ -1,16 +1,28 @@
 const initState = {
-    groups : {
-        name: "lorem ipsum",
-        users:[
-            {name:"user1", email:"user1@gmail.com"},
-            {name:"user2", email:"user2@gmail.com"},
-            {name:"user3", email:"user3@gmail.com"}
-        ]
-    }
+    groupName: '',
+    users: [
+    
+    ]
 }
 
-const NewGroups = (state = initState, action){
-    return state
+const NewGroups = (state = initState, action)=>{
+    
+    switch(action.type){
+        case 'ADD_USER':
+            const groupName = action.payload.groupName;
+            const users = [...state.users, 
+                            {name:action.payload.name, email:action.payload.email}
+                        ];
+            
+            return{
+                ...state,
+                groupName,
+                users
+            }
+
+        default:
+            return state
+    }    
 }
 
 export default NewGroups;
