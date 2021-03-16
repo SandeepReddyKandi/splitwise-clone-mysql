@@ -8,6 +8,7 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from './components/Dashboard/Dashboard';
 import User from './components/Dashboard/User/User';
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
         <Route exact path="/" component={home}/>
         <Route path="/login" component={login}/>
         <Route path="/signup" component={signup}/>
-        <Route exact path="/user" component={User}/>
-        <Route path="/user/home" component={Dashboard}/>
+        <ProtectedRoute exact path="/user" Component={User}/>
+        <ProtectedRoute path="/user/home" Component={Dashboard}/>
         {/* <Route path="/user/home/newGroup" component={CreateNewGroup}/> */}
       </div>
     </BrowserRouter>

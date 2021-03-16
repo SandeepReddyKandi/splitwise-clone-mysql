@@ -16,7 +16,6 @@ const initState = {
 };
 
 const userReducer = (state = initState, action)=> {
-  console.log('state : ', state);
   switch (action.type) {
     case 'ADD_USER' : {
       return {

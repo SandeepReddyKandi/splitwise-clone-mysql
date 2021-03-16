@@ -1,22 +1,34 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import letter from "../letter.webp";
 import "./signup.css";
 import {Link, withRouter} from "react-router-dom";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import axios from "axios";
-import { toast } from "react-toastify";
-import PropTypes from "prop-types";
+import {toast} from "react-toastify";
+import Utils from "../utils";
 
 class signUp extends Component {
-    state = {
-      name: "",
-      password: "",
-      email: "",
-      phone: "",
-      signupStatus: ""
-    }
+  state = {
+    name: "",
+    password: "",
+    email: "",
+    phone: "",
+    signupStatus: ""
+  }
 
-    signUpUser = (e) => {
+  getRedirections = async () => {
+    const {data, success} = await Utils.getLoggedInUser();
+    if (success) {
+      this.props.addUserData(data)
+      this.props.history.push('/user/home');
+    }
+  }
+
+  componentDidMount() {
+    this.getRedirections();
+  }
+
+  signUpUser = (e) => {
       e.preventDefault();
 
       if (!(this.state.name && this.state.email && this.state.phone && this.state.password)) {
@@ -32,7 +44,6 @@ class signUp extends Component {
       }).then((res)=>{
         if (res.data.success) {
           toast.success("You have successfully signed in !");
-          this.props.userSignUp(this.state);
           this.props.history.push('/login');
         } else {
           toast.error(res.data.reason);
@@ -98,17 +109,13 @@ class signUp extends Component {
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    userSignUp: (state)=>{
+    addUserData: (state) => {
       dispatch({
-        type: "SIGNUP_INFO",
+        type: "ADD_USER",
         payload: state
       });
     }
   };
-};
-
-signUp.propTypes = {
-  userSignUp: PropTypes.any
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(signUp));

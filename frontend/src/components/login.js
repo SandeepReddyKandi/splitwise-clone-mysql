@@ -5,13 +5,25 @@ import letter from "../letter.webp";
 import {connect} from "react-redux";
 import axios from "axios";
 import {toast} from "react-toastify";
+import Utils from "../utils";
 
 class login extends Component{
-    state = {
-      email: "",
-      password: "",
+  state = {
+    email: "",
+    password: "",
+  }
+  getRedirections = async () => {
+    const {data, success} = await Utils.getLoggedInUser();
+    if (success) {
+      this.props.addUserData(data);
+      localStorage.setItem('token', JSON.stringify(data.token));
+      this.props.history.push('/user/home');
     }
+  }
 
+  componentDidMount() {
+    this.getRedirections();
+  }
     // making an fetch call to the user in db
     userLoginDetails = (e)=>{
       e.preventDefault();
@@ -24,10 +36,10 @@ class login extends Component{
           const token = res.data.data.token;
           // console.log(token);
           toast.success("Successfully logged in!");
-          this.props.userInfo(res.data.data);
-          this.props.history.push('/user/home');
+          this.props.addUserData(res.data.data);
           localStorage.removeItem('token');
           localStorage.setItem('token', JSON.stringify(token));
+          this.props.history.push('/user/home');
         } else {
           console.log(res);
           toast.error(res.data.reason);
@@ -105,7 +117,7 @@ class login extends Component{
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    userInfo: (payload)=>{
+    addUserData: (payload)=>{
       dispatch({
         type: "ADD_USER",
         payload
