@@ -10,19 +10,21 @@ const initState = {
     timezone: '',
     token: '',
   },
+
   activeGroups : [
-    {name:"Bazaar expences", id:"kio1"},
-    {name:"furniture bazaar", id:"kio2"},
-    {name:"ice cream store", id:"kio3"}
+    // {name:"Bazaar expences", id:"kio1"},
+    // {name:"furniture bazaar", id:"kio2"},
+    // {name:"ice cream store", id:"kio3"}
   ],
 
   invitedGroups : [
-    {name: "Four People One House", expense:70, id:"kio4"},
-    {name: "Home Expenses", expense:-20, id:"kio5"},
+    // {name: "Four People One House", id:"kio4"},
+    // {name: "Home Expenses", id:"kio5"},
   ]
 };
 
 const userReducer = (state = initState, action)=> {
+  console.log('state : ', state);
   switch (action.type) {
     case 'ADD_USER' : {
       return {
@@ -32,6 +34,31 @@ const userReducer = (state = initState, action)=> {
         }
       }
     }
+
+    case 'ADD_ACTIVE_GROUPS':{
+      console.log('active groups : ',action.payload);
+      // const newActiveGrp = [...state.activeGroups, action.payload];
+      return {
+        ...state,
+        activeGroups : [
+          ...state.activeGroups, 
+          ...action.payload
+        ]
+      }
+    }
+
+    case 'ADD_INVITES':{
+      console.log('active groups : ',action.payload);
+      // const newActiveGrp = [...state.activeGroups, action.payload];
+      return {
+        ...state,
+        invitedGroups : [
+          ...state.invitedGroups, 
+          ...action.payload
+        ]
+      }
+    }
+
     default: {
       return {
         ...state,

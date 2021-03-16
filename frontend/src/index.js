@@ -6,11 +6,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers/rootReducer";
-import logger from "redux-logger";                  // console logs every state change in redux store
+// import logger from "redux-logger";                  // console logs every state change in redux store
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(logger)
+  // applyMiddleware(logger)
 );
 
 ReactDOM.render(

@@ -21,9 +21,15 @@ class login extends Component{
         password: this.state.password
       }).then((res)=>{
         if(res.data.success){
+          const token = res.data.data.token;
+          // console.log(token);
           toast.success("Successfully logged in!");
           this.props.userInfo(res.data.data);
           this.props.history.push('/user/home');
+          
+          if(localStorage.getItem('token') === null){
+            localStorage.setItem('token', JSON.stringify(token));
+          }
         } else{
           toast.error(res.data.message);
         }
@@ -49,7 +55,7 @@ class login extends Component{
               <ul className="right">
                 <li>
                   <Link to="/login" className="green-text text-darken-3">
-                    <button className="waves-effect waves-light btn">login</button>
+                    <button className="btn">login</button>
                   </Link>
                 </li>
                 <li> <span className="green-text text-darken-3">or</span> </li>

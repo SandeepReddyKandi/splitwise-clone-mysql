@@ -15,6 +15,9 @@ coverage
 # production
 build
 
+#config files
+backend/config/config.js
+
 # misc
 .DS_Store
 .env.local
