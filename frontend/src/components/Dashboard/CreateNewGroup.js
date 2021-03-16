@@ -22,10 +22,11 @@ class CreateNewGroup extends Component {
 		});
 	}
 	componentDidMount() {
-		console.log(this.props.userInfo, `Bearer ${this.props.userInfo.token}`)
+		// console.log(this.props.userInfo, `Bearer ${this.props.userInfo.token}`)
+        const token = JSON.parse(localStorage.getItem('token'));
 		axios.get('http://localhost:8000/user/all', {
 			headers: {
-				authorization: `Bearer ${this.props.userInfo.token}`,
+				authorization: `Bearer ${token}`,
 			}
 		}).then(res => {
 			if (res.data.success) {
@@ -61,6 +62,7 @@ class CreateNewGroup extends Component {
 			}).then((res) => {
 				if (res.data.success) {
 					this.props.addAPersonToGroup(this.state);
+					console.log(`Group "${this.state.groupName}" has been created successfully!`);
 					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
 				} else {
 					toast.error(res.data.message);
@@ -143,7 +145,8 @@ class CreateNewGroup extends Component {
 									}})
 							}}
 						>
-							{
+							<option value={''} id={''}>Select an person</option>
+							{	
 								this.state.completeUserList.map(user => {
 									return (
 										<option value={user.value} id={user.email}>{user.label}</option>
@@ -151,7 +154,7 @@ class CreateNewGroup extends Component {
 								})
 							}
 						</select>
-						<button className="btn orange darken-3" onClick={this.addAPersonToGroup}>Add a person</button>
+						<button className="btn orange darken-3" onClick={this.addAPersonToGroup} disabled={this.selectedPerson}>Add a person</button>
 					</div>
 					<div className="row">
 						<button className="btn btn-large green darken-1" onClick={this.createNewGroup}>Create Group</button>

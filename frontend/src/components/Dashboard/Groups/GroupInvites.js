@@ -1,20 +1,36 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useSelector, connect} from 'react-redux';
 import '../dashboard.css'
+import axios from 'axios';
 
-const Invites = ()=>{
+const Invites = (props)=>{
     const [searchString, setSearchString] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    // let searchString = '';
-    const {activeGroups, invitedGroups, token } = useSelector(state => {
-        return {
-            activeGroups: state.userState.activeGroups,
-            invitedGroups: state.userState.invitedGroups,
-            token : state.userState.token
-        }
-    });
+
+    useEffect(()=>{
+        console.log('inside useEffect : ');
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get('http://localhost:8000/groups/all',{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res=>{
+            console.log("res.data.data : ",res.data.data);
+            if(res.data.success){                
+                props.addActiveGroups(res.data.data.acceptedGroups);
+
+                console.log('invites : ', res.data.data.invitedGroups);
+                props.addInvites(res.data.data.invitedGroups);
+            }else{
+                console.log(res.data)
+            }
+        })
+    },[]);
+
+    // console.log('testing...');
 
     const acceptInvitation = (invite)=>{
+    
     }
 
     const rejectInvitation = (invite)=>{
@@ -23,6 +39,7 @@ const Invites = ()=>{
     const deleteGroup = (invite)=>{
 
     }
+
     const handleSearch = (e) => {
         setSearchString(e.target.value);
         if (!e.target.value) {
@@ -31,8 +48,9 @@ const Invites = ()=>{
             searchGroup();
         }
     }
+
     const searchGroup = () => {
-        const updatedSearchResult = [...invitedGroups, ...activeGroups].filter(group => {
+        const updatedSearchResult = [...props.invitedGroups, ...props.activeGroups].filter(group => {
             return group.name.toLowerCase().includes(searchString);
         });
         setSearchResult(updatedSearchResult);
@@ -48,7 +66,7 @@ const Invites = ()=>{
                         </div>
                     </div>
                     {
-                        invitedGroups ?
+                        props.invitedGroups ?
                         (
                             (
                                 <div>
@@ -72,11 +90,11 @@ const Invites = ()=>{
                                     <table className="centered highlight expenses-list-table">
                                         <tbody>
                                             {
-                                                invitedGroups.length > 0 && searchResult.length === 0 &&
+                                                props.invitedGroups.length > 0 && searchResult.length === 0 &&
                                                 (
-                                                    invitedGroups.map((invite)=>{
+                                                    props.invitedGroups.map((invite)=>{
                                                         return(
-                                                            <tr className="left-align grey lighten-4" key={invitedGroups.id}>
+                                                            <tr className="left-align grey lighten-4" key={props.invitedGroups.id}>
                                                                 <td className="grey-text text-darken-2">
                                                                     <h6>{invite.name}</h6>
                                                                 </td>
@@ -105,7 +123,7 @@ const Invites = ()=>{
                                                 (
                                                     searchResult.map((invite)=>{
                                                         return(
-                                                            <tr className="left-align grey lighten-4" key={invitedGroups.id}>
+                                                            <tr className="left-align grey lighten-4" key={props.invitedGroups.id}>
                                                                 <td className="grey-text text-darken-2">
                                                                     <h6>{invite.name}</h6>
                                                                 </td>
@@ -131,11 +149,11 @@ const Invites = ()=>{
                                                 )
                                                 :
                                                 (
-                                                    activeGroups.length > 0 && searchResult.length === 0 ?
+                                                    props.activeGroups.length > 0 && searchResult.length === 0 ?
                                                     (
-                                                        activeGroups.map((invite)=>{
+                                                        props.activeGroups.map((invite, index)=>{
                                                         return(
-                                                                <tr className="left-align" key={activeGroups.id}>
+                                                                <tr className="left-align" key={props.activeGroups.id}>
                                                                     <td className="grey-text text-darken-2">
                                                                         <h6>{invite.name}</h6>
                                                                     </td>
@@ -173,4 +191,29 @@ const Invites = ()=>{
     )
 }
 
-export default Invites;
+const mapStateToProps = (state)=>{
+    return {
+        activeGroups: state.userState.activeGroups,
+        invitedGroups: state.userState.invitedGroups
+    }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        addActiveGroups : (state)=>{
+            dispatch({
+                type : 'ADD_ACTIVE_GROUPS',
+                payload: state
+            });
+        },
+
+        addInvites: (state)=>{
+            dispatch({
+                type : 'ADD_INVITES',
+                payload: state
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Invites);
