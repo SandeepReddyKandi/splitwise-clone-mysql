@@ -9,5 +9,7 @@ router.get('/balance/:user2Id', isLoggedIn, expenseController.getBalanceByUser2I
 router.post('/create', isLoggedIn, expenseController.createGroupExpense);
 router.get('/recent', isLoggedIn, expenseController.getRecentExpenses);
 router.put('/settle/:user2Id', isLoggedIn, expenseController.settleExpense);
+router.get('/all-group/:groupId', isLoggedIn, expenseController.getAllExpensesForGroup);
+router.get('balance-group/:groupId', isLoggedIn, expenseController.getBalanceBetweenAllUsersForGroup);
 
 module.exports = router;

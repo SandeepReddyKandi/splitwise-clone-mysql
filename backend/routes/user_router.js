@@ -8,5 +8,6 @@ router.post('/login', userController.loginUser);
 router.post('/signup', userController.signUpUser);
 router.put('/update', isLoggedIn, userController.updateUserDetails);
 router.get('/all', isLoggedIn, userController.getAllUsers);
+router.get('/me/:token', userController.getUserDetailsByToken);
 
 module.exports = router;
