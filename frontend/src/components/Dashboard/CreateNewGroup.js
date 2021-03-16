@@ -149,7 +149,7 @@ class CreateNewGroup extends Component {
 							{	
 								this.state.completeUserList.map(user => {
 									return (
-										<option value={user.value} id={user.email}>{user.label}</option>
+										<option value={user.id} id={user.email}>{user.label}</option>
 									)
 								})
 							}

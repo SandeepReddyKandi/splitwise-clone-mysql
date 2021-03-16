@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 db.sequelize.sync();
 
 // Overwrite data
-db.sequelize.sync({ force: true });
+// db.sequelize.sync({ force: true });
 
 app.use('/user/', require('./routes/user_router'));
 app.use('/groups/', require('./routes/groups_router'));

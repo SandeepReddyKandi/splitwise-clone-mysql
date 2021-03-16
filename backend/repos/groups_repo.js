@@ -19,6 +19,7 @@ async function getAllGroupsByUserId(userId) {
   const allGroups = await groups.findAll();
   const invitedGroups = _.filter(allGroups, group => group.invitedUsers.includes(userId));
   const acceptedGroups = _.filter(allGroups, group => group.acceptedUsers.includes(userId));
+  console.log(allGroups, invitedGroups, acceptedGroups);
   const result = { invitedGroups, acceptedGroups };
   return result;
 }

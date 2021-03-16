@@ -36,8 +36,8 @@ const Invites = (props)=>{
     const rejectInvitation = (invite)=>{
     }
 
-    const deleteGroup = (invite)=>{
-
+    const deleteGroup = (e)=>{
+        console.log('delete', e.target);
     }
 
     const handleSearch = (e) => {
