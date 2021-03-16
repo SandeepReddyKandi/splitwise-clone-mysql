@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, Switch } from "react-router-dom";
 import {useSelector} from 'react-redux';
 import Dashboard from './Dashboard';
 import './dashboard.css';
 import CreateNewGroup from './CreateNewGroup';
+import axios from 'axios';
 
 const Sidebar = ()=>{
     const {groups} = useSelector(state => {
@@ -11,6 +12,23 @@ const Sidebar = ()=>{
             groups: state.groupState.groups
         }
     });
+
+    const [allGroups, setAllGroups] = useState([]);
+    useEffect(()=>{
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get('http://localhost:8000/groups/all', {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.data.success){
+                console.log(res.data.data);
+                setAllGroups(res.data.data.acceptedGroups);
+            }
+        })
+    },[]);
+
+    // console.log("all groups : " ,allGroups);
 
     return(
         <div className="container sidebar">
@@ -56,13 +74,13 @@ const Sidebar = ()=>{
                 </div>
                 <ul className="collection">
                 {
-                    groups.map((group)=>{
+                    allGroups.map((group)=>{
                         return(
                             <li className="collection-item" key={group.id}>
                                 <span>
                                     <i className="fas fa-bookmark"/>
                                 </span>
-                                <Link to={`/user/home/groups/${group.name}`}>
+                                <Link to={`/user/home/groups/${group.id}`}>
                                     <span>{group.name}</span>
                                 </Link>
                             </li>

@@ -3,16 +3,13 @@ import { connect } from "react-redux";
 import './Modal.css'
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
+import axios from 'axios';
 
 class Modal extends Component {
     state = {
-        groupName: this.props.groupName,
-        itemName: '',
-        itemCost: '',
-        date: {
-            month:'3',
-            day:'20'
-        }
+        groupId: this.props.groupId,
+        description: '',
+        amount: '',
     }
 
   componentDidMount() {
@@ -48,8 +45,23 @@ class Modal extends Component {
     })
   }
   
+  // divide expense equally among all the menbers of this group,(api call)
   addExpense = ()=>{
-    this.props.addExpense(this.state);
+    // this.props.addExpense(this.state);
+    const token = JSON.parse(localStorage.getItem('token'));
+    axios.post('http://localhost:8000/expenses/create', {
+      groupId : this.state.groupId,
+      amount: this.state.amount,
+      description: this.state.description
+    }, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }).then((res)=>{
+            if(res.data.success){
+              console.log('expense added : ',res.data);
+            }
+    });
   }
 
   render() {
@@ -74,10 +86,10 @@ class Modal extends Component {
                 </div>
                 <div className="row right-align">
                     <div className="input-field col m12 s12">
-                        <input placeholder="Expense item name" id="itemName" type="text" className=" input-field validate center-align"
+                        <input placeholder="Expense item name" id="description" type="text" className=" input-field validate center-align"
                             onChange={this.setValues}
                         />
-                        <input placeholder="Cost of item" id="itemCost" type="number" className="input-field validate center-align"
+                        <input placeholder="Cost of item" id="amount" type="number" className="input-field validate center-align"
                             onChange={this.setValues}
                         />
                     </div>
@@ -108,4 +120,3 @@ const mapDispatchToProps = (dispatch)=>{
 }
 
 export default connect(null, mapDispatchToProps)(Modal);
-// export default Modal;
