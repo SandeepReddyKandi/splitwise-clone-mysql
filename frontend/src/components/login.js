@@ -20,18 +20,17 @@ class login extends Component{
         email: this.state.email,
         password: this.state.password
       }).then((res)=>{
-        if(res.data.success){
+        if(res.data.success) {
           const token = res.data.data.token;
           // console.log(token);
           toast.success("Successfully logged in!");
           this.props.userInfo(res.data.data);
           this.props.history.push('/user/home');
-          
-          if(localStorage.getItem('token') === null){
-            localStorage.setItem('token', JSON.stringify(token));
-          }
-        } else{
-          toast.error(res.data.message);
+          localStorage.removeItem('token');
+          localStorage.setItem('token', JSON.stringify(token));
+        } else {
+          console.log(res);
+          toast.error(res.data.reason);
         }
       }).catch((err)=>{
         console.log(err);

@@ -10,17 +10,8 @@ const initState = {
     timezone: '',
     token: '',
   },
-
-  activeGroups : [
-    // {name:"Bazaar expences", id:"kio1"},
-    // {name:"furniture bazaar", id:"kio2"},
-    // {name:"ice cream store", id:"kio3"}
-  ],
-
-  invitedGroups : [
-    // {name: "Four People One House", id:"kio4"},
-    // {name: "Home Expenses", id:"kio5"},
-  ]
+  activeGroups : [],
+  invitedGroups : []
 };
 
 const userReducer = (state = initState, action)=> {
@@ -36,26 +27,47 @@ const userReducer = (state = initState, action)=> {
     }
 
     case 'ADD_ACTIVE_GROUPS':{
-      console.log('active groups : ',action.payload);
-      // const newActiveGrp = [...state.activeGroups, action.payload];
       return {
         ...state,
         activeGroups : [
-          ...state.activeGroups, 
+          ...state.activeGroups,
           ...action.payload
         ]
       }
     }
 
-    case 'ADD_INVITES':{
-      console.log('active groups : ',action.payload);
-      // const newActiveGrp = [...state.activeGroups, action.payload];
+    case 'ADD_INVITES': {
       return {
         ...state,
         invitedGroups : [
-          ...state.invitedGroups, 
+          ...state.invitedGroups,
           ...action.payload
         ]
+      }
+    }
+
+    case 'ACCEPT_GROUP_INVITE': {
+      return {
+        ...state,
+        activeGroups: [
+            ...state.activeGroups,
+            ...action.payload,
+        ],
+        invitedGroups : state.invitedGroups.filter(group => group.id !== action.payload.id)
+      }
+    }
+
+    case 'REMOVE_ACTIVE_GROUPS':{
+      return {
+        ...state,
+        activeGroups : state.activeGroups.filter(group => group.id !== action.payload.id)
+      }
+    }
+
+    case 'REMOVE_INVITES': {
+      return {
+        ...state,
+        invitedGroups : state.invitedGroups.filter(group => group.id !== action.payload.id)
       }
     }
 

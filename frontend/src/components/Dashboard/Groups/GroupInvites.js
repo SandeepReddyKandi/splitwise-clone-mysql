@@ -2,24 +2,21 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, connect} from 'react-redux';
 import '../dashboard.css'
 import axios from 'axios';
+import {toast} from "react-toastify";
 
 const Invites = (props)=>{
     const [searchString, setSearchString] = useState('');
     const [searchResult, setSearchResult] = useState([]);
 
     useEffect(()=>{
-        console.log('inside useEffect : ');
         const token = JSON.parse(localStorage.getItem('token'));
         axios.get('http://localhost:8000/groups/all',{
             headers: {
                 authorization: `Bearer ${token}`
             }
         }).then(res=>{
-            console.log("res.data.data : ",res.data.data);
-            if(res.data.success){                
+            if(res.data.success){
                 props.addActiveGroups(res.data.data.acceptedGroups);
-
-                console.log('invites : ', res.data.data.invitedGroups);
                 props.addInvites(res.data.data.invitedGroups);
             }else{
                 console.log(res.data)
@@ -27,17 +24,47 @@ const Invites = (props)=>{
         })
     },[]);
 
-    // console.log('testing...');
-
     const acceptInvitation = (invite)=>{
-    
+        if (!invite.id) {
+            toast.error('Please select a group to accept invitation!');
+        }
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.put(`http://localhost:8000/groups/accept-invite/${invite.id}`, null,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res=>{
+            if(res.data.success){
+                toast.success(`Invite for the ${invite.name} accepted successfully!`)
+                props.acceptGroupInvite([invite]);
+            } else {
+                toast.error(res.data.message);
+            }
+        })
+
     }
 
-    const rejectInvitation = (invite)=>{
-    }
-
-    const deleteGroup = (e)=>{
-        console.log('delete', e.target);
+    const leaveGroup = (invite, isInvitedGroup)=>{
+        if (!invite.id) {
+            toast.error('Please select a group to leave!');
+        }
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.put(`http://localhost:8000/groups/leave/${invite.id}`,null,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res=>{
+            if(res.data.success){
+                toast.success(`Invite for the ${invite.name} accepted successfully!`);
+                if (isInvitedGroup) {
+                    props.removeInvites(invite);
+                } else {
+                    props.removeActiveGroups(invite);
+                }
+            }else{
+                toast.error(res.data.message);
+            }
+        })
     }
 
     const handleSearch = (e) => {
@@ -108,7 +135,7 @@ const Invites = (props)=>{
                                                                     <span style={{marginLeft:"10px"}}/>
                                                                     <a
                                                                         className="btn-floating waves-light red delete"
-                                                                        onClick={() => rejectInvitation(invite)}
+                                                                        onClick={() => leaveGroup(invite, true)}
                                                                     >
                                                                         <i className="material-icons">clear</i>
                                                                     </a>
@@ -137,7 +164,7 @@ const Invites = (props)=>{
                                                                     <span style={{marginLeft:"10px"}}/>
                                                                     <a
                                                                         className="btn-floating waves-light red delete"
-                                                                        onClick={() => rejectInvitation(invite)}
+                                                                        onClick={() => leaveGroup(invite)}
                                                                     >
                                                                         <i className="material-icons">clear</i>
                                                                     </a>
@@ -158,7 +185,7 @@ const Invites = (props)=>{
                                                                         <h6>{invite.name}</h6>
                                                                     </td>
                                                                     <td className="left-align">
-                                                                        <a class="btn-floating waves-light red delete" onClick={deleteGroup}><i class="material-icons">clear</i></a>
+                                                                        <a class="btn-floating waves-light red delete" onClick={() => leaveGroup(invite)}><i class="material-icons">clear</i></a>
                                                                     </td>
                                                                 </tr>
                                                             )
@@ -206,10 +233,27 @@ const mapDispatchToProps = (dispatch)=>{
                 payload: state
             });
         },
-
+        acceptGroupInvite : (state)=>{
+            dispatch({
+                type : 'ACCEPT_GROUP_INVITE',
+                payload: state
+            });
+        },
         addInvites: (state)=>{
             dispatch({
                 type : 'ADD_INVITES',
+                payload: state
+            })
+        },
+        removeActiveGroups : (state)=>{
+            dispatch({
+                type : 'REMOVE_ACTIVE_GROUPS',
+                payload: state
+            });
+        },
+        removeInvites: (state)=>{
+            dispatch({
+                type : 'REMOVE_INVITES',
                 payload: state
             })
         }

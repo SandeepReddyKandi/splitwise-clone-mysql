@@ -23,7 +23,7 @@ const RecentActivityComponent = (props)=>{
 
               this.props.addRecentActivities(res.data.data);
             } else {
-              toast.error(res.data.message);
+              toast.error(res.data.reason);
             }
           }).catch((err)=>{
             toast.error('Something went wrong, Please try again!');

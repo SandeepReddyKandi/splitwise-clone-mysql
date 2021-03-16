@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 import letter from "../../letter.webp";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import {withRouter} from "react-router-dom";
 
 class CreateNewGroup extends Component {
 	state = {
@@ -41,7 +42,7 @@ class CreateNewGroup extends Component {
 					}),
 				})
 			} else {
-				toast.error(res.data.message);
+				toast.error(res.data.reason);
 			}
 		})
 	}
@@ -61,18 +62,20 @@ class CreateNewGroup extends Component {
 				}
 			}).then((res) => {
 				if (res.data.success) {
-					this.props.addAPersonToGroup(this.state);
-					console.log(`Group "${this.state.groupName}" has been created successfully!`);
 					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
+					this.props.addActiveGroup([{
+						id: res.data.id,
+						name: res.data.name,
+					}]);
+					this.props.history.push('/user/home/invites');
 				} else {
-					toast.error(res.data.message);
+					toast.error(res.data.reason);
 				}
 			})
 		}
 	}
 
  	addAPersonToGroup = () => {
-		console.log(this.state.selectedPerson, this.state.userIds);
 		 this.setState({
 			 ...this.state,
 			 userIds: [...this.state.userIds, this.state.selectedPerson],
@@ -131,7 +134,7 @@ class CreateNewGroup extends Component {
 							)
 						}
 					</div>
-					<div className="row" id="addAPersonToGroup">
+					<div className="row" id="add-person-container">
 						<select
 							value={this.state.selectedPerson}
 							name={'selectAPerson'}
@@ -146,10 +149,14 @@ class CreateNewGroup extends Component {
 							}}
 						>
 							<option value={''} id={''}>Select an person</option>
-							{	
+							{
 								this.state.completeUserList.map(user => {
 									return (
-										<option value={user.id} id={user.email}>{user.label}</option>
+										<option
+											value={user.id}
+											id={user.email}
+											selected={user.id === this.state.selectedPerson?.id}
+										>{user.label}</option>
 									)
 								})
 							}
@@ -173,13 +180,13 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		addAPersonToGroup : (state)=>{
+		addActiveGroup : (state)=>{
 			dispatch({
-				type : 'ADD_USER',
+				type : 'ADD_ACTIVE_GROUPS',
 				payload : state
 			})
 		}
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGroup);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateNewGroup));
