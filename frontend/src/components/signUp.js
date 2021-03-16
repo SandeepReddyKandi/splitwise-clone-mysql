@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import letter from "../letter.webp";
 import "./signup.css";
-import { Link } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -16,38 +16,36 @@ class signUp extends Component {
       signupStatus: ""
     }
 
-    signUpUser = (e)=>{
+    signUpUser = (e) => {
       e.preventDefault();
+
+      if (!(this.state.name && this.state.email && this.state.phone && this.state.password)) {
+        toast.error('Please fill in all the fields correctly!');
+        return;
+      }
 
       axios.post("http://localhost:8000/user/signup/", {
         name: this.state.name,
         phone: this.state.phone,
-        email: this.state.email, 
+        email: this.state.email,
         password: this.state.password
       }).then((res)=>{
-        if(res.data.success == true) {
+        if (res.data.success) {
           toast.success("You have successfully signed in !");
           this.props.userSignUp(this.state);
-        }else{
+          this.props.history.push('/login');
+        } else {
           toast.error(res.data.reason);
         }
         this.setState({
           signupStatus: res.data.success
         });
-      }).catch(()=>{
-        toast.error("Somthing went wrong");
-      }).then(()=>{
-        this.setState({
-          name: "",
-          password: "",
-          email: "",
-          phone: "",
-          signupStatus: ""
-        });
+      }).catch(() => {
+        toast.error("Something went wrong, Please try again!");
       });
     }
 
-    handleChange = (e)=>{
+    handleChange = (e) => {
       this.setState({
         [e.target.id]: e.target.value
       });
@@ -92,7 +90,7 @@ class signUp extends Component {
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       );
     }
@@ -113,4 +111,4 @@ signUp.propTypes = {
   userSignUp: PropTypes.any
 };
 
-export default connect(null, mapDispatchToProps)(signUp);
+export default withRouter(connect(null, mapDispatchToProps)(signUp));
