@@ -109,15 +109,15 @@ async function getAllUsers(req, res, next) {
   }
 }
 
-async function getUserDetailsByToken(req, res, next) {
+async function getUserDetails(req, res, next) {
   try {
-    logger.info('controllers', 'getUserDetailsByToken');
-    const { token } = req.params;
-    const user = await userRepo.getUserByAppAccessToken(token);
+    logger.info('controllers', 'getUserDetails');
+    const { userId } = req.user;
+    const user = await userRepo.getUserById(userId);
     const response = genericDTL.getResponseDto(user);
     return res.send(response);
   } catch (err) {
-    logger.error('Error in getting user from app token', JSON.stringify(err));
+    logger.error('Error in getUserDetails', JSON.stringify(err));
     return next(err);
   }
 }
@@ -128,5 +128,5 @@ module.exports = {
   fetchBalance,
   updateUserDetails,
   getAllUsers,
-  getUserDetailsByToken,
+  getUserDetails,
 };
