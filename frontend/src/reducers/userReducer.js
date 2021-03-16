@@ -10,6 +10,7 @@ const initState = {
     timezone: '',
     token: '',
   },
+
   activeGroups : [],
   invitedGroups : []
 };

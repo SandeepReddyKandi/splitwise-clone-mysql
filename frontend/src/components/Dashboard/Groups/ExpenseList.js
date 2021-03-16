@@ -2,7 +2,6 @@ import React from 'react';
 
 const ExpenseList = (list)=>{
     const expList = list.expenselist;
-    // console.log("m : ", list.expenselist);
     return(
         <tbody>
             {

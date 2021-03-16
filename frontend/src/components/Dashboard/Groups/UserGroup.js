@@ -6,25 +6,38 @@ import '../dashboard.css';
 import Modal from './Modal';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
+import axios from 'axios';
 
 var groupName;
 const UserGroups = (props)=>{
+    const groups = useSelector(state => state.groupState);
+    const groupId = props.match.params.id;
+
     useEffect(()=>{
-        document.querySelector("#extraInfo").classList.add('vanish');
-        document.querySelector("#openDetailsLink").classList.remove('vanish');
-        document.querySelector("#closeDetailsLink").classList.add('vanish');
+        // document.querySelector("#extraInfo").classList.add('vanish');
+        // document.querySelector("#openDetailsLink").classList.remove('vanish');
+        // document.querySelector("#closeDetailsLink").classList.add('vanish');
+
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get('http://localhost:8000/expenses/all', {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.data.success){
+                console.log(res.data.data);
+            }
+        })
     });
 
-    const groups = useSelector(state => state.groupExpenses);
-    const groupName = props.match.params.id;
-    const usrGrp = groups.groups.filter((group) => group.name === groupName);
-    const expList = usrGrp[0].expenses;
-    const userExpenses = usrGrp[0].totalExpenses;
-    const showUsers = userExpenses.slice(0, 1);
-    const remainingUsers = userExpenses.slice(1, userExpenses.length);
-    
+    // const usrGrp = groups.groups.filter((group) => group.name === groupId);
+    // const expList = usrGrp[0].expenses;
+    // const userExpenses = usrGrp[0].totalExpenses;
+    // const showUsers = userExpenses.slice(0, 1);
+    // const remainingUsers = userExpenses.slice(1, userExpenses.length);
+
     return (
-        <div className="container user-groups">  
+        <div className="container user-groups">
             <div className="row">
                 <div className="col m8 z-depth-1">
                     <div className="header row valign-wrapper grey lighten-2">
@@ -33,16 +46,16 @@ const UserGroups = (props)=>{
                                 <span className="center-align">HOME EXPENSES</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
-                            <Modal groupName={groupName}/>
+                            <Modal groupId={groupId}/>
                         </div>
                     </div>
-                    {
+                    {/* {
                         expList ?
                         (
                             (
                                 <div>
                                     <table className="centered highlight expenses-list-table">
-                                    {   
+                                    {
                                         expList.length ?
                                         (
                                             <ExpenseList expenselist={expList}/>
@@ -59,9 +72,9 @@ const UserGroups = (props)=>{
                         (
                             <div>Loading.....</div>
                         )
-                    }
+                    } */}
                 </div>
-                <div className="col m4">
+                {/* <div className="col m4">
                     <div className="row">
                         <div className="col m12 s12 sidebar-header ">
                             <h6 className="grey-text">GROUP BALANCES</h6>
@@ -79,8 +92,8 @@ const UserGroups = (props)=>{
                                                         <div className="col m9 left-align">
                                                             <h6 style={{marginBottom: "0px"}}>{usr.user}</h6>
                                                             {
-                                                                usr.amt > 0 ? 
-                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> : 
+                                                                usr.amt > 0 ?
+                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> :
                                                                     <p className="green-text" style={{marginTop: "0px"}}>Owes USD {-usr.amt}</p>
                                                             }
                                                         </div>
@@ -100,14 +113,14 @@ const UserGroups = (props)=>{
                                     (
                                         remainingUsers.map((usr) =>{
                                             return (
-                                                <li className="collection-item"> 
+                                                <li className="collection-item">
                                                     <div className="row valign-wrapper" style={{marginBottom: "0px"}}>
                                                         <img className="col m3" src="https://img.icons8.com/fluent/50/000000/user-male-circle.png"/>
                                                         <div className="col m9 left-align">
                                                             <h6 style={{marginBottom: "0px"}}>{usr.user}</h6>
                                                             {
-                                                                usr.amt > 0 ? 
-                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> : 
+                                                                usr.amt > 0 ?
+                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> :
                                                                     <p className="green-text" style={{marginTop: "0px"}}>Owes USD {-usr.amt}</p>
                                                             }
                                                         </div>
@@ -136,7 +149,7 @@ const UserGroups = (props)=>{
                             document.querySelector("#closeDetailsLink").classList.toggle('vanish');
                         }}><span className="col m12">X</span></p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
