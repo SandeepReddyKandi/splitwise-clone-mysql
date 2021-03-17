@@ -61,8 +61,8 @@ async function getAllExpensesByGroupId(groupId, userId) {
 
 async function getAllExpensesForGroup(groupId) {
   const result = await expenses.findAll({ where: { groupId } });
-  // return result.toJSON();
-  return JSON.stringify(result);
+  return result;
+  // return JSON.stringify(result);
 }
 
 async function getGroupExpenseForUserId(groupId, userId) {

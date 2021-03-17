@@ -13,40 +13,47 @@ const UserGroups = (props)=>{
     const groups = useSelector(state => state.groupState);
     const groupId = props.match.params.id;
 
-    console.log('group id : ', groupId);
-
-    const [groupExpenses, setGroupExpenses] = useState([]);
+    const [groupExpenses, setGroupExpenses] = useState();
+    const [users, getAllUsers] = useState();
     useEffect(()=>{
         // document.querySelector("#extraInfo").classList.add('vanish');
         // document.querySelector("#openDetailsLink").classList.remove('vanish');
         // document.querySelector("#closeDetailsLink").classList.add('vanish');
 
         const token = JSON.parse(localStorage.getItem('token'));
+
+        // to get all the group expenses
         axios.get(`http://localhost:8000/expenses/all-group/${groupId}`,{
             headers: {
                 authorization: `Bearer ${token}`
             }
         }).then((res)=>{
             if(res.data.success){
-                console.log('expenses group : ',res.data.data);
-                // setGroupExpenses(res.data.data);
-                // groupExpenses.map((expense)=>{
-                //     const date =  (expense.createdAt).splice(0, 10);
-                //     expense.createdAt = date;
-                // })
-                console.log('adsd asd');
+                const expList = JSON.parse(res.data.data);
+                console.log("exp List: ", expList);
+                setGroupExpenses(expList);
+                // groupExpenses = JSON.parse(res.data.data);
             }
         }).catch((err)=>{
-            // console.log(err);
+            console.log(err);
+        })
+
+        // to get all the user
+        axios.get(`http://localhost:8000/user/all`,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res =>{ 
+            if(res.data.success){
+                console.log("users List : ", res.data.data);
+                getAllUsers(res.data.data);
+            }
+        }).catch(err=>{
+            console.log(err);
         })
     },[]);
-
-    // const usrGrp = groups.groups.filter((group) => group.name === groupId);
-    // const expList = usrGrp[0].expenses;
-    // const userExpenses = usrGrp[0].totalExpenses;
-    // const showUsers = userExpenses.slice(0, 1);
-    // const remainingUsers = userExpenses.slice(1, userExpenses.length);
     
+
     return (
         <div className="container user-groups">  
             <div className="row">
@@ -61,7 +68,7 @@ const UserGroups = (props)=>{
                         </div>
                     </div>
                     {
-                        {/* groupExpenses ?
+                        groupExpenses ?
                         (
                             (
                                 <div>
@@ -72,13 +79,15 @@ const UserGroups = (props)=>{
                                             (
                                                 groupExpenses.map((expenses)=>{
                                                     return (
-                                                        <ExpenseList expenselist={expenses} key={expenses.id}/>
+                                                        <ExpenseList expenselist={expenses} userList={users} key={expenses.id}/>
                                                     )
                                                 })
                                             )
                                             :
                                             (
-                                                <div>Loading...</div>
+                                                <tr>
+                                                    <td>No expenses made yet....</td>
+                                                </tr>
                                             )
                                         }
                                         </tbody>
@@ -88,7 +97,7 @@ const UserGroups = (props)=>{
                         ):
                         (
                             <div>Loading.....</div>
-                        ) */}
+                        )
                     }
                 </div>
                 {/* <div className="col m4">
