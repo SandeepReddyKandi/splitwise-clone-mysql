@@ -11,6 +11,8 @@ import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService
 import GroupBackendAPIService from "../../../services/GroupBackendAPIService";
 
 const UserGroups = (props)=>{
+    const [groupExpenses, setGroupExpenses] = useState();
+    const [users, getAllUsers] = useState();
     const [group, setGroup] = useState({
         name: '',
     });
@@ -20,6 +22,7 @@ const UserGroups = (props)=>{
         setGroupId(props.match.params.id);
     })
 
+    
     useEffect(()=>{
         // document.querySelector("#extraInfo").classList.add('vanish');
         // document.querySelector("#openDetailsLink").classList.remove('vanish');
@@ -42,6 +45,41 @@ const UserGroups = (props)=>{
     // const showUsers = userExpenses.slice(0, 1);
     // const remainingUsers = userExpenses.slice(1, userExpenses.length);
 
+
+        const token = JSON.parse(localStorage.getItem('token'));
+
+        // to get all the group expenses
+        axios.get(`http://localhost:8000/expenses/all-group/${groupId}`,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.data.success){
+                const expList = JSON.parse(res.data.data);
+                console.log("exp List: ", expList);
+                setGroupExpenses(expList);
+                // groupExpenses = JSON.parse(res.data.data);
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+
+        // to get all the user
+        axios.get(`http://localhost:8000/user/all`,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res =>{ 
+            if(res.data.success){
+                console.log("users List : ", res.data.data);
+                getAllUsers(res.data.data);
+            }
+        }).catch(err=>{
+            console.log(err);
+        })
+    },[]);
+    
+
     return (
         <div className="container user-groups">
             <div className="row">
@@ -55,22 +93,30 @@ const UserGroups = (props)=>{
                             <Modal groupId={groupId}/>
                         </div>
                     </div>
-                    {/* {
-                        expList ?
+                    {
+                        groupExpenses ?
                         (
                             (
                                 <div>
-                                    <table className="centered highlight expenses-list-table">
-                                    {
-                                        expList.length ?
-                                        (
-                                            <ExpenseList expenselist={expList}/>
-                                        )
-                                        :
-                                        (
-                                            <div>Loading...</div>
-                                        )
-                                    }
+                                    <table className="centered highlight expenses-list-table">  
+                                        <tbody>
+                                        {   
+                                            groupExpenses.length ?
+                                            (
+                                                groupExpenses.map((expenses)=>{
+                                                    return (
+                                                        <ExpenseList expenselist={expenses} userList={users} key={expenses.id}/>
+                                                    )
+                                                })
+                                            )
+                                            :
+                                            (
+                                                <tr>
+                                                    <td>No expenses made yet....</td>
+                                                </tr>
+                                            )
+                                        }
+                                        </tbody>
                                     </table>
                                 </div>
                             )

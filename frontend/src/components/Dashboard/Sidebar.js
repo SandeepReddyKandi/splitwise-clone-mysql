@@ -18,6 +18,23 @@ const Sidebar = ()=>{
         });
     },[]);
 
+    const [allGroups, setAllGroups] = useState([]);
+    useEffect(()=>{
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get('http://localhost:8000/groups/all', {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.data.success){
+                console.log(res.data.data);
+                setAllGroups(res.data.data.acceptedGroups);
+            }
+        })
+    },[]);
+
+    // console.log("all groups : " ,allGroups);
+
     return(
         <div className="container sidebar">
             {/* dashboard header */}
