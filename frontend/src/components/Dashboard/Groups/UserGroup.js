@@ -13,22 +13,33 @@ const UserGroups = (props)=>{
     const groups = useSelector(state => state.groupState);
     const groupId = props.match.params.id;
 
+    console.log('group id : ', groupId);
+
+    const [groupExpenses, setGroupExpenses] = useState([]);
     useEffect(()=>{
         // document.querySelector("#extraInfo").classList.add('vanish');
         // document.querySelector("#openDetailsLink").classList.remove('vanish');
         // document.querySelector("#closeDetailsLink").classList.add('vanish');
 
         const token = JSON.parse(localStorage.getItem('token'));
-        axios.get('http://localhost:8000/expenses/all', {
+        axios.get(`http://localhost:8000/expenses/all-group/${groupId}`,{
             headers: {
                 authorization: `Bearer ${token}`
             }
         }).then((res)=>{
             if(res.data.success){
-                console.log(res.data.data);
+                console.log('expenses group : ',res.data.data);
+                // setGroupExpenses(res.data.data);
+                // groupExpenses.map((expense)=>{
+                //     const date =  (expense.createdAt).splice(0, 10);
+                //     expense.createdAt = date;
+                // })
+                console.log('adsd asd');
             }
+        }).catch((err)=>{
+            // console.log(err);
         })
-    });
+    },[]);
 
     // const usrGrp = groups.groups.filter((group) => group.name === groupId);
     // const expList = usrGrp[0].expenses;
@@ -49,30 +60,36 @@ const UserGroups = (props)=>{
                             <Modal groupId={groupId}/>
                         </div>
                     </div>
-                    {/* {
-                        expList ?
+                    {
+                        {/* groupExpenses ?
                         (
                             (
                                 <div>
-                                    <table className="centered highlight expenses-list-table">
-                                    {   
-                                        expList.length ?
-                                        (
-                                            <ExpenseList expenselist={expList}/>
-                                        )
-                                        :
-                                        (
-                                            <div>Loading...</div>
-                                        )
-                                    }
+                                    <table className="centered highlight expenses-list-table">  
+                                        <tbody>
+                                        {   
+                                            groupExpenses.length ?
+                                            (
+                                                groupExpenses.map((expenses)=>{
+                                                    return (
+                                                        <ExpenseList expenselist={expenses} key={expenses.id}/>
+                                                    )
+                                                })
+                                            )
+                                            :
+                                            (
+                                                <div>Loading...</div>
+                                            )
+                                        }
+                                        </tbody>
                                     </table>
                                 </div>
                             )
                         ):
                         (
                             <div>Loading.....</div>
-                        )
-                    } */}
+                        ) */}
+                    }
                 </div>
                 {/* <div className="col m4">
                     <div className="row">
