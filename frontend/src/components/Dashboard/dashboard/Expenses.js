@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector} from 'react-redux';
 import Recieve from './Recieve';
 import Give from './GivePayment';
@@ -7,6 +7,8 @@ import '../dashboard.css';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
 import axios from 'axios';
+import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
+import UserBackendAPIService from "../../../services/UserBackendAPIService";
 
 const Expenses = (props)=>{
     const {recieve, pay} = useSelector(state => {
@@ -16,6 +18,34 @@ const Expenses = (props)=>{
             token : state.userState.token
         }
     });
+
+    const [userId, setUserId] = useState();
+    const [userExpenses, setUserExpenses] = useState();
+    const [allBalance, setBalance] = useState();
+
+    useEffect(() => {
+        UserBackendAPIService.getUserDetails().then(({data, success})=>{
+            console.log(data);
+            setUserId(data.id);
+        });
+    },[])
+
+    // useEffect(()=>{
+    //     ExpenseBackendAPIService.getUserBalanceByUserId(userId).then(({data, success})=>{
+    //         if(success){
+    //             setUserExpenses(data);
+    //         }
+    //     })
+    // },[])
+
+    useEffect(()=>{
+        ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
+            if(success){
+                console.log('all expenses : ',data);
+                setBalance(data);
+            }
+        })
+    },[])
 
     return (
         <div className="container expenses row z-depth-2">

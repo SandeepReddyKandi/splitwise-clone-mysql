@@ -9,6 +9,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import axios from 'axios';
 import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
 import GroupBackendAPIService from "../../../services/GroupBackendAPIService";
+import UserBackendAPIService from '../../../services/UserBackendAPIService';
 
 const UserGroups = (props)=>{
     const [groupExpenses, setGroupExpenses] = useState();
@@ -27,8 +28,9 @@ const UserGroups = (props)=>{
         // document.querySelector("#extraInfo").classList.add('vanish');
         // document.querySelector("#openDetailsLink").classList.remove('vanish');
         // document.querySelector("#closeDetailsLink").classList.add('vanish');
+        
         GroupBackendAPIService.getGroupInfo(groupId).then(({data, success}) => {
-            console.log(data);
+            console.log("group name: ",data.name);
             setGroup(data);
         });
 
@@ -36,48 +38,31 @@ const UserGroups = (props)=>{
             if(success){
                 console.log(data);
             }
-        })
-    }, [groupId]);
+        });
 
-    // const usrGrp = groups.groups.filter((group) => group.name === groupId);
-    // const expList = usrGrp[0].expenses;
-    // const userExpenses = usrGrp[0].totalExpenses;
-    // const showUsers = userExpenses.slice(0, 1);
-    // const remainingUsers = userExpenses.slice(1, userExpenses.length);
-
-
-        const token = JSON.parse(localStorage.getItem('token'));
-
-        // to get all the group expenses
-        axios.get(`http://localhost:8000/expenses/all-group/${groupId}`,{
-            headers: {
-                authorization: `Bearer ${token}`
+        // getting all the expenses
+        ExpenseBackendAPIService.getAllExpensesForGroupId(groupId).then(({data, success})=>{
+            if(success){
+                console.log(data);
+                setGroupExpenses(data);
             }
-        }).then((res)=>{
-            if(res.data.success){
-                const expList = JSON.parse(res.data.data);
-                console.log("exp List: ", expList);
-                setGroupExpenses(expList);
-                // groupExpenses = JSON.parse(res.data.data);
+        });
+
+        ExpenseBackendAPIService.getBalanceOfEachUserInGoupId(groupId).then(({data, success})=>{
+            if(success){
+                console.log(data);
+                // setGroupExpenses(data);
             }
-        }).catch((err)=>{
-            console.log(err);
-        })
+        });
 
         // to get all the user
-        axios.get(`http://localhost:8000/user/all`,{
-            headers: {
-                authorization: `Bearer ${token}`
+        UserBackendAPIService.getAllUsers().then(({data, success})=>{
+            if(success){
+                console.log(data);
+                getAllUsers(data);
             }
-        }).then(res =>{ 
-            if(res.data.success){
-                console.log("users List : ", res.data.data);
-                getAllUsers(res.data.data);
-            }
-        }).catch(err=>{
-            console.log(err);
-        })
-    },[]);
+        });
+    }, [groupId]);
     
 
     return (
@@ -86,7 +71,7 @@ const UserGroups = (props)=>{
                 <div className="col m8 z-depth-1">
                     <div className="header row valign-wrapper grey lighten-2">
                         <div className="col m6 valign-wrapper">
-                                <img className="responsive-img" srsc="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
+                                <img className="responsive-img" src="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
                                 <span className="center-align">{group.name}</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
@@ -105,7 +90,7 @@ const UserGroups = (props)=>{
                                             (
                                                 groupExpenses.map((expenses)=>{
                                                     return (
-                                                        <ExpenseList expenselist={expenses} userList={users} key={expenses.id}/>
+                                                        <ExpenseList expenselist={expenses} key={expenses.id}/>
                                                     )
                                                 })
                                             )
@@ -124,7 +109,7 @@ const UserGroups = (props)=>{
                         (
                             <div>Loading.....</div>
                         )
-                    } */}
+                    }
                 </div>
                 {/* <div className="col m4">
                     <div className="row">

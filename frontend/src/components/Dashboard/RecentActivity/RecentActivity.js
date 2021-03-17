@@ -1,34 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector} from 'react-redux';
 import ExpenseList from './ExpenseList';
 import axios from 'axios';
 import '../dashboard.css';
 import {toast} from "react-toastify";
 import {connect} from "react-redux";
+import ExpenseBackendAPIService from '../../../services/ExpenseBackendAPIService';
 
 const RecentActivityComponent = (props)=>{
-    const {activities, token} = useSelector(state => {
+    const {activities, token, userId} = useSelector(state => {
         return {
             activities: state.expenseState.recentActivities,
-            token : state.userState.token
+            token : state.userState.token,
+            userId : state.userState.id
         }
     });
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/expenses/recent',{
-            Authorization:`Bearer ${token}`
-        }).then((res) => {
-            if (res.data.success === true) {
-              toast.success("Recent activity successfully fetched !");
+    const [recentActivities, setRecentActivities] = useState([]);
 
-              this.props.addRecentActivities(res.data.data);
-            } else {
-              toast.error(res.data.reason);
+    useEffect(() => {
+        ExpenseBackendAPIService.getRecentActivity().then(({data, success})=>{
+            if(success){
+                console.log('recent activity : ',data);
+                setRecentActivities(data);
             }
-          }).catch((err)=>{
-            toast.error('Something went wrong, Please try again!');
-          })
-    },[])
+        })
+    },[]);    
 
     return (
         <div className="container user-groups">
@@ -40,10 +37,10 @@ const RecentActivityComponent = (props)=>{
                         </div>
                     </div>
                     {
-                        activities ? (
+                        recentActivities ? (
                             <div>
                                 <table className="centered highlight expenses-list-table">
-                                    {activities.length ? <ExpenseList expenselist={activities}/> : <div>Loading...</div>}
+                                    {recentActivities.length ? <ExpenseList recentActivities={recentActivities} userId={userId}/> : <div>Loading...</div>}
                                 </table>
                             </div>
                         ) : (

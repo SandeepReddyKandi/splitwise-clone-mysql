@@ -1,20 +1,24 @@
 import React, { useState,useEffect} from 'react';
 import { useSelector} from 'react-redux';
 import axios from 'axios';
+import UserBackendAPIService from '../../../services/UserBackendAPIService';
 
 const ExpenseList = (props)=>{    
-    console.log('user List : ',props.userList);
-    const userList = props.userList;
-    const expList = props.expenselist;
-
-    // const [expList, setExpList] = useState();
-    // const [userList, setUserList] = useState();
+    const [expList, setExpList] = useState(props.expenselist);
+    const [userList, setUserList] = useState();
     const [payer, setPayer] = useState('');
-    useEffect(()=>{
-        const user = userList.filter((user)=>{
-            return user.id === expList.byUser
+
+    useEffect(() => {
+        setExpList(props.expenselist);
+        UserBackendAPIService.getAllUsers().then(({data, success})=>{
+            if(success){
+                // console.log('data : ', data);
+                const user = data.filter((user)=>{
+                    return user.id === expList.byUser
+                });
+                setPayer(user[0].name);
+            }
         });
-        setPayer(user[0].name);
     })
 
     return(

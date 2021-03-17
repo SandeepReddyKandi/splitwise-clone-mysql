@@ -9,7 +9,6 @@ import GroupBackendAPIService from "../../services/GroupBackendAPIService";
 
 const Sidebar = ()=>{
     const [allGroups, setAllGroups] = useState([]);
-
     useEffect(()=>{
         GroupBackendAPIService.getAllGroups().then(({data, success})=>{
             if (success){
@@ -18,7 +17,6 @@ const Sidebar = ()=>{
         });
     },[]);
 
-    const [allGroups, setAllGroups] = useState([]);
     useEffect(()=>{
         const token = JSON.parse(localStorage.getItem('token'));
         axios.get('http://localhost:8000/groups/all', {
@@ -53,7 +51,7 @@ const Sidebar = ()=>{
 
             {/* recent activity */}
             <div className="row recent-activity">
-                <Link to="/user/home/recent-activity">
+                <Link to="/user/home/recentactivity">
                     <div className="col m2 ">
                         <i className="fas fa-flag" />
                     </div>
