@@ -108,7 +108,7 @@ async function getBalanceBetweenAllUsersForGroup(req, res, next) {
       for (let j = i + 1; j < users.length; j += 1) {
         const byUser = users[i];
         const toUser = users[j];
-        const { balance } = await expensesRepo.getBalanceByUser2Id(byUser, toUser);
+        const { balance } = await expensesRepo.getBalanceBetweenUsers(byUser, toUser);
         const byUserName = getNameById(allUsers, byUser);
         const toUserName = getNameById(allUsers, toUser);
         balances.push({ byUserName, toUserName, balance });
