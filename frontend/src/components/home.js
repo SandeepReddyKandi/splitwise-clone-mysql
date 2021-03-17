@@ -13,10 +13,10 @@ const home = () => {
           </Link>
           <ul className="right">
             <li><Link to="/login" className="green-text text-darken-3">
-                            login
+                            Login
             </Link></li>
             <li><NavLink to="/signup" className="black-text">
-              <button className="waves-effect waves-light btn">sign up</button>
+              <button className="waves-effect waves-light btn">Sign up</button>
             </NavLink></li>
           </ul>
         </div>
