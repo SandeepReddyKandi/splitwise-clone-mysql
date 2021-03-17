@@ -7,7 +7,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import Utils from "../utils";
 
-class signUp extends Component {
+class SignUpComponent extends Component {
   state = {
     name: "",
     password: "",
@@ -118,4 +118,4 @@ const mapDispatchToProps = (dispatch) =>{
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(signUp));
+export default withRouter(connect(null, mapDispatchToProps)(SignUpComponent));

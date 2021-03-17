@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter, Route} from "react-router-dom";
-import login from "./components/login";
-import signup from "./components/signUp";
+import LoginComponent from "./components/LoginComponent";
+import SignUpComponent from "./components/SignUpComponent";
 import home from "./components/home";
 import "./App.css";
 import {ToastContainer} from "react-toastify";
@@ -16,10 +16,22 @@ function App() {
       <div className="App">
         <ToastContainer/>
         <Route exact path="/" component={home}/>
-        <Route path="/login" component={login}/>
-        <Route path="/signup" component={signup}/>
-        <ProtectedRoute exact path="/user" Component={User}/>
-        <ProtectedRoute path="/user/home" Component={Dashboard}/>
+        <Route path="/login" component={LoginComponent}/>
+        <Route path="/signup" component={SignUpComponent}/>
+        <Route exact path="/user" component={() => {
+            return (
+                <ProtectedRoute>
+                    <User />
+                </ProtectedRoute>
+            )
+        }}/>
+        <Route path="/user/home" component={() => {
+          return (
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+          )
+        }}/>
         {/* <Route path="/user/home/newGroup" component={CreateNewGroup}/> */}
       </div>
     </BrowserRouter>

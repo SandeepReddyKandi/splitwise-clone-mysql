@@ -7,7 +7,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import Utils from "../utils";
 
-class login extends Component{
+class LoginComponent extends Component {
   state = {
     email: "",
     password: "",
@@ -24,31 +24,29 @@ class login extends Component{
   componentDidMount() {
     this.getRedirections();
   }
-    // making an fetch call to the user in db
-    userLoginDetails = (e)=>{
-      e.preventDefault();
 
-      axios.post("http://localhost:8000/user/login/", {
-        email: this.state.email,
-        password: this.state.password
-      }).then((res)=>{
-        if(res.data.success) {
-          const token = res.data.data.token;
-          // console.log(token);
-          toast.success("Successfully logged in!");
-          this.props.addUserData(res.data.data);
-          localStorage.removeItem('token');
-          localStorage.setItem('token', JSON.stringify(token));
-          this.props.history.push('/user/home');
-        } else {
-          console.log(res);
-          toast.error(res.data.reason);
-        }
-      }).catch((err)=>{
-        console.log(err);
-      });
-    }
+  // making an fetch call to the user in db
+  userLoginDetails = (e) => {
+    e.preventDefault();
 
+    axios.post("http://localhost:8000/user/login/", {
+      email: this.state.email,
+      password: this.state.password
+    }).then((res)=>{
+      if(res.data.success) {
+        const token = res.data.data.token;
+        toast.success("Successfully logged in!");
+        this.props.addUserData(res.data.data);
+        localStorage.setItem('token', JSON.stringify(token));
+        this.props.history.push('/user/home');
+      } else {
+        console.log(res);
+        toast.error(res.data.reason);
+      }
+    }).catch((err)=>{
+      console.log(err);
+    });
+  }
     handleChange = (e)=>{
       this.setState({
         [e.target.id]: e.target.value
@@ -126,4 +124,4 @@ const mapDispatchToProps = (dispatch) =>{
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(login));
+export default withRouter(connect(null, mapDispatchToProps)(LoginComponent));
