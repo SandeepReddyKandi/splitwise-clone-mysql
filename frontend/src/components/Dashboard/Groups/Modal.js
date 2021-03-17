@@ -4,6 +4,8 @@ import './Modal.css'
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import axios from 'axios';
+import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
+import {toast} from "react-toastify";
 
 class Modal extends Component {
     state = {
@@ -47,19 +49,13 @@ class Modal extends Component {
 
   // divide expense equally among all the menbers of this group,(api call)
   addExpense = ()=>{
-    // this.props.addExpense(this.state);
-    const token = JSON.parse(localStorage.getItem('token'));
-    axios.post('http://localhost:8000/expenses/create', {
+    ExpenseBackendAPIService.createExpense({
       groupId : this.state.groupId,
       amount: this.state.amount,
       description: this.state.description
-    }, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      }
-    }).then((res)=>{
-            if(res.data.success){
-              console.log('expense added : ',res.data);
+    }).then(({data, success})=>{
+            if(success){
+              toast.success(`Successfully added expense for amount ${this.state.amount}`);
             }
     });
   }
