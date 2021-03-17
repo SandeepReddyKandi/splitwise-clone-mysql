@@ -8,9 +8,7 @@ import {withRouter} from "react-router-dom";
 
 class CreateNewGroup extends Component {
 	state = {
-		groupName: "",
 		name: "",
-		email:"",
 		userIds: [],
 		completeUserList: [],
 		selectedPerson: '',
@@ -23,7 +21,6 @@ class CreateNewGroup extends Component {
 		});
 	}
 	componentDidMount() {
-		// console.log(this.props.userInfo, `Bearer ${this.props.userInfo.token}`)
         const token = JSON.parse(localStorage.getItem('token'));
 		axios.get('http://localhost:8000/user/all', {
 			headers: {
@@ -38,6 +35,7 @@ class CreateNewGroup extends Component {
 							label: user.name,
 							id: user.id,
 							email: user.email,
+							isAdded: this.props.userInfo.id === user.id,
 						}
 					}),
 				})
@@ -50,11 +48,11 @@ class CreateNewGroup extends Component {
 	// here we are submitting the store data to db
 	createNewGroup = (e) => {
 		e.preventDefault();
-		if (this.state.groupName === '') {
+		if (this.state.name === '') {
 			toast.error("Please add a name to your group");
 		} else {
 			axios.post('http://localhost:8000/groups/create', {
-				name: this.state.groupName,
+				name: this.state.name,
 				invitedUsers: this.state.userIds.map(user => user.id),
 			}, {
 				headers: {
@@ -62,7 +60,7 @@ class CreateNewGroup extends Component {
 				}
 			}).then((res) => {
 				if (res.data.success) {
-					toast.success(`Group "${this.state.groupName}" has been created successfully!`);
+					toast.success(`Group "${this.state.name}" has been created successfully!`);
 					this.props.addActiveGroup([{
 						id: res.data.id,
 						name: res.data.name,
@@ -75,16 +73,36 @@ class CreateNewGroup extends Component {
 		}
 	}
 
+	onSelectPersonHandler = (e) => {
+		const selectedOption = e.target.options[e.target.selectedIndex];
+		if (selectedOption.id) {
+			this.setState({
+				...this.state,
+				selectedPerson: {
+					name: selectedOption.getAttribute('name'),
+					id: selectedOption.value,
+					email: selectedOption.id
+				}})
+		}
+	}
+
  	addAPersonToGroup = () => {
-		 this.setState({
-			 ...this.state,
-			 userIds: [...this.state.userIds, this.state.selectedPerson],
-			 selectedPerson: '',
+		 this.setState((prevState) => {
+			 return {
+				 ...prevState,
+				 userIds: [...prevState.userIds, prevState.selectedPerson],
+				 selectedPerson: '',
+				 completeUserList: prevState.completeUserList.map(user => {
+					 return {
+						 ...user,
+						 isAdded: [prevState.selectedPerson.id, this.props.userInfo.id].includes(user.id),
+					 }
+				 })
+			 }
 		 });
 	}
 
 	render() {
-		console.log(this.state.userIds)
 		return (
 			<div className="container row new-group">
 				<div className="col m4 center-align" id="groupLeftSide">
@@ -98,8 +116,8 @@ class CreateNewGroup extends Component {
 					<h5 className="grey-text">Start a new group</h5>
 					<div className="row group-name">
 						<div className="input-field col m12">
-							<input id="groupName" type="text" className="validate" onChange={this.handleChange} required/>
-							<label htmlFor="groupName">My group shall be called</label>
+							<input id="name" type="text" className="validate" onChange={this.handleChange} required/>
+							<label htmlFor="name">My group shall be called</label>
 						</div>
 					</div>
 					<div className="row group-members">
@@ -136,35 +154,39 @@ class CreateNewGroup extends Component {
 					</div>
 					<div className="row" id="add-person-container">
 						<select
-							value={this.state.selectedPerson}
-							name={'selectAPerson'}
-							onChange={(value) => {
-								this.setState({
-									...this.state,
-									selectedPerson: {
-										name: value.target.options[value.target.selectedIndex].text,
-										id: value.target.options[value.target.selectedIndex].value,
-										email: value.target.options[value.target.selectedIndex].id
-									}})
-							}}
+							value={this.state.selectedPerson ? this.state.selectedPerson.id : null}
+							name={'select-person'}
+							onChange={this.onSelectPersonHandler}
 						>
-							<option value={''} id={''}>Select an person</option>
+							<option>Select a person</option>
 							{
-								this.state.completeUserList.map(user => {
+								this.state.completeUserList.filter(user => !user.isAdded).map(user => {
 									return (
 										<option
 											value={user.id}
 											id={user.email}
-											selected={user.id === this.state.selectedPerson?.id}
-										>{user.label}</option>
+											name={user.label}
+										>
+											{user.label.toUpperCase()} ({user.email})
+										</option>
 									)
 								})
 							}
 						</select>
-						<button className="btn orange darken-3" onClick={this.addAPersonToGroup} disabled={this.selectedPerson}>Add a person</button>
+						<button
+							className="btn orange darken-3"
+							onClick={this.addAPersonToGroup}
+							disabled={!this.state.selectedPerson}
+						>
+							Add a person
+						</button>
 					</div>
 					<div className="row">
-						<button className="btn btn-large green darken-1" onClick={this.createNewGroup}>Create Group</button>
+						<button
+							className="btn btn-large green darken-1"
+							onClick={this.createNewGroup}
+							disabled={!this.state.name || !this.state.userIds.length}
+						>Create Group</button>
 					</div>
 				</div>
 			</div>

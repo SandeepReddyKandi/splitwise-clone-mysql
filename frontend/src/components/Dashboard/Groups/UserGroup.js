@@ -6,52 +6,117 @@ import '../dashboard.css';
 import Modal from './Modal';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
+import axios from 'axios';
+import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
+import GroupBackendAPIService from "../../../services/GroupBackendAPIService";
 
-var groupName;
 const UserGroups = (props)=>{
-    useEffect(()=>{
-        document.querySelector("#extraInfo").classList.add('vanish');
-        document.querySelector("#openDetailsLink").classList.remove('vanish');
-        document.querySelector("#closeDetailsLink").classList.add('vanish');
+    const [groupExpenses, setGroupExpenses] = useState();
+    const [users, getAllUsers] = useState();
+    const [group, setGroup] = useState({
+        name: '',
     });
+    const [groupId, setGroupId] = useState(props.match.params.id);
 
-    const groups = useSelector(state => state.groupExpenses);
-    const groupName = props.match.params.id;
-    const usrGrp = groups.groups.filter((group) => group.name === groupName);
-    const expList = usrGrp[0].expenses;
-    const userExpenses = usrGrp[0].totalExpenses;
-    const showUsers = userExpenses.slice(0, 1);
-    const remainingUsers = userExpenses.slice(1, userExpenses.length);
+    useEffect(() => {
+        setGroupId(props.match.params.id);
+    })
+
     
+    useEffect(()=>{
+        // document.querySelector("#extraInfo").classList.add('vanish');
+        // document.querySelector("#openDetailsLink").classList.remove('vanish');
+        // document.querySelector("#closeDetailsLink").classList.add('vanish');
+        GroupBackendAPIService.getGroupInfo(groupId).then(({data, success}) => {
+            console.log(data);
+            setGroup(data);
+        });
+
+        ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
+            if(success){
+                console.log(data);
+            }
+        })
+    }, [groupId]);
+
+    // const usrGrp = groups.groups.filter((group) => group.name === groupId);
+    // const expList = usrGrp[0].expenses;
+    // const userExpenses = usrGrp[0].totalExpenses;
+    // const showUsers = userExpenses.slice(0, 1);
+    // const remainingUsers = userExpenses.slice(1, userExpenses.length);
+
+
+        const token = JSON.parse(localStorage.getItem('token'));
+
+        // to get all the group expenses
+        axios.get(`http://localhost:8000/expenses/all-group/${groupId}`,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.data.success){
+                const expList = JSON.parse(res.data.data);
+                console.log("exp List: ", expList);
+                setGroupExpenses(expList);
+                // groupExpenses = JSON.parse(res.data.data);
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+
+        // to get all the user
+        axios.get(`http://localhost:8000/user/all`,{
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then(res =>{ 
+            if(res.data.success){
+                console.log("users List : ", res.data.data);
+                getAllUsers(res.data.data);
+            }
+        }).catch(err=>{
+            console.log(err);
+        })
+    },[]);
+    
+
     return (
-        <div className="container user-groups">  
+        <div className="container user-groups">
             <div className="row">
                 <div className="col m8 z-depth-1">
                     <div className="header row valign-wrapper grey lighten-2">
                         <div className="col m6 valign-wrapper">
                                 <img className="responsive-img" srsc="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
-                                <span className="center-align">HOME EXPENSES</span>
+                                <span className="center-align">{group.name}</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
-                            <Modal groupName={groupName}/>
+                            <Modal groupId={groupId}/>
                         </div>
                     </div>
                     {
-                        expList ?
+                        groupExpenses ?
                         (
                             (
                                 <div>
-                                    <table className="centered highlight expenses-list-table">
-                                    {   
-                                        expList.length ?
-                                        (
-                                            <ExpenseList expenselist={expList}/>
-                                        )
-                                        :
-                                        (
-                                            <div>Loading...</div>
-                                        )
-                                    }
+                                    <table className="centered highlight expenses-list-table">  
+                                        <tbody>
+                                        {   
+                                            groupExpenses.length ?
+                                            (
+                                                groupExpenses.map((expenses)=>{
+                                                    return (
+                                                        <ExpenseList expenselist={expenses} userList={users} key={expenses.id}/>
+                                                    )
+                                                })
+                                            )
+                                            :
+                                            (
+                                                <tr>
+                                                    <td>No expenses made yet....</td>
+                                                </tr>
+                                            )
+                                        }
+                                        </tbody>
                                     </table>
                                 </div>
                             )
@@ -59,9 +124,9 @@ const UserGroups = (props)=>{
                         (
                             <div>Loading.....</div>
                         )
-                    }
+                    } */}
                 </div>
-                <div className="col m4">
+                {/* <div className="col m4">
                     <div className="row">
                         <div className="col m12 s12 sidebar-header ">
                             <h6 className="grey-text">GROUP BALANCES</h6>
@@ -79,8 +144,8 @@ const UserGroups = (props)=>{
                                                         <div className="col m9 left-align">
                                                             <h6 style={{marginBottom: "0px"}}>{usr.user}</h6>
                                                             {
-                                                                usr.amt > 0 ? 
-                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> : 
+                                                                usr.amt > 0 ?
+                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> :
                                                                     <p className="green-text" style={{marginTop: "0px"}}>Owes USD {-usr.amt}</p>
                                                             }
                                                         </div>
@@ -100,14 +165,14 @@ const UserGroups = (props)=>{
                                     (
                                         remainingUsers.map((usr) =>{
                                             return (
-                                                <li className="collection-item"> 
+                                                <li className="collection-item">
                                                     <div className="row valign-wrapper" style={{marginBottom: "0px"}}>
                                                         <img className="col m3" src="https://img.icons8.com/fluent/50/000000/user-male-circle.png"/>
                                                         <div className="col m9 left-align">
                                                             <h6 style={{marginBottom: "0px"}}>{usr.user}</h6>
                                                             {
-                                                                usr.amt > 0 ? 
-                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> : 
+                                                                usr.amt > 0 ?
+                                                                    <p className="orange-text" style={{marginTop: "0px"}}>Owes USD {usr.amt}</p> :
                                                                     <p className="green-text" style={{marginTop: "0px"}}>Owes USD {-usr.amt}</p>
                                                             }
                                                         </div>
@@ -136,7 +201,7 @@ const UserGroups = (props)=>{
                             document.querySelector("#closeDetailsLink").classList.toggle('vanish');
                         }}><span className="col m12">X</span></p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

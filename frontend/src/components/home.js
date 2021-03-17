@@ -1,9 +1,9 @@
 import React from "react";
 import "./home.css";
 import airplane from "../airplane.png";
-import { Link, NavLink } from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
-const home = () =>{
+const home = () => {
   return(
     <div className="homePage">
       <nav className="nav-wrapper white navbar">
@@ -13,10 +13,10 @@ const home = () =>{
           </Link>
           <ul className="right">
             <li><Link to="/login" className="green-text text-darken-3">
-                            login
+                            Login
             </Link></li>
             <li><NavLink to="/signup" className="black-text">
-              <button className="waves-effect waves-light btn">sign up</button>
+              <button className="waves-effect waves-light btn">Sign up</button>
             </NavLink></li>
           </ul>
         </div>
@@ -25,7 +25,7 @@ const home = () =>{
         <div className="row box1 center-align">
           <div className="col s7">
             <div className="row">
-              <div className="container top-heading"> 
+              <div className="container top-heading">
                 <h1 className="grey-text text-darken-3">Less stress when sharing expenses on trips.</h1>
               </div>
               <div className="container">
@@ -53,9 +53,9 @@ const home = () =>{
             </div>
             <div className="row left-align">
               <div className="container deviceIcons">
-                <p>Free for <span> </span> 
+                <p>Free for <span> </span>
                   <i className="fab fa-apple"></i> iPhone ,
-                  <i className="fab fa-android"></i> android 
+                  <i className="fab fa-android"></i> android
                                     and web
                 </p>
               </div>

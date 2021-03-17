@@ -3,16 +3,15 @@ import { connect } from "react-redux";
 import './Modal.css'
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
+import axios from 'axios';
+import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
+import {toast} from "react-toastify";
 
 class Modal extends Component {
     state = {
-        groupName: this.props.groupName,
-        itemName: '',
-        itemCost: '',
-        date: {
-            month:'3',
-            day:'20'
-        }
+        groupId: this.props.groupId,
+        description: '',
+        amount: '',
     }
 
   componentDidMount() {
@@ -36,7 +35,7 @@ class Modal extends Component {
   setDate = (e)=>{
     const date = (e.target.value).split("-");
     const months = [
-        "jan", "Feb", "March", "April", "May", "June", "July", "Agust", "Sept", 
+        "jan", "Feb", "March", "April", "May", "June", "July", "Agust", "Sept",
         "Oct", "Nov", "Dec"
     ]
     this.setState({
@@ -47,9 +46,30 @@ class Modal extends Component {
         }
     })
   }
-  
+
+  // divide expense equally among all the menbers of this group,(api call)
   addExpense = ()=>{
-    this.props.addExpense(this.state);
+    ExpenseBackendAPIService.createExpense({
+      groupId : this.state.groupId,
+      amount: this.state.amount,
+      description: this.state.description
+    }).then(({data, success})=>{
+            if(success){
+              toast.success(`Successfully added expense for amount ${this.state.amount}`);
+              // this.props.addExpense({
+              //     groupName:
+              // })
+            }
+    //        amount: 1000
+        // byUser: "9c034fda-d94c-4bd4-ab36-d1beb873dce8"
+        // createdAt: "2021-03-17T10:52:08.472Z"
+        // currency: "USD"
+        // description: "This is a test message for the Paper2"
+        // groupId: "03c53b8d-5600-4033-8247-3d14ff96ac8f"
+        // id: "750af0e5-7658-4161-af7e-119d60558446"
+        // toUser: "9484ee35-a152-4d68-b136-157279aaa9a6"
+        // updatedAt: "2021-03-17T10:52:08.472Z"
+    });
   }
 
   render() {
@@ -74,10 +94,10 @@ class Modal extends Component {
                 </div>
                 <div className="row right-align">
                     <div className="input-field col m12 s12">
-                        <input placeholder="Expense item name" id="itemName" type="text" className=" input-field validate center-align"
+                        <input placeholder="Expense item name" id="description" type="text" className=" input-field validate center-align"
                             onChange={this.setValues}
                         />
-                        <input placeholder="Cost of item" id="itemCost" type="number" className="input-field validate center-align"
+                        <input placeholder="Cost of item" id="amount" type="number" className="input-field validate center-align"
                             onChange={this.setValues}
                         />
                     </div>
@@ -108,4 +128,3 @@ const mapDispatchToProps = (dispatch)=>{
 }
 
 export default connect(null, mapDispatchToProps)(Modal);
-// export default Modal;
