@@ -5,6 +5,20 @@ const groupsDtl = require('../dtl/groups_dtl');
 const groupsRepo = require('../repos/groups_repo');
 const expensesRepo = require('../repos/expenses_repo');
 
+async function getGroupInfo(req, res, next) {
+  try {
+    logger.info('controllers', 'getGroupInfo');
+    const { userId } = req.user;
+    const { groupId } = req.params;
+    const group = await groupsRepo.getGroupById(groupId);
+    const response = genericDTL.getResponseDto(group);
+    return res.send(response);
+  } catch (err) {
+    logger.error(`Unable to get groups info. Err. ${JSON.stringify(err)}`);
+    return next(err);
+  }
+}
+
 async function getAllGroups(req, res, next) {
   try {
     logger.info('controllers', 'getAllGroups');
@@ -88,6 +102,7 @@ async function updateGroup(req, res, next) {
 
 module.exports = {
   getAllGroups,
+  getGroupInfo,
   acceptGroupInvite,
   createGroup,
   leaveGroup,

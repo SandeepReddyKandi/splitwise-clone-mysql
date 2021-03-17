@@ -7,28 +7,34 @@ import Modal from './Modal';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
 import axios from 'axios';
+import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
+import GroupBackendAPIService from "../../../services/GroupBackendAPIService";
 
-var groupName;
 const UserGroups = (props)=>{
-    const groups = useSelector(state => state.groupState);
-    const groupId = props.match.params.id;
+    const [group, setGroup] = useState({
+        name: '',
+    });
+    const [groupId, setGroupId] = useState(props.match.params.id);
+
+    useEffect(() => {
+        setGroupId(props.match.params.id);
+    })
 
     useEffect(()=>{
         // document.querySelector("#extraInfo").classList.add('vanish');
         // document.querySelector("#openDetailsLink").classList.remove('vanish');
         // document.querySelector("#closeDetailsLink").classList.add('vanish');
+        GroupBackendAPIService.getGroupInfo(groupId).then(({data, success}) => {
+            console.log(data);
+            setGroup(data);
+        });
 
-        const token = JSON.parse(localStorage.getItem('token'));
-        axios.get('http://localhost:8000/expenses/all', {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        }).then((res)=>{
-            if(res.data.success){
-                console.log(res.data.data);
+        ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
+            if(success){
+                console.log(data);
             }
         })
-    });
+    }, [groupId]);
 
     // const usrGrp = groups.groups.filter((group) => group.name === groupId);
     // const expList = usrGrp[0].expenses;
@@ -43,7 +49,7 @@ const UserGroups = (props)=>{
                     <div className="header row valign-wrapper grey lighten-2">
                         <div className="col m6 valign-wrapper">
                                 <img className="responsive-img" srsc="https://img.icons8.com/flat-round/64/000000/home--v1.png"/>
-                                <span className="center-align">HOME EXPENSES</span>
+                                <span className="center-align">{group.name}</span>
                         </div>
                         <div className="col m6 valign-wrapper expenseBtn">
                             <Modal groupId={groupId}/>

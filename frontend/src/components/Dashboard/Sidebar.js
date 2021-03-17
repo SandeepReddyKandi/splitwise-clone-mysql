@@ -5,30 +5,18 @@ import Dashboard from './Dashboard';
 import './dashboard.css';
 import CreateNewGroup from './CreateNewGroup';
 import axios from 'axios';
+import GroupBackendAPIService from "../../services/GroupBackendAPIService";
 
 const Sidebar = ()=>{
-    const {groups} = useSelector(state => {
-        return {
-            groups: state.groupState.groups
-        }
-    });
-
     const [allGroups, setAllGroups] = useState([]);
-    useEffect(()=>{
-        const token = JSON.parse(localStorage.getItem('token'));
-        axios.get('http://localhost:8000/groups/all', {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        }).then((res)=>{
-            if(res.data.success){
-                console.log(res.data.data);
-                setAllGroups(res.data.data.acceptedGroups);
-            }
-        })
-    },[]);
 
-    // console.log("all groups : " ,allGroups);
+    useEffect(()=>{
+        GroupBackendAPIService.getAllGroups().then(({data, success})=>{
+            if (success){
+                setAllGroups(data.acceptedGroups);
+            }
+        });
+    },[]);
 
     return(
         <div className="container sidebar">
@@ -48,9 +36,9 @@ const Sidebar = ()=>{
 
             {/* recent activity */}
             <div className="row recent-activity">
-                <Link to="/user/home/recentactivity">
+                <Link to="/user/home/recent-activity">
                     <div className="col m2 ">
-                        <i className="fas fa-flag"></i>
+                        <i className="fas fa-flag" />
                     </div>
                     <div className="col m10 valign-wrapper">
                         <span className="grey-text text-darken-2 valign-wrapper">
@@ -60,15 +48,14 @@ const Sidebar = ()=>{
                 </Link>
             </div>
 
-
             {/* side-bar group list */}
             <div className="row group-list">
                 <div className="group-header grey lighten-3 left-align">
                     <p className="gery-text">GROUPS</p>
                     <div className="icon right-align">
                         <Link to="/user/home/newGroup">
-                            <i className="fa fa-plus modal-trigger"></i>
-                            <span>add</span>
+                            <i className="fa fa-plus modal-trigger"/>
+                            <span>Add</span>
                         </Link>
                     </div>
                 </div>

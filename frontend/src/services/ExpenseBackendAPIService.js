@@ -5,7 +5,7 @@ class ExpenseBackendAPIService {
     static API_ENDPOINT = 'http://localhost:8000/expenses';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
-    static async getAllGroups(payload) {
+    static async getAllExpenses() {
         const url = `${this.API_ENDPOINT}/all`;
         try {
             const response = await axios.get(url, {
@@ -44,7 +44,7 @@ class ExpenseBackendAPIService {
         }
     }
 
-    static async leaveGroup(invite) {
+    static async expens(invite) {
         if (!invite.id) {
             toast.error('Please select a group to accept invitation!');
         }

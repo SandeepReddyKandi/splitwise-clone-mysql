@@ -2,7 +2,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 class GroupBackendAPIService {
-    static API_ENDPOINT = 'http://localhost:8000/groups/';
+    static API_ENDPOINT = 'http://localhost:8000/groups';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllGroups(payload) {
@@ -56,6 +56,26 @@ class GroupBackendAPIService {
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while leaving group!');
+            return {
+                success: false,
+            }
+        }
+    }
+
+    static async getGroupInfo(groupId) {
+        if (!groupId) {
+            toast.error('Cannot get group info without group Id!');
+        }
+        const url = `${this.API_ENDPOINT}/${groupId}`;
+        try {
+            const response = await axios.get(url,{
+                headers: {
+                    authorization: `Bearer ${this.TOKEN}`
+                }
+            });
+            return response.data;
+        } catch (e) {
+            toast.error('Something went wrong while getting group info!');
             return {
                 success: false,
             }
