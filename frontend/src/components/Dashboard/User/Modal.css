@@ -1,0 +1,13 @@
+#userInfoUpdateModal {
+    width: 48%;
+}
+#userInfoUpdateModal  .modal-content {
+    margin: auto;
+    width: 90%;
+}
+
+#userInfoUpdateModal .modal-footer{
+    display: flex ;
+    justify-content: center ;
+    align-item: center ;
+}

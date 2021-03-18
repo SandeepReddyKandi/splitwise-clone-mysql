@@ -18,16 +18,15 @@ const Expenses = (props)=>{
         }
     });
 
-    const [userId, setUserId] = useState();
+    const [userIndo, setUserIndo] = useState();
     const [userExpenses, setUserExpenses] = useState();
     const [allBalance, setBalance] = useState();
 
     useEffect(() => {
         UserBackendAPIService.getUserDetails().then(({data, success})=>{
-            console.log(data);
-            setUserId(data.id);
+            setUserIndo(data);
         });
-    },[])
+    },[]);
 
     // useEffect(()=>{
     //     ExpenseBackendAPIService.getUserBalanceByUserId(userId).then(({data, success})=>{
@@ -40,11 +39,12 @@ const Expenses = (props)=>{
     useEffect(()=>{
         ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
             if(success){
-                console.log('all expenses : ',data);
                 setBalance(data);
             }
         })
-    },[])
+    },[]);
+
+    // console.log(allBalance);
 
     return (
         <div className="container expenses row z-depth-2">
@@ -67,19 +67,19 @@ const Expenses = (props)=>{
                         <td>
                             <div className="user-exp user-total">
                                 <p className="grey-text lighten-2">total balance</p>
-                                <span className="green-text">+$80.24</span>
+                                <span className="green-text">{allBalance !== undefined ? allBalance.totalcost : ''}</span>
                             </div>
                         </td>
                         <td>
                             <div className="user-exp user-total">
                                 <p className="grey-text lighten-2">you owe</p>
-                                <span className="green-text">+$0.24</span>
+                                <span className="green-text">{ allBalance !== undefined ? allBalance.recieve : ''}</span>
                             </div>
                         </td>
                         <td>
                             <div className="user-exp user-total">
                                 <p className="grey-text lighten-2">you are owed</p>
-                                <span className="green-text">+$80.24</span>
+                                <span className="green-text">{ allBalance !== undefined ? allBalance.pay : ''}</span>
                             </div>
                         </td>
                     </tr>
@@ -90,39 +90,49 @@ const Expenses = (props)=>{
                     <div className="col m6 payingList">
                         <h5 className="grey-text left">YOU OWE</h5>
                         {
-                            pay.length ?
-                            (
-                                pay.map((payment)=>{
-                                    return(
-                                        <Give paymentList={payment} key={payment.id}/>
-                                    )
-                                })
-                            )
-                            :
-                            (
-                                <div className="container emptyList row valign-wrapper center-align">
-                                    <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
-                                </div>
-                            )
+                            allBalance !== undefined ?
+                                (
+                                    allBalance.recieveExpenses.length > 0?
+                                        (
+                                            allBalance.recieveExpenses.map((payment)=>{
+                                                return(
+                                                    <Give paymentList={payment} key={payment.id}/>
+                                                )
+                                            })
+                                        )
+                                        :
+                                        (
+                                            <div className="container emptyList row valign-wrapper center-align">
+                                                <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
+                                            </div>
+                                        )
+                                ):(
+                                    ''
+                                )
                         }
                     </div>
                     <div className="col m6 recievingList">
                         <h5 className="grey-text right">YOU ARE OWED</h5>
                         {
-                            recieve.length ?
-                            (
-                                recieve.map((payment)=>{
-                                    return(
-                                        <Recieve paymentList={payment} key={payment.id}/>
-                                    )
-                                })
-                            )
-                            :
-                            (
-                                <div className="container emptyList row valign-wrapper center-align">
-                                    <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
-                                </div>
-                            )
+                            allBalance !== undefined ?
+                                (
+                                    allBalance.getExpenses.length ?
+                                        (
+                                            allBalance.getExpenses.map((payment)=>{
+                                                return(
+                                                    <Recieve paymentList={payment} key={payment.id}/>
+                                                )
+                                            })
+                                        )
+                                        :
+                                        (
+                                            <div className="container emptyList row valign-wrapper center-align">
+                                                <h5 className="col s12 m12 grey-text emptyText">List is empty</h5>
+                                            </div>
+                                        )
+                                ):(
+                                    ''
+                                )
                         }
                     </div>
                 </div>

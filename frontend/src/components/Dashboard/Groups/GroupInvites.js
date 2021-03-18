@@ -60,7 +60,8 @@ const Invites = (props)=>{
                     setAcceptedGroups(acceptedGroups.filter(group => group.id !== invite.id))
                 }
             } else {
-                toast.error(data.message);
+                toast.error(data.reason);
+                // console.log(data);
             }
         })
     }

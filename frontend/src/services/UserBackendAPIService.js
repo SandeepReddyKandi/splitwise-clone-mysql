@@ -102,6 +102,27 @@ class UserBackendAPIService {
         }
     }
 
+    static async updateUserDetails(payload) {
+        console.log(payload);
+        const url = `${this.API_ENDPOINT}/update`;
+        try {
+            const response = await axios.put(url,
+                {
+                    ...payload
+                },{
+                    headers: {
+                        authorization: `Bearer ${this.TOKEN}`
+                    }
+                });
+            return response.data;
+        } catch (e) {
+            toast.error('Something went wrong while getting user info!');
+            return {
+                success: false,
+            }
+        }
+    }
+
 }
 
 export default UserBackendAPIService;

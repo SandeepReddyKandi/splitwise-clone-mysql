@@ -45,7 +45,7 @@ class CreateNewGroup extends Component {
 		})
 	}
 
-	// here we are submitting the store data to db
+	// submitting the store data to db
 	createNewGroup = (e) => {
 		e.preventDefault();
 		if (this.state.name === '') {
