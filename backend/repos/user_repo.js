@@ -24,9 +24,10 @@ async function findUserByEmail(email) {
 async function updateUserDetailsById(userId, data) {
   const { currency, phone, name, password, language, timezone } = data;
   const values = { currency, phone, name, password, language, timezone };
-  const condition = { returning: true, plain: true, where: { id: userId } };
-  const result = await users.update(values, condition);
-  return result;
+  const condition = { where: { id: userId } };
+  await users.update(values, condition);
+  const user = await users.findOne({ where: { id: userId } });
+  return user;
 }
 
 async function getUserByAppAccessToken(token) {
