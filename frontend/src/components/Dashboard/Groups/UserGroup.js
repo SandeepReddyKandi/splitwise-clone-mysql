@@ -34,31 +34,31 @@ const UserGroups = (props)=>{
             setGroup(data);
         });
 
-        ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
-            if(success){
-                console.log(data);
-            }
-        });
+        // ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
+        //     if(success){
+        //         console.log(data);
+        //     }
+        // });
 
         // getting all the expenses
         ExpenseBackendAPIService.getAllExpensesForGroupId(groupId).then(({data, success})=>{
             if(success){
-                console.log(data);
+                // console.log(data);
                 setGroupExpenses(data);
             }
         });
 
         ExpenseBackendAPIService.getBalanceOfEachUserInGoupId(groupId).then(({data, success})=>{
             if(success){
-                console.log(data);
-                // setGroupExpenses(data);
+                console.log('balance of each user : ',data);
+                setGroupExpenses(data);
             }
         });
 
         // to get all the user
         UserBackendAPIService.getAllUsers().then(({data, success})=>{
             if(success){
-                console.log(data);
+                // console.log(data); 
                 getAllUsers(data);
             }
         });

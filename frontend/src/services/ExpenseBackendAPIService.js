@@ -42,7 +42,7 @@ class ExpenseBackendAPIService {
     static async getBalanceOfEachUserInGoupId(groupId) {
         const url = `${this.API_ENDPOINT}/balance-group/${groupId}`;
         try {
-            const response = await axios.get(url, {
+            const response = await axios.get(url,{
                 headers: {
                     authorization: `Bearer ${this.TOKEN}`
                 }

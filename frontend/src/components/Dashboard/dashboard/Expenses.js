@@ -6,7 +6,6 @@ import Modal from './Modal';
 import '../dashboard.css';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
-import axios from 'axios';
 import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
 import UserBackendAPIService from "../../../services/UserBackendAPIService";
 
