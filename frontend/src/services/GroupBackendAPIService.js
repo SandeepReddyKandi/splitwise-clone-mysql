@@ -53,7 +53,8 @@ class GroupBackendAPIService {
                     authorization: `Bearer ${this.TOKEN}`
                 }
             });
-            return response.data;
+            // console.log(response);
+            return response;
         } catch (e) {
             toast.error('Something went wrong while leaving group!');
             return {

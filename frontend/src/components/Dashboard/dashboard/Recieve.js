@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../dashboard.css';
 
 const Recieve = (recieve)=>{
-    const info = recieve.paymentList;
+    const [getPayment, setGetPayment] = useState(recieve.paymentList);
+
+    useEffect(()=>{
+        setGetPayment(recieve.paymentList);
+    },[]);
+
     return(
         <div className="container amtContainer">
             <div className="row">
@@ -12,16 +17,16 @@ const Recieve = (recieve)=>{
                             <div className="card-title row grey lighten-3">
                                 <img className="col m2 left responsive-img center-align valign-wrapper" src="https://img.icons8.com/nolan/64/shopping-cart-loaded.png"/>
                                 <div className="col m10 left">
-                                    <p className="left-align">{info.name}</p>
-                                    <p className="green-text left-align">Ows you +${info.totalAmt}</p>
+                                    <p className="left-align">{getPayment.name}</p>
+                                    <p className="green-text left-align">Ows you +${getPayment.totalAmt}</p>
                                 </div>
                             </div>
                             <div className="list-content">
                                 <ul className="collection ">
                                 {
-                                    info.groups.map((group)=>{
+                                    getPayment.groups.map((group)=>{
                                         return (
-                                            <li className="collection-item grey lighten-5 grey-text text-lighten-1" key={group.id}>{info.name} owes you +${group.amt} for "{group.group}"</li>
+                                            <li className="collection-item grey lighten-5 grey-text text-lighten-1" key={group.id}>{getPayment.name} owes you +${group.amt} for "{group.group}"</li>
                                         )
                                     })
                                 }

@@ -47,7 +47,8 @@ class ExpenseBackendAPIService {
                 headers: {
                     authorization: `Bearer ${this.TOKEN}`
                 }
-            })
+            });
+            console.log('all users balance : ', response);
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while getting the balance of each user in this group!');
@@ -128,6 +129,30 @@ class ExpenseBackendAPIService {
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while leaving group!');
+            return {
+                success: false,
+            }
+        }
+    }
+
+    static async settleExpenseWithUser2ID(payload) {
+        if (!payload.userId || !payload.user2Id) {
+            toast.error('Please select a group to accept invitation!');
+        }
+
+        console.log('payload : ', payload);
+        const url = `${this.API_ENDPOINT}/settle/${payload.params}`;
+        try {
+            const response = await axios.put(url, {
+                ...payload
+            },{
+                headers: {
+                    authorization: `Bearer ${this.TOKEN}`
+                }
+            });
+            return response.data;
+        } catch (e) {
+            toast.error('Something went wrong settling expense!');
             return {
                 success: false,
             }
