@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "materialize-css": "^1.0.0-rc.2",
+    "materialize-css": "^1.0.0",
     "react-select": "^4.2.1",
     "react-toastify": "^7.0.3"
   }

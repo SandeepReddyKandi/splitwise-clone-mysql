@@ -3,6 +3,7 @@ import { Link , Switch } from "react-router-dom";
 import { useSelector, connect } from 'react-redux';
 import '../dashboard.css';
 import userIcon from './img/user_1.png';
+import Modal from "./Modal.js";
 
 const User = (props)=>{
     const initUser = useSelector(state => state.userState.user);
@@ -50,33 +51,34 @@ const User = (props)=>{
                                     <div>
                                         <p>Your Name</p>
                                         <div>   <b>{user.name}  </b>
-                                            <span>
+                                            <a className="modal-trigger" data-target="userInfoUpdateModal">
                                                 <i className="fas fa-pencil-alt"></i>
                                                 Edit
-                                            </span>
+                                            </a>
                                         </div>
                                     </div>
                                     <div>
                                         <p>Your email address</p>
                                         <div>   <b>{user.email}  </b>
-                                            <span>
-                                                <i className="fas fa-pencil-alt"></i>
-                                                Edit
-                                            </span>
+                                            {/*<span>*/}
+                                            {/*    <i className="fas fa-pencil-alt"></i>*/}
+                                            {/*    Edit*/}
+                                            {/*</span>*/}
                                         </div>
                                     </div>
                                     <div>
                                         <p>Your phone number</p>
                                         <div>   <b>{user.phone}  </b>
-                                            <span>
+                                            <a className="modal-trigger" data-target="userInfoUpdateModal">
                                                 <i className="fas fa-pencil-alt"></i>
                                                 Edit
-                                            </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <Modal/>
                     </div>
                 </div>
                 <div className="col m6 s6">
