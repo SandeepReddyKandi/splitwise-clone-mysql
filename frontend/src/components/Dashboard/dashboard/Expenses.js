@@ -28,14 +28,6 @@ const Expenses = (props)=>{
         });
     },[]);
 
-    // useEffect(()=>{
-    //     ExpenseBackendAPIService.getUserBalanceByUserId(userId).then(({data, success})=>{
-    //         if(success){
-    //             setUserExpenses(data);
-    //         }
-    //     })
-    // },[])
-
     useEffect(()=>{
         ExpenseBackendAPIService.getAllExpenses().then(({data, success})=>{
             if(success){
@@ -43,8 +35,6 @@ const Expenses = (props)=>{
             }
         })
     },[]);
-
-    // console.log(allBalance);
 
     return (
         <div className="container expenses row z-depth-2">

@@ -21,7 +21,6 @@ const RecentActivityComponent = (props)=>{
     useEffect(() => {
         ExpenseBackendAPIService.getRecentActivity().then(({data, success})=>{
             if(success){
-                console.log('recent activity : ',data);
                 setRecentActivities(data);
             }
         })
@@ -40,7 +39,7 @@ const RecentActivityComponent = (props)=>{
                         recentActivities ? (
                             <div>
                                 <table className="centered highlight expenses-list-table">
-                                    {recentActivities.length ? <ExpenseList recentActivities={recentActivities} userId={userId}/> : <div>Loading...</div>}
+                                    {recentActivities.length ? <ExpenseList recentActivities={recentActivities} userId={userId} key={recentActivities.id}/> : <div>Loading...</div>}
                                 </table>
                             </div>
                         ) : (

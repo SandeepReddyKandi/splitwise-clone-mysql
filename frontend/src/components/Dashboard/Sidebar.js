@@ -25,13 +25,10 @@ const Sidebar = ()=>{
             }
         }).then((res)=>{
             if(res.data.success){
-                console.log(res.data.data);
                 setAllGroups(res.data.data.acceptedGroups);
             }
         })
     },[]);
-
-    // console.log("all groups : " ,allGroups);
 
     return(
         <div className="container sidebar">

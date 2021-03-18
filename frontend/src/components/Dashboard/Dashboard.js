@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, connect } from 'react-redux';
 import Sidebar from './Sidebar';
 import Expenses from './dashboard/Expenses';
 import RecentActivity from './RecentActivity/RecentActivity';
@@ -16,7 +17,8 @@ const Dashboard = (props)=>{
             <nav className="nav-wrapper teal accent-4 navbar">
                 <div className="container">
                     <Link to="/" className="brand-logo black-text">
-                        <img className="responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter" style={{ marginTop: "10px" }}/>
+                        {/*<img className="responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter" style={{ marginTop: "10px" }}/>*/}
+                        <button className="btn" onClick={props.clearStore}>Log Out</button>
                     </Link>
                     <ul className="right">
                         <li className="navbarBtnGrp">
@@ -58,4 +60,15 @@ const Dashboard = (props)=>{
     )
 }
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        clearStore: (payload)=>{
+            dispatch({
+                type: 'CLEAR_STORE',
+                payload
+            })
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Dashboard);

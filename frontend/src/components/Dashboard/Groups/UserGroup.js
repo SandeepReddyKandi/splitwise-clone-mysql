@@ -32,7 +32,6 @@ const UserGroups = (props)=>{
         document.querySelector("#closeDetailsLink").classList.add('vanish');
         
         GroupBackendAPIService.getGroupInfo(groupId).then(({data, success}) => {
-            console.log("group name: ",data.name);
             setGroup(data);
         },[]);
 
@@ -40,7 +39,6 @@ const UserGroups = (props)=>{
         // getting all the expenses
         ExpenseBackendAPIService.getAllExpensesForGroupId(groupId).then(({data, success})=>{
             if(success){
-                console.log('all expense', data);
                  setGroupExpenses(data);
             }
         },[]);

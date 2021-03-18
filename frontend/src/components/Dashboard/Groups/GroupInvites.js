@@ -12,7 +12,6 @@ const Invites = (props)=>{
 
     useEffect(() => {
         GroupBackendAPIService.getAllGroups().then(({data, success})=>{
-            console.log(data, success);
             if (success){
                 props.addActiveGroups(data.acceptedGroups);
                 props.addInvites(data.invitedGroups);
@@ -61,7 +60,6 @@ const Invites = (props)=>{
                 }
             } else {
                 toast.error(data.reason);
-                // console.log(data);
             }
         })
     }

@@ -34,7 +34,6 @@ class Modal extends Component {
           }
       }).then(res => {
           if (res.data.success) {
-              console.log('users : ', res.data.data);
               this.setState({
                   ...this.state,
                   completeUserList: res.data.data.map(user => {
@@ -59,7 +58,6 @@ class Modal extends Component {
   }
 
   settleBalance = ()=>{
-    console.log(this.state.userName);
     this.props.deleteUser(this.state);
   }
 

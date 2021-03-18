@@ -17,7 +17,8 @@ const User = (props)=>{
             <nav className="nav-wrapper teal accent-4 navbar user-header">
                 <div className="container">
                     <Link to="/" className="brand-logo black-text">
-                        <img className="responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter" style={{ marginTop: "10px" }}/>
+                        {/*<img className="responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter" style={{ marginTop: "10px" }}/>*/}
+                        <button className="btn" onClick={props.clearStore}>Log Out</button>
                     </Link>
                     <ul className="right">
                         <li className="navbarBtnGrp">
@@ -159,6 +160,13 @@ const mapDispatchToProps = (dispatch)=>{
             dispatch({
                 type: 'SET_USER_VARIABLES',
                 payload: state
+            })
+        },
+
+        clearStore: (payload)=>{
+            dispatch({
+                type: 'CLEAR_STORE',
+                payload
             })
         }
     }

@@ -8,12 +8,10 @@ const ExpenseList = (list)=>{
 
     useEffect(() => {
         setExpenseList(list.recentActivities);
-        console.log(list.recentActivities);
     })
 
     useEffect(() => {
         UserBackendAPIService.getUserDetails().then(({data, success})=>{
-            console.log(data);
             setUserInfo(data);
             setUserName(data.name);
         });
