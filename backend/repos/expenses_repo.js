@@ -33,8 +33,8 @@ async function settleAllBalancesBetweenUsers(byUser, toUser) {
 }
 
 async function getAllExpensesForUserId(userId) {
-  const getCondition = { plain: true, where: { byUser: userId, settledAt: null } };
-  const payCondition = { plain: true, where: { toUser: userId, settledAt: null } };
+  const getCondition = { where: { byUser: userId, settledAt: null } };
+  const payCondition = { where: { toUser: userId, settledAt: null } };
   const getExpenses = await expenses.findAll(getCondition);
   const payExpenses = await expenses.findAll(payCondition);
   return { getExpenses, payExpenses };
