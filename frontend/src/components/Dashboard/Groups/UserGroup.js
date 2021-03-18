@@ -43,15 +43,15 @@ const UserGroups = (props)=>{
         // getting all the expenses
         ExpenseBackendAPIService.getAllExpensesForGroupId(groupId).then(({data, success})=>{
             if(success){
-                // console.log(data);
-                setGroupExpenses(data);
+                console.log('all expense', data);
+                 setGroupExpenses(data);
             }
         });
 
         ExpenseBackendAPIService.getBalanceOfEachUserInGoupId(groupId).then(({data, success})=>{
             if(success){
                 console.log('balance of each user : ',data);
-                setGroupExpenses(data);
+                // setGroupExpenses(data);  // TODO Check this need some other value ?? 
             }
         });
 
