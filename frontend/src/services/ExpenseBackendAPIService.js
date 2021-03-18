@@ -48,7 +48,7 @@ class ExpenseBackendAPIService {
                     authorization: `Bearer ${this.TOKEN}`
                 }
             });
-            console.log('all users balance : ', response);
+            console.log('all users balance : ', response);      // user balance
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while getting the balance of each user in this group!');
