@@ -34,7 +34,7 @@ async function getAllExpenses(req, res, next) {
     const { getExpenses, payExpenses } = await expensesRepo.getAllExpensesForUserId(userId);
     const users = await usersRepo.getAllUsers();
     const allGroups = await groupsRepo.getAllGroups();
-    const data = await expensesDtl.getExpenseSummaryDto({ getExpenses, payExpenses, userId, users, allGroups });
+    const data = expensesDtl.getExpenseSummaryDto({ getExpenses, payExpenses, userId, users, allGroups });
     const response = genericDTL.getResponseDto(data);
     return res.send(response);
   } catch (err) {

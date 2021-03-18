@@ -30,6 +30,7 @@ class ExpenseBackendAPIService {
                     authorization: `Bearer ${this.TOKEN}`
                 }
             })
+        
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while getting all expenses for this group!');

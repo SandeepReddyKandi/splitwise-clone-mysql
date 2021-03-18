@@ -6,7 +6,7 @@ const { Op } = db.Sequelize;
 
 function getTotalAmount(allExpenses) {
   let total = 0;
-  if (!allExpenses) return total;
+  if (!allExpenses || !Array.isArray(allExpenses)) return total;
   allExpenses.forEach((expense) => {
     total += expense.amount;
     return expense;
@@ -15,8 +15,8 @@ function getTotalAmount(allExpenses) {
 }
 
 async function getBalanceBetweenUsers(user1Id, user2Id) {
-  const getCondition = { plain: true, where: { byUser: user1Id, toUser: user2Id, settledAt: null } };
-  const payCondition = { plain: true, where: { byUser: user2Id, toUser: user1Id, settledAt: null } };
+  const getCondition = { where: { byUser: user1Id, toUser: user2Id, settledAt: null } };
+  const payCondition = { where: { byUser: user2Id, toUser: user1Id, settledAt: null } };
   const getExpenses = await expenses.findAll(getCondition);
   const payExpenses = await expenses.findAll(payCondition);
   const getAmount = getTotalAmount(getExpenses);
@@ -33,8 +33,8 @@ async function settleAllBalancesBetweenUsers(byUser, toUser) {
 }
 
 async function getAllExpensesForUserId(userId) {
-  const getCondition = { plain: true, where: { byUser: userId, settledAt: null } };
-  const payCondition = { plain: true, where: { toUser: userId, settledAt: null } };
+  const getCondition = { where: { byUser: userId, settledAt: null } };
+  const payCondition = { where: { toUser: userId, settledAt: null } };
   const getExpenses = await expenses.findAll(getCondition);
   const payExpenses = await expenses.findAll(payCondition);
   return { getExpenses, payExpenses };
