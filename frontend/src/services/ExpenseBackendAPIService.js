@@ -2,7 +2,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 class ExpenseBackendAPIService {
-    static API_ENDPOINT = 'http://localhost:8000/expenses';
+    static API_ENDPOINT = 'http://18.219.242.1:8000/expenses';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllExpenses() {
@@ -30,7 +30,7 @@ class ExpenseBackendAPIService {
                     authorization: `Bearer ${this.TOKEN}`
                 }
             })
-        
+
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while getting all expenses for this group!');

@@ -2,7 +2,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 class UserBackendAPIService {
-    static API_ENDPOINT = 'http://localhost:8000/user';
+    static API_ENDPOINT = 'http://18.219.242.1:8000/user';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllUsers() {

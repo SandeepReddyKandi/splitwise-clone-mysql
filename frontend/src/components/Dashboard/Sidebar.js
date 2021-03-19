@@ -19,7 +19,7 @@ const Sidebar = ()=>{
 
     useEffect(()=>{
         const token = JSON.parse(localStorage.getItem('token'));
-        axios.get('http://localhost:8000/groups/all', {
+        axios.get('http://18.219.242.1:8000/groups/all', {
             headers: {
                 authorization: `Bearer ${token}`
             }

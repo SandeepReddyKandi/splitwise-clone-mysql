@@ -2,7 +2,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 
 class GroupBackendAPIService {
-    static API_ENDPOINT = 'http://localhost:8000/groups';
+    static API_ENDPOINT = 'http://18.219.242.1:8000/groups';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllGroups(payload) {

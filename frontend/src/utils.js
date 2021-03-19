@@ -8,7 +8,7 @@ class Utils {
         const token = JSON.parse(localStorage.getItem('token'));
         let userData = {};
         try {
-            const {data} = await axios.post(`http://localhost:8000/user/me`, null,  {
+            const {data} = await axios.post(`http://18.219.242.1:8000/user/me`, null,  {
                 headers: {
                     authorization: `Bearer ${token}`,
                 }

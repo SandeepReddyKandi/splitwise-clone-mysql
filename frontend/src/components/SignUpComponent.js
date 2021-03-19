@@ -36,7 +36,7 @@ class SignUpComponent extends Component {
         return;
       }
 
-      axios.post("http://localhost:8000/user/signup/", {
+      axios.post("http://18.219.242.1:8000//user/signup/", {
         name: this.state.name,
         phone: this.state.phone,
         email: this.state.email,

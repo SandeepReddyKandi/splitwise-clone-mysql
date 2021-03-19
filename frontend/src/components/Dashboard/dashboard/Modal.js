@@ -28,7 +28,7 @@ class Modal extends Component {
 
       // getting all the users
       const token = JSON.parse(localStorage.getItem('token'));
-      axios.get('http://localhost:8000/user/all', {
+      axios.get('http://18.219.242.1:8000/user/all', {
           headers: {
               authorization: `Bearer ${token}`,
           }
