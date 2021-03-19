@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import './Modal.css'
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
-import axios from 'axios';
-import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
-import {toast} from "react-toastify";
 import UserBackendAPIService from "../../../services/UserBackendAPIService";
 
 class Modal extends Component {
@@ -31,7 +28,6 @@ class Modal extends Component {
         this.setState({
             [e.target.id] : e.target.value
         })
-        // console.log(e.target.value);
     }
 
     updateChanges = ()=>{
@@ -39,14 +35,12 @@ class Modal extends Component {
         console.log('updated user number : ', this.state.updatedUserPhoneNumber);
         UserBackendAPIService.updateUserDetails({
             user : this.props.userInfo.id,
-            body : {
-                currency : this.props.userInfo.currency,
-                phone : this.state.updatedUserPhoneNumber,
-                name : this.state.updatedUserName,
-                password : this.props.userInfo.password,
-                language : this.props.userInfo.language,
-                timezone : this.props.userInfo.timezone
-            }
+            currency : this.props.userInfo.currency,
+            phone : this.state.updatedUserPhoneNumber,
+            name : this.state.updatedUserName,
+            password : this.props.userInfo.password,
+            language : this.props.userInfo.language,
+            timezone : this.props.userInfo.timezone
         }).then(({data, success})=>{
             if(success){
                 console.log('data : ',data);

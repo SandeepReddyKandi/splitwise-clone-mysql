@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import '../dashboard.css';
 
-const Recieve = (recieve)=>{
+const Recieve = (recieve) => {
     const [getPayment, setGetPayment] = useState(recieve.paymentList);
 
     useEffect(()=>{
