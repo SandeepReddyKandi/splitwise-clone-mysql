@@ -15,7 +15,7 @@ class UserBackendAPIService {
             })
             return response.data;
         } catch (e) {
-            toast.error('Something went wrong while getting all users!');
+            // toast.error('Something went wrong while getting all users!');
             return {
                 success: false,
             }
@@ -97,12 +97,12 @@ class UserBackendAPIService {
         } catch (e) {
             return {
                 success: false,
+                data: {},
             }
         }
     }
 
     static async updateUserDetails(payload) {
-        console.log(payload);
         const url = `${this.API_ENDPOINT}/update`;
         try {
             const response = await axios.put(url,

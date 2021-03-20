@@ -25,6 +25,8 @@ const Expenses = (props)=>{
     useEffect(() => {
         UserBackendAPIService.getUserDetails().then(({data, success})=>{
             setUserIndo(data);
+        }).catch(e => {
+            console.log(e.message);
         });
     },[]);
 

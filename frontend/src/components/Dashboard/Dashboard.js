@@ -65,10 +65,9 @@ const Dashboard = (props)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        logout: (payload)=>{
+        logout: () => {
             dispatch({
-                type: 'lOG_OUT',
-                payload
+                type: 'LOG_OUT',
             })
         }
     }

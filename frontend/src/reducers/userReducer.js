@@ -71,7 +71,8 @@ const userReducer = (state = initState, action)=> {
     }
 
     case 'LOG_OUT': {
-      localStorage.removeItem('token');
+      debugger;
+      localStorage.clear();
       return initState;
     }
 

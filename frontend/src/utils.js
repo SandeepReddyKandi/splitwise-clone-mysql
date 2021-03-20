@@ -18,7 +18,6 @@ class Utils {
             }
             return userData;
         } catch (e) {
-            toast.error('Something went wrong, please log in again!')
             return userData;
         }
     }

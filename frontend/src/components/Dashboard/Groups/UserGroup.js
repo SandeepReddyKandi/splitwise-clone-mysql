@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import { useSelector} from 'react-redux';
-import { Switch, Route, Link, Redirect} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import ExpenseList from './ExpenseList';
 import '../dashboard.css';
 import Modal from './Modal';
 import './Modal.css'
 import "materialize-css/dist/css/materialize.min.css";
-import axios from 'axios';
 import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
 import GroupBackendAPIService from "../../../services/GroupBackendAPIService";
 import UserBackendAPIService from '../../../services/UserBackendAPIService';
@@ -30,7 +27,7 @@ const UserGroups = (props)=>{
         document.querySelector("#extraInfo").classList.add('vanish');
         document.querySelector("#openDetailsLink").classList.remove('vanish');
         document.querySelector("#closeDetailsLink").classList.add('vanish');
-        
+
         GroupBackendAPIService.getGroupInfo(groupId).then(({data, success}) => {
             setGroup(data);
         },[]);
@@ -78,9 +75,9 @@ const UserGroups = (props)=>{
                         (
                             (
                                 <div>
-                                    <table className="centered highlight expenses-list-table">  
+                                    <table className="centered highlight expenses-list-table">
                                         <tbody>
-                                        {   
+                                        {
                                             groupExpenses.length ?
                                             (
                                                 groupExpenses.map((expenses)=>{

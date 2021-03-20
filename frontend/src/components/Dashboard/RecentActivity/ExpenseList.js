@@ -14,9 +14,11 @@ const ExpenseList = (list)=>{
         UserBackendAPIService.getUserDetails().then(({data, success})=>{
             setUserInfo(data);
             setUserName(data.name);
+        }).catch(e => {
+            console.log(e.message);
         });
     },[])
-    
+
 
     return(
         <tbody>
