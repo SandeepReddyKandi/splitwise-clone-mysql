@@ -60,15 +60,13 @@ async function getAllExpensesByGroupId(groupId, userId) {
 }
 
 async function getAllExpensesForGroup(groupId) {
-  const result = await expenses.findAll({ where: { groupId } });
-  return result;
+  return expenses.findAll({ where: { groupId } });
   // return JSON.stringify(result);
 }
 
 async function getGroupExpenseForUserId(groupId, userId) {
   const condition = { plain: true, where: { [Op.or]: [{ byUser: userId, groupId }, { toUser: userId, groupId }] } };
-  const result = await expenses.findAll(condition);
-  return result;
+  return expenses.findAll(condition);
 }
 
 module.exports = {
