@@ -13,8 +13,7 @@ import Invites from './Groups/GroupInvites';
 
 const Dashboard = (props)=>{
     const clearUserLoginInfo = ()=>{
-        props.clearStore;
-        localStorage.setItem('token', '');
+        props.logout();
     }
 
     return (
@@ -66,9 +65,9 @@ const Dashboard = (props)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        clearStore: (payload)=>{
+        logout: (payload)=>{
             dispatch({
-                type: 'CLEAR_STORE',
+                type: 'lOG_OUT',
                 payload
             })
         }

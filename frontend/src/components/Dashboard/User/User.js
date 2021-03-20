@@ -18,7 +18,7 @@ const User = (props)=>{
                 <div className="container">
                     <Link to="/" className="brand-logo black-text">
                         {/*<img className="responsive-img" src="https://img.icons8.com/fluent/48/000000/love-letter.png" alt="letter" style={{ marginTop: "10px" }}/>*/}
-                        <button className="btn" onClick={props.clearStore}>Log Out</button>
+                        <button className="btn" onClick={props.logout}>Log Out</button>
                     </Link>
                     <ul className="right">
                         <li className="navbarBtnGrp">
@@ -163,9 +163,9 @@ const mapDispatchToProps = (dispatch)=>{
             })
         },
 
-        clearStore: (payload)=>{
+        logout: (payload)=>{
             dispatch({
-                type: 'CLEAR_STORE',
+                type: 'LOG_OUT',
                 payload
             })
         }

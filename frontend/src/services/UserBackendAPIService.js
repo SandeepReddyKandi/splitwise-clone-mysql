@@ -95,7 +95,6 @@ class UserBackendAPIService {
             });
             return response.data;
         } catch (e) {
-            toast.error('Something went wrong while getting user info!');
             return {
                 success: false,
             }

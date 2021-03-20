@@ -70,6 +70,11 @@ const userReducer = (state = initState, action)=> {
       }
     }
 
+    case 'LOG_OUT': {
+      localStorage.removeItem('token');
+      return initState;
+    }
+
     default: {
       return {
         ...state,
