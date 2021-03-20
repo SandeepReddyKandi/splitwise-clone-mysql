@@ -65,7 +65,7 @@ async function getAllExpensesForGroup(groupId) {
 }
 
 async function getGroupExpenseForUserId(groupId, userId) {
-  const condition = { plain: true, where: { [Op.or]: [{ byUser: userId, groupId }, { toUser: userId, groupId }] } };
+  const condition = { where: { [Op.or]: [{ byUser: userId, groupId, settledAt: null }, { toUser: userId, groupId, settledAt: null }] } };
   return expenses.findAll(condition);
 }
 
