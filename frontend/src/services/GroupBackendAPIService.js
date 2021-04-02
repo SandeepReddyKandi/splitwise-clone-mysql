@@ -4,14 +4,14 @@ import {toast} from "react-toastify";
 const API_ENDPOINT = `${process.env.REACT_APP_ENDPOINT}/groups`
 
 class GroupBackendAPIService {
-    static TOKEN = JSON.parse(localStorage.getItem('token'));
+    static getToken = () => localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null;
 
-    static async getAllGroups(payload) {
+    static async getAllGroups() {
         const url = `${API_ENDPOINT}/all`;
         try {
             const response = await axios.get(url, {
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
@@ -23,7 +23,7 @@ class GroupBackendAPIService {
         }
     }
 
-    static async createGroup(invite) {
+    static async acceptInvitation(invite) {
         if (!invite.id) {
             toast.error('Please select a group to accept invitation!');
         }
@@ -31,7 +31,7 @@ class GroupBackendAPIService {
         try {
             const response = await axios.put(url, null,{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
@@ -39,6 +39,37 @@ class GroupBackendAPIService {
             toast.error('Something went wrong while creating group!');
             return {
                 success: false,
+            }
+        }
+    }
+
+    static async createGroup(payload) {
+        try {
+            const {data} = await axios.post(`${API_ENDPOINT}/create`, {
+                ...payload,
+            }, {
+                headers: {
+                    authorization: `Bearer ${this.getToken()}`,
+                }
+            })
+            if (data.reason) {
+                return {
+                    data,
+                    success: false
+                }
+            }
+            return {
+                data: {
+                    ...data.data,
+                },
+                success: true
+            }
+        } catch (e) {
+            return {
+                data: {
+                    reason: 'Something went wrong while creating new group',
+                },
+                success: false
             }
         }
     }
@@ -51,7 +82,7 @@ class GroupBackendAPIService {
         try {
             const response = await axios.put(url, null,{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             });
             // console.log(response);
@@ -72,7 +103,7 @@ class GroupBackendAPIService {
         try {
             const response = await axios.get(url,{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             });
             return response.data;

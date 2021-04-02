@@ -34,7 +34,7 @@ const Invites = (props)=>{
     },[]);
 
     const acceptInvitation = (invite)=>{
-        GroupBackendAPIService.createGroup(invite).then(({data, success})=>{
+        GroupBackendAPIService.acceptInvitation(invite).then(({data, success})=>{
             if(success){
                 toast.success(`Invite for the ${invite.name} accepted successfully!`)
                 props.acceptGroupInvite([invite]);

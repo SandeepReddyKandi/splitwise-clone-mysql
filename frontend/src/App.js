@@ -3,9 +3,9 @@ import {BrowserRouter, Route} from "react-router-dom";
 import LoginComponent from "./components/LoginComponent";
 import SignUpComponent from "./components/SignUpComponent";
 import home from "./components/home";
-import "./App.css";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 import Dashboard from './components/Dashboard/Dashboard';
 import User from './components/Dashboard/User/User';
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -32,7 +32,7 @@ function App() {
               </ProtectedRoute>
           )
         }}/>
-        {/* <Route path="/user/home/newGroup" component={CreateNewGroup}/> */}
+        {/* <Route path="/user/home/new-group" component={CreateNewGroup}/> */}
       </div>
     </BrowserRouter>
   );

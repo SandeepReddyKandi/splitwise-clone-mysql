@@ -5,8 +5,10 @@ import letter from "../letter.webp";
 import {connect} from "react-redux";
 import axios from "axios";
 import {toast} from "react-toastify";
-import Utils from "../utils";
 import NavigationBarComponent from "./NavigationBarComponent";
+import UserBackendAPIService from "../services/UserBackendAPIService";
+
+const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 class LoginComponent extends Component {
 	state = {
@@ -14,7 +16,7 @@ class LoginComponent extends Component {
 		password: "",
 	}
 	getRedirections = async () => {
-		const {data, success} = await Utils.getLoggedInUser();
+		const { data, success } = await UserBackendAPIService.getUserDetails();
 		if (success) {
 			this.props.addUserData(data);
 			localStorage.setItem('token', JSON.stringify(data.token));
@@ -30,19 +32,16 @@ class LoginComponent extends Component {
 	userLoginDetails = (e) => {
 		e.preventDefault();
 
-		axios.post(`${API_ENDPOINT}/user/login/`, {
+		UserBackendAPIService.login({
 			email: this.state.email,
 			password: this.state.password
-		}).then((res)=>{
-			if(res.data.success) {
-				const token = res.data.data.token;
+		}).then(({data, success})=>{
+			if(success) {
 				toast.success("Successfully logged in!");
-				this.props.addUserData(res.data.data);
-				localStorage.setItem('token', JSON.stringify(token));
+				this.props.addUserData(data);
 				this.props.history.push('/user/home');
 			} else {
-				console.log(res);
-				toast.error(res.data.reason);
+				toast.error(data.reason);
 			}
 		}).catch((err)=>{
 			console.log(err);
@@ -71,11 +70,11 @@ class LoginComponent extends Component {
 								<form className="loginForm">
 									<div className="inputBox">
 										<div className="input-field inputBar">
-											<input id="email" type="email" className="validate" onChange={this.handleChange} value={this.state.email}></input>
+											<input id="email" type="email" className="validate" onChange={this.handleChange} value={this.state.email}/>
 											<label htmlFor="email">Email</label>
 										</div>
 										<div className="input-field inputBar">
-											<input id="password" type="password" className="validate" value={this.state.password} onChange={this.handleChange}></input>
+											<input id="password" type="password" className="validate" value={this.state.password} onChange={this.handleChange}/>
 											<label htmlFor="password">Passwords</label>
 										</div>
 									</div>

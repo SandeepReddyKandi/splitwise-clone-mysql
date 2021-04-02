@@ -3,6 +3,7 @@ import {withRouter} from "react-router-dom";
 import Utils from "../utils";
 
 import {connect} from "react-redux";
+import UserBackendAPIService from "../services/UserBackendAPIService";
 
 const ProtectedRoute = ({ userData, addUserData, history, children, ...rest}) => {
     // Access the token from userReducer
@@ -14,7 +15,7 @@ const ProtectedRoute = ({ userData, addUserData, history, children, ...rest}) =>
             setUser(userData);
             setIsLoading(false);
         } else {
-            Utils.getLoggedInUser().then(({data, success}) => {
+            UserBackendAPIService.getUserDetails().then(({data, success}) => {
                 if (success) {
                     setUser(data);
                     addUserData(data);

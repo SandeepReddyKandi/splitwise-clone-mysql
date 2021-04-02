@@ -4,14 +4,14 @@ import {toast} from "react-toastify";
 const API_ENDPOINT = `${process.env.REACT_APP_ENDPOINT}/expenses`;
 
 class ExpenseBackendAPIService {
-    static TOKEN = JSON.parse(localStorage.getItem('token'));
+    static getToken = () => localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null;
 
     static async getAllExpenses() {
         const url = `${API_ENDPOINT}/all`;
         try {
             const response = await axios.get(url, {
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
@@ -28,7 +28,7 @@ class ExpenseBackendAPIService {
         try {
             const response = await axios.get(url, {
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
 
@@ -46,7 +46,7 @@ class ExpenseBackendAPIService {
         try {
             const response = await axios.get(url,{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             });
             console.log('all users balance : ', response);      // user balance
@@ -64,7 +64,7 @@ class ExpenseBackendAPIService {
         try {
             const response = await axios.get(url, {
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
@@ -82,7 +82,7 @@ class ExpenseBackendAPIService {
         try {
             const response = await axios.get(url, {
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
@@ -104,32 +104,12 @@ class ExpenseBackendAPIService {
                 ...payload
             },{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             })
             return response.data;
         } catch (e) {
             toast.error('Something went wrong while adding the expense!');
-            return {
-                success: false,
-            }
-        }
-    }
-
-    static async expens(invite) {
-        if (!invite.id) {
-            toast.error('Please select a group to accept invitation!');
-        }
-        const url = `${API_ENDPOINT}/leave/${invite.id}`;
-        try {
-            const response = await axios.put(url, null,{
-                headers: {
-                    authorization: `Bearer ${this.TOKEN}`
-                }
-            });
-            return response.data;
-        } catch (e) {
-            toast.error('Something went wrong while leaving group!');
             return {
                 success: false,
             }
@@ -148,7 +128,7 @@ class ExpenseBackendAPIService {
                 ...payload
             },{
                 headers: {
-                    authorization: `Bearer ${this.TOKEN}`
+                    authorization: `Bearer ${this.getToken()}`
                 }
             });
             return response.data;

@@ -7,6 +7,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import Utils from "../utils";
 import NavigationBarComponent from "./NavigationBarComponent";
+import UserBackendAPIService from "../services/UserBackendAPIService";
 
 const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
@@ -20,7 +21,7 @@ class SignUpComponent extends Component {
   }
 
   getRedirections = async () => {
-    const {data, success} = await Utils.getLoggedInUser();
+    const { data, success } = await UserBackendAPIService.getUserDetails();
     if (success) {
       this.props.addUserData(data)
       this.props.history.push('/user/home');

@@ -2,8 +2,9 @@ import React, {useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {connect, useSelector} from 'react-redux';
 import './user.scss';
-import placeHolderImage from './img/user_1.png';
+import userIcon from './img/user_1.png';
 import UserBackendAPIService from "../../../services/UserBackendAPIService";
+import {toast} from "react-toastify";
 
 const User = (props)=>{
     const initUser = useSelector(state => {
@@ -15,6 +16,7 @@ const User = (props)=>{
             timezone: user.timezone,
             language: user.language,
             currency: user.currency,
+            imageURL: user.imageURL,
         }
     });
     const [user, setUser] = useState(initUser);
@@ -49,7 +51,7 @@ const User = (props)=>{
         UserBackendAPIService.updateUserDetails(formData).then(({data, success})=>{
             if (success) {
                 console.log('data : ',data);
-
+                toast.success('User info updated successfully!')
             } else {
                 toast.error('Could Not Update Your Info, Please Try Again!')
             }
@@ -83,7 +85,7 @@ const User = (props)=>{
                     <div className="col m6 s6">
                         <div className="row center-align">
                             <div className="col personal-img-info grey-text text-darken-1">
-                                <img className="responsive-img" src={localImageUrl ? localImageUrl: placeHolderImage} alt={'user-img'}/>
+                                <img className="responsive-img" src={localImageUrl ? localImageUrl: user.imageURL || userIcon} alt={'user-img'}/>
                                 <span className={'image-info-text'}>
                                     { localImageUrl
                                         ? "Click on 'Update' to save your changes!"
@@ -115,12 +117,12 @@ const User = (props)=>{
                                 <div>
                                     <form>
                                         <div className="row">
-                                            <label htmlFor="currency">User Name:</label>
-                                            <input value={user.name} name="name" type="text" className="validate" onChange={handleChange}/>
+                                            <label htmlFor="currency">Email:</label>
+                                            <input value={user.email} name="email" type="email" className="validate" disabled={true} />
                                         </div>
                                         <div className="row">
-                                            <label htmlFor="currency">Email:</label>
-                                            <input value={user.email} name="email" type="email" className="validate" onChange={handleChange}/>
+                                            <label htmlFor="currency">User Name:</label>
+                                            <input value={user.name} name="name" type="text" className="validate" onChange={handleChange}/>
                                         </div>
                                         <div className="row">
                                             <label htmlFor="currency">Phone Number:</label>

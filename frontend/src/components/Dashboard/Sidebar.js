@@ -50,7 +50,7 @@ const Sidebar = ()=>{
 
             {/* recent activity */}
             <div className="row recent-activity">
-                <Link to="/user/home/recentactivity">
+                <Link to="/user/home/recent-activity">
                     <div className="col m2 ">
                         <i className="fas fa-flag" />
                     </div>
@@ -67,7 +67,7 @@ const Sidebar = ()=>{
                 <div className="group-header grey lighten-3 left-align">
                     <p className="gery-text">GROUPS</p>
                     <div className="icon right-align">
-                        <Link to="/user/home/newGroup">
+                        <Link to="/user/home/new-group">
                             <i className="fa fa-plus modal-trigger"/>
                             <span>Add</span>
                         </Link>

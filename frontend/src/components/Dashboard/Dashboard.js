@@ -51,8 +51,8 @@ const Dashboard = (props)=>{
                                     <Route exact path="/user/home" component={Expenses}/>
                                     <Route path="/user/home/dashboard" component={Expenses}/>
                                     <Route path="/user/home/groups/:id" component={UserGroups}/>
-                                    <Route path="/user/home/recentactivity" component={RecentActivity}/>
-                                    <Route path="/user/home/newGroup" component={CreateNewGroup}/>
+                                    <Route path="/user/home/recent-activity" component={RecentActivity}/>
+                                    <Route path="/user/home/new-group" component={CreateNewGroup}/>
                                     <Route path="/user/home/invites" component={Invites}/>
                                 </div>
                             </Switch>

@@ -5,6 +5,7 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import {withRouter} from "react-router-dom";
+import GroupBackendAPIService from "../../services/GroupBackendAPIService";
 
 const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
@@ -53,23 +54,19 @@ class CreateNewGroup extends Component {
 		if (this.state.name === '') {
 			toast.error("Please add a name to your group");
 		} else {
-			axios.post(`${API_ENDPOINT}/groups/create`, {
+			GroupBackendAPIService.createGroup({
 				name: this.state.name,
-				invitedUsers: this.state.userIds.map(user => user.id),
-			}, {
-				headers: {
-					authorization: `Bearer ${this.props.userInfo.token}`,
-				}
-			}).then((res) => {
-				if (res.data.success) {
+				invitedUsers: this.state.userIds.map(user => user.id)
+			}).then(({data, success}) => {
+				if (success) {
 					toast.success(`Group "${this.state.name}" has been created successfully!`);
 					this.props.addActiveGroup([{
-						id: res.data.id,
-						name: res.data.name,
+						id: data.id,
+						name: data.name,
 					}]);
 					this.props.history.push('/user/home/invites');
 				} else {
-					toast.error(res.data.reason);
+					toast.error(data.reason);
 				}
 			})
 		}

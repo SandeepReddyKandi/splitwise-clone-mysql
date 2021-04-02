@@ -77,7 +77,7 @@ async function updateUserDetails(req, res, next) {
       payload = {
         ...rest,
         password: hashedPassword,
-        imagURL: req.file.path,
+        imageURL: req.file.path,
       };
     } else {
       payload = {
