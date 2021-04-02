@@ -8,6 +8,8 @@ import {toast} from "react-toastify";
 import Utils from "../utils";
 import NavigationBarComponent from "./NavigationBarComponent";
 
+const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
+
 class SignUpComponent extends Component {
   state = {
     name: "",
@@ -37,7 +39,7 @@ class SignUpComponent extends Component {
         return;
       }
 
-      axios.post("http://18.219.242.1:8000/user/signup/", {
+      axios.post(`${API_ENDPOINT}/user/signup/`, {
         name: this.state.name,
         phone: this.state.phone,
         email: this.state.email,

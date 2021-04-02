@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import {withRouter} from "react-router-dom";
 
+const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
+
 class CreateNewGroup extends Component {
 	state = {
 		name: "",
@@ -22,7 +24,7 @@ class CreateNewGroup extends Component {
 	}
 	componentDidMount() {
         const token = JSON.parse(localStorage.getItem('token'));
-		axios.get('http://18.219.242.1:8000/user/all', {
+		axios.get(`${API_ENDPOINT}/user/all`, {
 			headers: {
 				authorization: `Bearer ${token}`,
 			}
@@ -51,7 +53,7 @@ class CreateNewGroup extends Component {
 		if (this.state.name === '') {
 			toast.error("Please add a name to your group");
 		} else {
-			axios.post('http://18.219.242.1:8000/groups/create', {
+			axios.post(`${API_ENDPOINT}/groups/create`, {
 				name: this.state.name,
 				invitedUsers: this.state.userIds.map(user => user.id),
 			}, {

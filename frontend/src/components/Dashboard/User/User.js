@@ -1,9 +1,8 @@
-import React, {useEffect, useState}from 'react';
-import { Link , Switch } from "react-router-dom";
-import { useSelector, connect } from 'react-redux';
-import '../dashboard.css';
+import React, {useRef, useState} from 'react';
+import {Link} from "react-router-dom";
+import {connect, useSelector} from 'react-redux';
+import './user.scss';
 import userIcon from './img/user_1.png';
-import Modal from "./Modal.js";
 
 const User = (props)=>{
     const initUser = useSelector(state => state.userState.user);
@@ -11,6 +10,12 @@ const User = (props)=>{
     const [userCurrency, setUserCurrency] = useState('');
     const [userTimezone, setuserTimezone] = useState('');
     const [userLanguage, setUsetLanguage] = useState('');
+
+    const fileUploadInputRef = useRef();
+
+    const handleChange = (e) => {
+
+    }
 
     return(
         <div className="user-info">
@@ -34,52 +39,25 @@ const User = (props)=>{
                     </ul>
                 </div>
             </nav>
-            <div className="row" id="userContent">
+            <div className="row" id="user-data-container">
                 <div className="container">
                 <div className="col m6 s6">
                     <div className="row center-align">
-                        <div className="col m6 s6 personal-img-info grey-text text-darken-1">
+                        <div className="col personal-img-info grey-text text-darken-1">
                             <h4 className="center-align">Your account</h4>
-                            <img className="responsive-img" src={userIcon}/>
+                            <img className="responsive-img" src={userIcon} alt={'user-img'}/>
                             <span>Change your avatar</span>
                             <div className="container center-align">
-                                <input className="center-align" type="file"/>
+                                <input className="center-align hide" type="file" ref={fileUploadInputRef}/>
+                                <button
+                                    className="btn waves-effect waves-light"
+                                    name="upload-img"
+                                    onClick={() => fileUploadInputRef.current.click()}
+                                >
+                                    Upload <i className="material-icons right">file_upload</i>
+                                </button>
                             </div>
                         </div>
-                        <div className="col m6 s6 personal-info left-align valign-wrapper">
-                            <div className="row">
-                                <div className="info">
-                                    <div>
-                                        <p>Your Name</p>
-                                        <div>   <b>{user.name}  </b>
-                                            <a className="modal-trigger" data-target="userInfoUpdateModal">
-                                                <i className="fas fa-pencil-alt"></i>
-                                                Edit
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>Your email address</p>
-                                        <div>   <b>{user.email}  </b>
-                                            {/*<span>*/}
-                                            {/*    <i className="fas fa-pencil-alt"></i>*/}
-                                            {/*    Edit*/}
-                                            {/*</span>*/}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>Your phone number</p>
-                                        <div>   <b>{user.phone}  </b>
-                                            <a className="modal-trigger" data-target="userInfoUpdateModal">
-                                                <i className="fas fa-pencil-alt"></i>
-                                                Edit
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <Modal/>
                     </div>
                 </div>
                 <div className="col m6 s6">
@@ -87,6 +65,18 @@ const User = (props)=>{
                         <div className="col m8">
                             <div>
                                 <form>
+                                    <div className="row">
+                                        <label htmlFor="currency">User Name:</label>
+                                        <input value={user.name} name="name" type="text" className="validate" onChange={handleChange}/>
+                                    </div>
+                                    <div className="row">
+                                        <label htmlFor="currency">Email:</label>
+                                        <input value={user.email} name="email" type="email" className="validate" onChange={handleChange}/>
+                                    </div>
+                                    <div className="row">
+                                        <label htmlFor="currency">Phone Number:</label>
+                                        <input value={user.phone} name="phone" type="tel" className="validate" onChange={handleChange}/>
+                                    </div>
                                     <div className="row">
                                         <label htmlFor="currency">Currency :</label>
                                         <select defaultValue="USD" name="currency" id="currency" onChange={(e)=>{
@@ -108,15 +98,18 @@ const User = (props)=>{
 
                                     <div className="row">
                                         <label htmlFor="timezones">Timezone : </label>
-                                        <select defaultValue="New York, NY, USA EST (UTC -5)" name="timezones" id="timezones" onChange={(e)=>{
-                                            console.log("value : ", e.target.options[e.target.selectedIndex].text);
-                                            setuserTimezone(e.target.options[e.target.selectedIndex].text);
-                                            props.setUserVariables({
-                                                currency: userCurrency,
-                                                timezone: e.target.options[e.target.selectedIndex].text,
-                                                language: userLanguage
-                                            });
-                                        }}>
+                                        <select
+                                            defaultValue="New York, NY, USA EST (UTC -5)"
+                                            name="timezones"
+                                            id="timezones"
+                                            onChange={(e) => {
+                                                setuserTimezone(e.target.options[e.target.selectedIndex].text);
+                                                props.setUserVariables({
+                                                    currency: userCurrency,
+                                                    timezone: e.target.options[e.target.selectedIndex].text,
+                                                    language: userLanguage
+                                                });
+                                            }}>
                                             <option value="USD">New York, NY, USA EST (UTC -5)</option>
                                             <option value="KWD">Kuwait City, Kuwait AST (UTC +3)</option>
                                             <option value="BHD">Manama, Bahrain AST (UTC +3)</option>
@@ -142,6 +135,11 @@ const User = (props)=>{
                                             <option value="german">German</option>
                                             <option value="chinese">chinese</option>
                                         </select>
+                                    </div>
+                                    <div className="row">
+                                        <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                                            <i className="material-icons right">send</i>
+                                        </button>
                                     </div>
                                 </form>
                             </div>

@@ -7,6 +7,8 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import ExpenseBackendAPIService from "../../../services/ExpenseBackendAPIService";
 
+const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
+
 class Modal extends Component {
     state = {
         userId: this.props.userInfo.id,
@@ -28,7 +30,7 @@ class Modal extends Component {
 
       // getting all the users
       const token = JSON.parse(localStorage.getItem('token'));
-      axios.get('http://18.219.242.1:8000/user/all', {
+      axios.get(`${API_ENDPOINT}/user/all`, {
           headers: {
               authorization: `Bearer ${token}`,
           }

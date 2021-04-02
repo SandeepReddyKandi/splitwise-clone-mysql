@@ -7,6 +7,8 @@ import CreateNewGroup from './CreateNewGroup';
 import axios from 'axios';
 import GroupBackendAPIService from "../../services/GroupBackendAPIService";
 
+const API_ENDPOINT = process.env.REACT_APP_ENDPOINT;
+
 const Sidebar = ()=>{
     const [allGroups, setAllGroups] = useState([]);
     useEffect(()=>{
@@ -19,7 +21,7 @@ const Sidebar = ()=>{
 
     useEffect(()=>{
         const token = JSON.parse(localStorage.getItem('token'));
-        axios.get('http://18.219.242.1:8000/groups/all', {
+        axios.get(`${API_ENDPOINT}/groups/all`, {
             headers: {
                 authorization: `Bearer ${token}`
             }

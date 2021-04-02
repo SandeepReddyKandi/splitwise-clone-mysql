@@ -1,12 +1,13 @@
 import axios from "axios";
 import {toast} from "react-toastify";
 
+const API_ENDPOINT = `${process.env.REACT_APP_ENDPOINT}/expenses`;
+
 class ExpenseBackendAPIService {
-    static API_ENDPOINT = 'http://18.219.242.1:8000/expenses';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllExpenses() {
-        const url = `${this.API_ENDPOINT}/all`;
+        const url = `${API_ENDPOINT}/all`;
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -23,7 +24,7 @@ class ExpenseBackendAPIService {
     }
 
     static async getAllExpensesForGroupId(groupId) {
-        const url = `${this.API_ENDPOINT}/all-group/${groupId}`;
+        const url = `${API_ENDPOINT}/all-group/${groupId}`;
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -41,7 +42,7 @@ class ExpenseBackendAPIService {
     }
 
     static async getBalanceOfEachUserInGoupId(groupId) {
-        const url = `${this.API_ENDPOINT}/balance-group/${groupId}`;
+        const url = `${API_ENDPOINT}/balance-group/${groupId}`;
         try {
             const response = await axios.get(url,{
                 headers: {
@@ -59,7 +60,7 @@ class ExpenseBackendAPIService {
     }
 
     static async getRecentActivity() {
-        const url = `${this.API_ENDPOINT}/recent`;
+        const url = `${API_ENDPOINT}/recent`;
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -77,7 +78,7 @@ class ExpenseBackendAPIService {
 
     // get all the expenses for a user
     static async getUserBalanceByUserId(userId) {
-        const url = `${this.API_ENDPOINT}/balance/${userId}`;
+        const url = `${API_ENDPOINT}/balance/${userId}`;
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -97,7 +98,7 @@ class ExpenseBackendAPIService {
         if (!payload.groupId || !payload.amount || !payload.description) {
             toast.error('Please add both Amount and Description before creating expense!');
         }
-        const url = `${this.API_ENDPOINT}/create`;
+        const url = `${API_ENDPOINT}/create`;
         try {
             const response = await axios.post(url, {
                 ...payload
@@ -119,7 +120,7 @@ class ExpenseBackendAPIService {
         if (!invite.id) {
             toast.error('Please select a group to accept invitation!');
         }
-        const url = `${this.API_ENDPOINT}/leave/${invite.id}`;
+        const url = `${API_ENDPOINT}/leave/${invite.id}`;
         try {
             const response = await axios.put(url, null,{
                 headers: {
@@ -141,7 +142,7 @@ class ExpenseBackendAPIService {
         }
 
         console.log('payload : ', payload);
-        const url = `${this.API_ENDPOINT}/settle/${payload.params}`;
+        const url = `${API_ENDPOINT}/settle/${payload.params}`;
         try {
             const response = await axios.put(url, {
                 ...payload

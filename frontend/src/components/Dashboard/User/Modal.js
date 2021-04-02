@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import './Modal.css'
+import './user.scss'
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import UserBackendAPIService from "../../../services/UserBackendAPIService";
@@ -31,8 +31,6 @@ class Modal extends Component {
     }
 
     updateChanges = ()=>{
-        console.log('updated user name : ', this.state.updatedUserName);
-        console.log('updated user number : ', this.state.updatedUserPhoneNumber);
         UserBackendAPIService.updateUserDetails({
             user : this.props.userInfo.id,
             currency : this.props.userInfo.currency,
@@ -84,7 +82,6 @@ class Modal extends Component {
         );
     }
 }
-
 
 const mapStateToProps = (state)=>{
     return {

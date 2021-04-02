@@ -30,7 +30,7 @@ class LoginComponent extends Component {
 	userLoginDetails = (e) => {
 		e.preventDefault();
 
-		axios.post("http://18.219.242.1:8000/user/login/", {
+		axios.post(`${API_ENDPOINT}/user/login/`, {
 			email: this.state.email,
 			password: this.state.password
 		}).then((res)=>{

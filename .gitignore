@@ -18,6 +18,9 @@ build
 #config files
 backend/config/config.js
 
+#images folder
+backend/public/images/
+
 # misc
 .DS_Store
 .env.local

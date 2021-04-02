@@ -1,12 +1,13 @@
 import axios from "axios";
 import {toast} from "react-toastify";
 
+const API_ENDPOINT = `${process.env.REACT_APP_ENDPOINT}/groups`
+
 class GroupBackendAPIService {
-    static API_ENDPOINT = 'http://18.219.242.1:8000/groups';
     static TOKEN = JSON.parse(localStorage.getItem('token'));
 
     static async getAllGroups(payload) {
-        const url = `${this.API_ENDPOINT}/all`;
+        const url = `${API_ENDPOINT}/all`;
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -26,7 +27,7 @@ class GroupBackendAPIService {
         if (!invite.id) {
             toast.error('Please select a group to accept invitation!');
         }
-        const url = `${this.API_ENDPOINT}/accept-invite/${invite.id}`;
+        const url = `${API_ENDPOINT}/accept-invite/${invite.id}`;
         try {
             const response = await axios.put(url, null,{
                 headers: {
@@ -46,7 +47,7 @@ class GroupBackendAPIService {
         if (!invite.id) {
             toast.error('Please select a group to accept invitation!');
         }
-        const url = `${this.API_ENDPOINT}/leave/${invite.id}`;
+        const url = `${API_ENDPOINT}/leave/${invite.id}`;
         try {
             const response = await axios.put(url, null,{
                 headers: {
@@ -67,7 +68,7 @@ class GroupBackendAPIService {
         if (!groupId) {
             toast.error('Cannot get group info without group Id!');
         }
-        const url = `${this.API_ENDPOINT}/${groupId}`;
+        const url = `${API_ENDPOINT}/${groupId}`;
         try {
             const response = await axios.get(url,{
                 headers: {
