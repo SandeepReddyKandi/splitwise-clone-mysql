@@ -31,19 +31,7 @@ class Modal extends Component {
     }
 
     updateChanges = ()=>{
-        UserBackendAPIService.updateUserDetails({
-            user : this.props.userInfo.id,
-            currency : this.props.userInfo.currency,
-            phone : this.state.updatedUserPhoneNumber,
-            name : this.state.updatedUserName,
-            password : this.props.userInfo.password,
-            language : this.props.userInfo.language,
-            timezone : this.props.userInfo.timezone
-        }).then(({data, success})=>{
-            if(success){
-                console.log('data : ',data);
-            }
-        });
+
     }
 
     render() {

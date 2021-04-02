@@ -69,10 +69,23 @@ async function updateUserDetails(req, res, next) {
   try {
     logger.info('controllers', 'updateUserDetails', 'body', JSON.stringify(req.body));
     const { userId } = req.user;
-    const { currency, phone, name, password, language, timezone } = req.body;
+    const { password, ...rest } = req.body;
+    let payload;
     let hashedPassword;
     if (password) hashedPassword = await createHashedPassword(password);
-    await userRepo.updateUserDetailsById(userId, { currency, phone, name, password: hashedPassword, language, timezone });
+    if (req.file) {
+      payload = {
+        ...rest,
+        password: hashedPassword,
+        imagURL: req.file.path,
+      };
+    } else {
+      payload = {
+        ...rest,
+        password: hashedPassword,
+      };
+    }
+    await userRepo.updateUserDetailsById(userId, payload);
     const updatedDetails = await userRepo.getUserById(userId);
     const response = genericDTL.getResponseDto(updatedDetails);
     return res.send(response);

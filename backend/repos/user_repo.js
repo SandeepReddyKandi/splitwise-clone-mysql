@@ -22,8 +22,9 @@ async function findUserByEmail(email) {
 }
 
 async function updateUserDetailsById(userId, data) {
-  const { currency, phone, name, password, language, timezone } = data;
-  const values = { currency, phone, name, password, language, timezone };
+  const { currency, phone, name, password, language, timezone, imageURL } = data;
+  console.log('FINAL DATA IS ', data);
+  const values = { currency, phone, name, password, language, timezone, imageURL };
   const condition = { where: { id: userId } };
   await users.update(values, condition);
   const user = await users.findOne({ where: { id: userId } });

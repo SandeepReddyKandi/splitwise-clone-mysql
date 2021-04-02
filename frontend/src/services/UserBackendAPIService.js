@@ -107,11 +107,11 @@ class UserBackendAPIService {
         const url = `${API_ENDPOINT}/update`;
         try {
             const response = await axios.put(url,
+                payload,
                 {
-                    ...payload
-                },{
                     headers: {
-                        authorization: `Bearer ${this.TOKEN}`
+                        authorization: `Bearer ${this.TOKEN}`,
+                        contentType: 'multipart/form-data',
                     }
                 });
             return response.data;
@@ -122,7 +122,6 @@ class UserBackendAPIService {
             }
         }
     }
-
 }
 
 export default UserBackendAPIService;
